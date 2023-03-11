@@ -161,6 +161,9 @@ table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
 rm(dat)
 
 fh=readRDS("output/fh_full.rds")
+fh=na.omit(fh)
+fh2=fh[-which(fh$LIPRX1==1),]
+fh3=fh2[-which(fh2$chddate<=0&fh2$chd==1),]
 dat=fh
 
 dat=na.omit(dat)
@@ -193,11 +196,15 @@ label(dat$bp_med)  <- "Anti-hypertensive"
 table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
          CALC_LDL1 + bp_med , data=dat)
 
+```
 
 
-
+```{r}
 
 fhp=readRDS("output/fh_prs.rds")
+fhp=na.omit(fhp)
+fh2=fhp[-which(fhp$LIPRX1==1),]
+fh3=fh2[-which(fh2$chddate<=0&fh2$chd==1),]
 fhp$prs=scale(fhp$V2)
 fhp$prs.r=rank(fhp$prs)/length(fhp$prs)
 fhp$prscat <- cut(fhp$prs.r, breaks=c(0, 0.20,0.80,1), labels=c("low", "intermediate","high"))

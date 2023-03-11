@@ -1,0 +1,61 @@
+---
+title: "flowcharts"
+author: "Your Name"
+date: "2023-03-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Flow Chart creation
+
+
+
+
+```{r}
+
+
+library(khsmisc)
+library(khsverse)
+
+design <- tibble::tribble(
+  ~left,               ~n_left, ~right,              ~n_right,
+  "Study base",        502485,    "Lack quality-controlled genotypes for risk score generation",       15209 ,
+  "Polygenic score and Phenotypic information",  487276  ,     "Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)", 34635,
+  "With baseline information", 452641,     "Missing Lipid information",                  59069,
+  "With Lipid information",  393572,     "On Statin therapy",                 63832,
+  "Polygenic score and Phenotypic information off statin therapy",  329740,     "Remains with coronary artery disease",                1903,
+  "Complete-case set", 327837,     "",                  NA_integer_)
+  
+
+
+
+
+
+e=exclusion_flowchart(design, width = 2)
+e
+```
+
+
+```{r}
+
+
+library(khsmisc)
+library(khsverse)
+
+design <- tibble::tribble(
+  ~left,               ~n_left, ~right,              ~n_right,
+  "Study base with Outcome Data",        3821 ,   "Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline ",       154 ,
+  "Contain All Covariates",  3660,     "On Statin at Baseline", 21,
+  "Contain All Covariates and Statin-free",  3639,     "With CAD at baseline", 51,
+  "With baseline covariate and outcome data", 3588,   "Missing PRS Info",                 959,
+  "PRS, Pheno, Covariate info", 2629,  "",                  NA_integer_)
+
+
+##
+
+e=exclusion_flowchart(design, width = 2)
+e
+###
+```
+

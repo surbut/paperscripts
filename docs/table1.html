@@ -523,15 +523,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree7ddb13f71c5960cbe535759d89d9ee4716ee27a8targetblank7ddb13fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree13b78355af818edba9849c01a32344143ae2da35targetblank13b7835a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/7ddb13f71c5960cbe535759d89d9ee4716ee27a8" target="_blank">7ddb13f</a>
+<a href="https://github.com/surbut/paperscripts/tree/13b78355af818edba9849c01a32344143ae2da35" target="_blank">13b7835</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree7ddb13f71c5960cbe535759d89d9ee4716ee27a8targetblank7ddb13fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree13b78355af818edba9849c01a32344143ae2da35targetblank13b7835a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/7ddb13f71c5960cbe535759d89d9ee4716ee27a8" target="_blank">7ddb13f</a>.
+<a href="https://github.com/surbut/paperscripts/tree/13b78355af818edba9849c01a32344143ae2da35" target="_blank">13b7835</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -556,6 +556,8 @@ were generated:
 </p>
 <pre><code>
 Unstaged changes:
+    Modified:   .DS_Store
+    Modified:   analysis/generation_rawfiles/creating_FH.R
     Modified:   analysis/table1.Rmd
 
 </code></pre>
@@ -601,6 +603,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/13b78355af818edba9849c01a32344143ae2da35/analysis/table1.Rmd" target="_blank">13b7835</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/13b78355af818edba9849c01a32344143ae2da35/docs/table1.html" target="_blank">13b7835</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1388,6 +1424,44 @@ Attaching package: &#39;table1&#39;</code></pre>
 </tbody>
 </table>
 </div>
+<pre class="r"><code>fhp=readRDS(&quot;output/fh_prs.rds&quot;)
+fhp=na.omit(fhp)
+fh2=fhp[-which(fhp$LIPRX1==1),]
+fh3=fh2[-which(fh2$chddate&lt;=0&amp;fh2$chd==1),]
+fhp$prs=scale(fhp$V2)
+fhp$prs.r=rank(fhp$prs)/length(fhp$prs)
+fhp$prscat &lt;- cut(fhp$prs.r, breaks=c(0, 0.20,0.80,1), labels=c(&quot;low&quot;, &quot;intermediate&quot;,&quot;high&quot;))
+
+dat=fhp
+dat=na.omit(dat)
+
+dat$age=dat$enroll_age
+dat$dm    &lt;- factor(dat$DMRX1, levels=c(&quot;NA&quot;,&quot;0&quot;,&quot;1&quot;), labels=c(&quot;None&quot;,&quot;None&quot;,&quot;Diabetes Mellitus&quot;))
+dat$sex     &lt;- factor(dat$SEX, levels=c(1, 2), labels=c(&quot;Male&quot;, &quot;Female&quot;))
+dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
+# dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
+#                       labels=c(&quot;&lt;7.5&quot;,
+#                                &quot;7.5-20&quot;,
+#                                &quot;20+&quot;))
+dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
+                      labels=c(&quot;Never&quot;,
+                               &quot;Current&quot;))
+dat$bp_med=factor(dat$HRX1,levels=c(0,&quot;NA&quot;,1),labels=c(&quot;No&quot;,&quot;No&quot;,&quot;Yes&quot;))
+
+                               
+
+label(dat$AGE1)      &lt;- &quot;Age (y)&quot;
+label(dat$sex)      &lt;- &quot;Sex&quot;
+label(dat$dm)    &lt;- &quot;Diabetes status&quot;
+label(dat$SBP1)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
+label(dat$TC1)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
+label(dat$HDL1)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
+label(dat$smoke) &lt;- &quot;Smoking Status&quot;
+label(dat$CALC_LDL1)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
+label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
+label(dat$prscat)    &lt;- &quot;Polygenic score category&quot;
+table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
+         CALC_LDL1 + bp_med , data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1474,15 +1548,15 @@ Attaching package: &#39;table1&#39;</code></pre>
 </tr>
 <tr>
 <td class='rowlabel'>Low</td>
-<td>535 (20.1%)</td>
+<td>531 (20.0%)</td>
 </tr>
 <tr>
 <td class='rowlabel'>Intermediate</td>
-<td>1590 (59.9%)</td>
+<td>1593 (60.0%)</td>
 </tr>
 <tr>
 <td class='rowlabel lastrow'>High</td>
-<td class='lastrow'>531 (20.0%)</td>
+<td class='lastrow'>532 (20.0%)</td>
 </tr>
 <tr>
 <td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>

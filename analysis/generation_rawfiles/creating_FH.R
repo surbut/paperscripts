@@ -22,17 +22,19 @@ df$chd.age=df$chddate/365.25+df$AGE1
 
 d2=merge(d, outcomes[,c("dbGaP_Subject_ID","shareid","chddate", "chd")])
 dim(d2)
+dim(na.omit(d2))
 
+## 3660   15
 sum(na.omit(d2$LIPRX1)==1)
 
 d3=d2[-which(d2$LIPRX1==1),]
 dim(d2)[1]-dim(d3)[1]
-## 22
-d4=d3[-which(d2$chddate<=0&d2$chd==1),]
+## 21
+d4=d3[-which(d3$chddate<=0&d3$chd==1),]
 dim(d4)[1]-dim(d3)[1]
-##  58
+##  51
 dim(d4)
-
+#3588
 saveRDS(df,'~/Dropbox/fh_full.rds')
 prs=fread("~/Dropbox (Personal)/Fram_allchr_CAD_c1.profile")
 
@@ -56,16 +58,15 @@ design <- tibble::tribble(
   ~left,               ~n_left, ~right,              ~n_right,
   "Study base with Outcome Data",        3821 ,   "Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline ",       154 ,
   "Contain All Covariates",  3660,     "On Statin at Baseline", 21,
-  "Contain All Covariates and Statin-free",  3645,     "With CAD at baseline", 58,
-  "With baseline covariate and outcome data", 3581,   "Missing PRS Info",                 974,
-  "PRS, Pheno, Covariate info", 2606,  "",                  NA_integer_)
+  "Contain All Covariates and Statin-free",  3639,     "With CAD at baseline", 51,
+  "With baseline covariate and outcome data", 3588,   "Missing PRS Info",                 959,
+  "PRS, Pheno, Covariate info", 2629,  "",                  NA_integer_)
 
 
 ##
 
-pdf("Figs/exclusion_flow.pdf")
 e=exclusion_flowchart(design, width = 2)
-dev.off()
+e
 ###
 
 
