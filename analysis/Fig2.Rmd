@@ -78,8 +78,8 @@ predr$x=rep(newdf$x,3)
 
 predr$variable=  factor(
     predr$variable,
-    levels = c(
-      "<55","55-65",">65"
+    levels = c("<55","55-65",">65"),labels = c(
+      "<55 years","55-65 years",">65 years"
     )
   )
 
@@ -89,11 +89,21 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, color=variable,fil
  xlab("Polygenic score percentile") + 
  ylab("Absolute risk of coronary artery disease")+
 scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
-scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
+scale_color_manual(name="Age Group",values=c("<55 years"="deepskyblue","55-65 years"="deepskyblue3",">65 years"="deepskyblue4"))+theme_classic(base_size =20)#+theme(legend.position = "null")
+
+ggsave(gp,filename = paste0(fig_path,"gprs_abs_withleg.tiff"),dpi=300,height=6,width = 6)
+
+
+
+gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, color=variable,fill=variable)) + 
+ geom_line(linewidth=2) + 
+ geom_ribbon(alpha=0.3) + 
+ xlab("Polygenic score percentile") + 
+ ylab("Absolute risk of coronary artery disease")+
+scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
+scale_color_manual(name="Age Group",values=c("<55 years"="deepskyblue","55-65 years"="deepskyblue3",">65 years"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
 
 ggsave(gp,filename = paste0(fig_path,"gprs_abs.tiff"),dpi=300,height=6,width = 6)
-
-
 ```
 
 #### relative fits
@@ -194,8 +204,6 @@ predf=rbind(predy,predm,predo)
 predr=predf
 predr$variable=c(rep("<55",97),rep("55-65",97),rep(">65",68))
 predr$x=c(rep(newdf$x[5:101],2),newdf$x[34:101])
-
-
 predr$variable=  factor(
     predr$variable,
     levels = c(

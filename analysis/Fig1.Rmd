@@ -224,7 +224,7 @@ r2 = r2_ukb_all + theme_classic(base_size = 20) + theme(legend.position = "none"
 
 hall = hr_ukb_all + theme_classic(base_size = 20) + tems 
 ## generate without legend
-hr_ukb_all_nolegend=hr_ukb_all+theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(c(0.75,5)) 
+hr_ukb_all_nolegend=hr_ukb_all+theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(c(0.35,5)) 
 
 ```
 
@@ -304,9 +304,9 @@ aes(age, value, colour = variable)) +
     )
   )
 
-r2_pce = r2_ukb_pce + theme_classic(base_size = 20)+theme(legend.position = "none") +ylim(0,0.10)
+r2_pce = r2_ukb_pce + theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(0,0.15)
 #hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,4.5)
-hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,4.5)+theme(legend.position = "none")
+hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,2)+theme(legend.position = "none")
 ```
 
 ```{r}

@@ -37,10 +37,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="site_libs/viz-1.8.2/viz.js"></script>
-<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="site_libs/grViz-binding-1.0.9/grViz.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -528,15 +524,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreed6440826ea52a1046a6625ba24d1c10bcfb873actargetblankd644082a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreee19764b789fc3f3605d51f81dad7df1e5b42f9f7targetblanke19764ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/d6440826ea52a1046a6625ba24d1c10bcfb873ac" target="_blank">d644082</a>
+<a href="https://github.com/surbut/paperscripts/tree/e19764b789fc3f3605d51f81dad7df1e5b42f9f7" target="_blank">e19764b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreed6440826ea52a1046a6625ba24d1c10bcfb873actargetblankd644082a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreee19764b789fc3f3605d51f81dad7df1e5b42f9f7targetblanke19764ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +542,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/d6440826ea52a1046a6625ba24d1c10bcfb873ac" target="_blank">d644082</a>.
+<a href="https://github.com/surbut/paperscripts/tree/e19764b789fc3f3605d51f81dad7df1e5b42f9f7" target="_blank">e19764b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -560,7 +556,23 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
+Untracked files:
+    Untracked:  Figs/Fig2/gprs_abs_withleg.tiff
+    Untracked:  Figs/flowchart_fhs.svg
+    Untracked:  Figs/flowchart_ukbb.svg
+    Untracked:  graph.svg
+    Untracked:  vignette flowchart.png
+
 Unstaged changes:
+    Modified:   .DS_Store
+    Modified:   Figs/.DS_Store
+    Modified:   Figs/Fig1/hr_pce.tiff
+    Modified:   Figs/Fig2/gprs_abs.tiff
+    Modified:   Figs/Fig3/interaction.tiff
+    Deleted:    Figs/aucplot.tiff
+    Modified:   analysis/Fig1.Rmd
+    Modified:   analysis/Fig2.Rmd
+    Modified:   analysis/Fig3.Rmd
     Modified:   analysis/flowcharts.Rmd
 
 </code></pre>
@@ -607,6 +619,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/e19764b789fc3f3605d51f81dad7df1e5b42f9f7/analysis/flowcharts.Rmd" target="_blank">e19764b</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/e19764b789fc3f3605d51f81dad7df1e5b42f9f7/docs/flowcharts.html" target="_blank">e19764b</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -664,10 +710,18 @@ Update
 ✖ dplyr::lag()       masks stats::lag()
 ✖ gt::tab_footnote() masks khsmisc::tab_footnote()
 ✖ gt::tab_style()    masks khsmisc::tab_style()</code></pre>
-<div id="htmlwidget-5c3a3ec5a4b38bce708f" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5c3a3ec5a4b38bce708f">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base\\nn = 502485\"]\ntab1b [label = \"Lack quality-controlled genotypes for risk score generation\\nn = 15209\"]\ntab2a [label = \"Polygenic score and Phenotypic information\\nn = 487276\"]\ntab2b [label = \"Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)\\nn = 34635\"]\ntab3a [label = \"With baseline information\\nn = 452641\"]\ntab3b [label = \"Missing Lipid information\\nn = 59069\"]\ntab4a [label = \"With Lipid information\\nn = 393572\"]\ntab4b [label = \"On Statin therapy\\nn = 63832\"]\ntab5a [label = \"Polygenic score and Phenotypic information off statin therapy\\nn = 329740\"]\ntab5b [label = \"Remains with coronary artery disease\\nn = 1903\"]\ntab6a [label = \"Complete-case set\\nn = 327837\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\n\n{ rank = same; tab5a; tab5b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a ->  tab5a -> tab6a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n\ntab5a -> tab5b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<div id="htmlwidget-47abf6feb9c508565805" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-47abf6feb9c508565805">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base with Outcome Data\\nn = 3821\"]\ntab1b [label = \"Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline \\nn = 154\"]\ntab2a [label = \"Contain All Covariates\\nn = 3660\"]\ntab2b [label = \"On Statin at Baseline\\nn = 21\"]\ntab3a [label = \"Contain All Covariates and Statin-free\\nn = 3639\"]\ntab3b [label = \"With CAD at baseline\\nn = 51\"]\ntab4a [label = \"With baseline covariate and outcome data\\nn = 3588\"]\ntab4b [label = \"Missing PRS Info\\nn = 959\"]\ntab5a [label = \"PRS, Pheno, Covariate info\\nn = 2629\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a -> tab5a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<pre><code>Loading required package: magrittr</code></pre>
+<pre><code>
+Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    set_names</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    extract</code></pre>
+<pre><code>Loading required package: DiagrammeR</code></pre>
+<pre><code>Loading required package: DiagrammeRsvg</code></pre>
+<pre><code>Loading required package: xml2</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -692,11 +746,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] risks_0.4.1       gt_0.8.0          viridis_0.6.2     viridisLite_0.4.1
- [5] cowplot_1.1.1     survival_3.4-0    readxl_1.4.1      labelled_2.10.0  
- [9] broom_1.0.1       ggplot2_3.4.1     stringr_1.4.1     purrr_0.3.5      
-[13] readr_2.1.2       forcats_0.5.2     tibble_3.1.8      tidyr_1.2.1      
-[17] dplyr_1.0.10      khsverse_0.0.2    khsmisc_0.4.6    
+ [1] xml2_1.3.3        DiagrammeRsvg_0.1 DiagrammeR_1.0.9  magrittr_2.0.3   
+ [5] risks_0.4.1       gt_0.8.0          viridis_0.6.2     viridisLite_0.4.1
+ [9] cowplot_1.1.1     survival_3.4-0    readxl_1.4.1      labelled_2.10.0  
+[13] broom_1.0.1       ggplot2_3.4.1     stringr_1.4.1     purrr_0.3.5      
+[17] readr_2.1.2       forcats_0.5.2     tibble_3.1.8      tidyr_1.2.1      
+[21] dplyr_1.0.10      khsverse_0.0.2    khsmisc_0.4.6    
 
 loaded via a namespace (and not attached):
  [1] fs_1.5.2             lubridate_1.8.0      RColorBrewer_1.1-3  
@@ -704,26 +759,26 @@ loaded via a namespace (and not attached):
  [7] backports_1.4.1      bslib_0.4.0          utf8_1.2.2          
 [10] R6_2.5.1             DBI_1.1.3            colorspace_2.0-3    
 [13] withr_2.5.0          tidyselect_1.2.0     gridExtra_2.3       
-[16] compiler_4.2.1       git2r_0.30.1         cli_3.4.1           
-[19] rvest_1.0.3          xml2_1.3.3           sass_0.4.2          
+[16] curl_4.3.3           compiler_4.2.1       git2r_0.30.1        
+[19] cli_3.4.1            rvest_1.0.3          sass_0.4.2          
 [22] scales_1.2.1         digest_0.6.29        rmarkdown_2.17      
 [25] pkgconfig_2.0.3      htmltools_0.5.3      dbplyr_2.2.1        
 [28] fastmap_1.1.0        htmlwidgets_1.5.4    rlang_1.0.6         
 [31] rstudioapi_0.14      visNetwork_2.1.2     jquerylib_0.1.4     
 [34] generics_0.1.3       jsonlite_1.8.2       googlesheets4_1.0.1 
-[37] magrittr_2.0.3       Matrix_1.5-1         Rcpp_1.0.9          
-[40] munsell_0.5.0        fansi_1.0.3          lifecycle_1.0.3     
-[43] stringi_1.7.8        whisker_0.4          yaml_2.3.5          
-[46] gtsummary_1.7.0      grid_4.2.1           promises_1.2.0.1    
-[49] crayon_1.5.2         lattice_0.20-45      haven_2.5.1         
-[52] splines_4.2.1        hms_1.1.2            knitr_1.40          
-[55] pillar_1.8.1         reprex_2.0.2         glue_1.6.2          
-[58] evaluate_0.17        broom.helpers_1.12.0 modelr_0.1.9        
+[37] Matrix_1.5-1         Rcpp_1.0.9           munsell_0.5.0       
+[40] fansi_1.0.3          lifecycle_1.0.3      stringi_1.7.8       
+[43] whisker_0.4          yaml_2.3.5           gtsummary_1.7.0     
+[46] grid_4.2.1           promises_1.2.0.1     crayon_1.5.2        
+[49] lattice_0.20-45      haven_2.5.1          splines_4.2.1       
+[52] hms_1.1.2            knitr_1.40           pillar_1.8.1        
+[55] reprex_2.0.2         glue_1.6.2           evaluate_0.17       
+[58] V8_4.2.2             broom.helpers_1.12.0 modelr_0.1.9        
 [61] vctrs_0.5.2          tzdb_0.3.0           httpuv_1.6.6        
 [64] cellranger_1.1.0     gtable_0.3.1         assertthat_0.2.1    
 [67] cachem_1.0.6         xfun_0.33            tidyverse_1.3.2     
 [70] later_1.3.0          googledrive_2.0.0    gargle_1.2.0        
-[73] workflowr_1.7.0      DiagrammeR_1.0.9     ellipsis_0.3.2      </code></pre>
+[73] workflowr_1.7.0      ellipsis_0.3.2      </code></pre>
 </div>
 </div>
 

@@ -17,14 +17,19 @@ editor_options:
 
 library(khsmisc)
 library(khsverse)
+require(magrittr)
+require(DiagrammeR)
+require(DiagrammeRsvg)
+require(xml2)
+
 
 design <- tibble::tribble(
   ~left,               ~n_left, ~right,              ~n_right,
   "Study base",        502485,    "Lack quality-controlled genotypes for risk score generation",       15209 ,
-  "Polygenic score and Phenotypic information",  487276  ,     "Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)", 34635,
-  "With baseline information", 452641,     "Missing Lipid information",                  59069,
-  "With Lipid information",  393572,     "On Statin therapy",                 63832,
-  "Polygenic score and Phenotypic information off statin therapy",  329740,     "Remains with coronary artery disease",                1903,
+  "Polygenic score and phenotypic information",  487276  ,     "Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)", 34635,
+  "With baseline information", 452641,     "Missing lipid information",                  59069,
+  "With lipid information",  393572,     "On statin therapy",                 63832,
+  "Polygenic score and phenotypic information off statin therapy",  329740,     "Remains with coronary artery disease",                1903,
   "Complete-case set", 327837,     "",                  NA_integer_)
   
 
@@ -33,29 +38,32 @@ design <- tibble::tribble(
 
 
 e=exclusion_flowchart(design, width = 2)
-e
+
+e %>%
+export_svg() %>%
+read_xml() %>%
+write_xml("Figs/Flowcharts/flowchart_ukbb.svg")
+
 ```
 
 
 ```{r,echo=F}
 
 
-library(khsmisc)
-library(khsverse)
 
 design <- tibble::tribble(
   ~left,               ~n_left, ~right,              ~n_right,
-  "Study base with Outcome Data",        3821 ,   "Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline ",       154 ,
-  "Contain All Covariates",  3660,     "On Statin at Baseline", 21,
-  "Contain All Covariates and Statin-free",  3639,     "With CAD at baseline", 51,
-  "With baseline covariate and outcome data", 3588,   "Missing PRS Info",                 959,
-  "PRS, Pheno, Covariate info", 2629,  "",                  NA_integer_)
+  "Study base with outcome Data",        3821 ,   "Lack total cholesterol, high-density lipoprotein, smoking status, anti-lipid, anti-hypertensive information at baseline ",       154 ,
+  "Contain all covariates",  3660,     "On statin at baseline", 21,
+  "Contain All covariates and are statin-free",  3639,     "With coronary artery disease at baseline", 51,
+  "With baseline covariate and outcome data", 3588,   "Missing genomic information",                 959,
+  "contain covariate, outcome and genomic information", 2629,  "",                  NA_integer_)
 
 
-##
 
-e=exclusion_flowchart(design, width = 2)
-e
-###
+e %>%
+export_svg() %>%
+read_xml() %>%
+write_xml("Figs/Flowcharts/flowchart_fhs.svg")
 ```
 

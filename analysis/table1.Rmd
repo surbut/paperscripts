@@ -11,104 +11,16 @@ knitr::opts_chunk$set(echo = TRUE)
 Here we plot table 1
 
 ```{r cars,echo=F}
-# #df=na.omit(readRDS("~/Dropbox/phenotypes/df_ani_new.rds"))
-# df=readRDS("output/amit_df.rds")
-# 
-# df_low=df[df$ascvdcat=="low",]
-# df_mid=df[df$ascvdcat=="intermediate",]
-# df_high=df[df$ascvdcat=="high",]
-# 
-# df_low=(df[df$prs.r<0.20,])
-# df_mid=(df[df$prs.r<0.80&df$prs.r>0.20,])
-# df_high=(df[df$prs.r>0.80,])
-# 
-# sum_func=function(df){
-#   
-#  mean(df$bmi)
-#   sd(df$bmi)
-#   
-#   mean(df$phenos.enrollment)
-#   sd(df$phenos.enrollment)
-#   
-#   ##
-#   mean(df$sex=="male")
-#   sum(df$sex=="male")
-#   
-#   mean(df$Race=="white")
-#   sum(df$Race=="white")
-#   ##
-#   mean(df$phenos.has_CAD)
-#   sum(df$phenos.has_CAD)
-#   ##
-#   mean(df$age_to_censor[df$phenos.has_CAD==1])
-#   sd(df$age_to_censor[df$phenos.has_CAD==1])
-#   ##
-#   mean(df$phenos.CAD_censor_age[df$phenos.has_CAD==1])
-#   sd(df$phenos.CAD_censor_age[df$phenos.has_CAD==1])
-#   
-#    ##
-#   mean(df$ascvd_10y_accaha)
-#   sd(df$ascvd_10y_accaha)
-#   ##
-#   
-#    ##
-#   mean(df$ascvd_10y_accaha)
-#   sd(df$ascvd_10y_accaha)
-#   ##
-#    ##
-#   mean(df$ascvd_10y_accaha<7.5)
-#   sum(df$ascvd_10y_accaha<7.5)
-#   ##
-#    ##
-#   mean(df$ascvd_10y_accaha>7.5&df$ascvd_10y_accaha<20)
-# sum(df$ascvd_10y_accaha>7.5&df$ascvd_10y_accaha<20)
-#   ##
-# 
-#    ##
-#   mean(df$ascvd_10y_accaha>20)
-#   sum(df$ascvd_10y_accaha>20)
-#   ##
-#   mean(df$DM)
-#   sum(df$DM)
-#   
-#   ##
-#   mean(df$smoke)
-#   sum(df$smoke)
-#   
-#   mean(df$ldladj)
-#   sd(df$ldladj)
-#   
-#    mean(df$hdladj)
-#   sd(df$hdladj)
-#   
-#   mean(df$sbp)
-#  sd(df$sbp)
-#  
-#  mean(df$bmi)
-#  sd(df$bmi)
-#  
-#  mean(df$prs.r)
-#   sd(df$prs.r)
-#   
-#   
-#      ##
-#   mean(df$prs.r<.20)
-#   sum(df$prs.r<.20)
-#   ##
-#    ##
-#   mean(df$prs.r>.20&df$prs.r<.80)
-#   sum(df$prs.r>.20&df$prs.r<.80)
-#   ##
-# 
-#    ##
-# mean(df$prs.r>.80)
-#   sum(df$prs.r>.80)
-#   ##
-# }
+
+library(table1)
+
+library(table1)
+library(magrittr)
+library("flextable")
 ```
 
 ```{r,echo=F}
-library(table1)
+
 df=readRDS("output/amit_df.rds")
 dat=df
 
@@ -139,21 +51,28 @@ label(dat$ldladj)  <- "Low-density lipoprotein (ng/ml)"
 label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
 
-table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med , data=dat)
+t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med, data=dat)
+
+t1flex(t) %>% 
+  save_as_docx(path="Figs/Tables/UKBB_table1.docx")
 ```
 
 ```{r byasc,echo=F}
 ###
-table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med |ascvdcat, data=dat)
+t1flex(t) %>% 
+  save_as_docx(path="Figs/Tables/UKBB_table1_byASCVD.docx")
 
 ```
 
 
 ```{r byprs,echo=FALSE}
-table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med |prscat, data=dat)
+t1flex(t) %>% 
+  save_as_docx(path="Figs/Tables/UKBB_table1_byPRS.docx")
 ```
 
 
@@ -193,8 +112,12 @@ label(dat$smoke) <- "Smoking Status"
 label(dat$CALC_LDL1)  <- "Low-density lipoprotein (ng/ml)"
 label(dat$bp_med)  <- "Anti-hypertensive"
 
-table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
+t=table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
          CALC_LDL1 + bp_med , data=dat)
+
+
+t1flex(t) %>% 
+  save_as_docx(path="Figs/Tables/FHS_table1.docx")
 
 ```
 
@@ -237,8 +160,11 @@ label(dat$smoke) <- "Smoking Status"
 label(dat$CALC_LDL1)  <- "Low-density lipoprotein (ng/ml)"
 label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$prscat)    <- "Polygenic score category"
-table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
+t=table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
          CALC_LDL1 + bp_med , data=dat)
+
+t1flex(t) %>% 
+  save_as_docx(path="Figs/Tables/FHS_table1_PRS.docx")
 ```
 
 
