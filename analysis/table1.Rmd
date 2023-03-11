@@ -107,7 +107,7 @@ Here we plot table 1
 # }
 ```
 
-```{r}
+```{r,echo=F}
 library(table1)
 df=readRDS("output/amit_df.rds")
 dat=df
@@ -141,15 +141,23 @@ label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
 
 table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med , data=dat)
+```
+
+```{r byasc,echo=F}
 ###
 table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med |ascvdcat, data=dat)
+
+```
+
+
+```{r byprs,echo=FALSE}
 table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med |prscat, data=dat)
 ```
 
 
-```{r fhs}
+```{r fhs, echo=F}
 rm(dat)
 
 fh=readRDS("output/fh_full.rds")
@@ -224,6 +232,6 @@ label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$prscat)    <- "Polygenic score category"
 table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
          CALC_LDL1 + bp_med , data=dat)
-````
+```
 
 

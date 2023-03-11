@@ -427,10 +427,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -523,15 +523,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree7ddb13f71c5960cbe535759d89d9ee4716ee27a8targetblank7ddb13fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>
+<a href="https://github.com/surbut/paperscripts/tree/7ddb13f71c5960cbe535759d89d9ee4716ee27a8" target="_blank">7ddb13f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree7ddb13f71c5960cbe535759d89d9ee4716ee27a8targetblank7ddb13fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>.
+<a href="https://github.com/surbut/paperscripts/tree/7ddb13f71c5960cbe535759d89d9ee4716ee27a8" target="_blank">7ddb13f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,44 +555,8 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  .DS_Store
-    Untracked:  Figs/
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/Fig1.Rmd
-    Untracked:  analysis/Fig2.Rmd
-    Untracked:  analysis/Fig3.Rmd
-    Untracked:  analysis/Fig4.Rmd
-    Untracked:  analysis/Fig5.Rmd
-    Untracked:  analysis/generation_rawfiles/
-    Untracked:  analysis/table1.Rmd
-    Untracked:  code/TextXX.R
-    Untracked:  code/utils.R
-    Untracked:  output/.DS_Store
-    Untracked:  output/AUC.csv
-    Untracked:  output/PVE_fhs.csv
-    Untracked:  output/PVE_ukb.csv
-    Untracked:  output/amit_df.rds
-    Untracked:  output/fh_full.rds
-    Untracked:  output/fh_prs.rds
-    Untracked:  output/hazards_fhs.rds
-    Untracked:  output/hazards_fhs_EQ.rds
-    Untracked:  output/hazards_rate_UKB_amit.rds
-    Untracked:  output/hazards_rate_UKB_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_amit.rds
-    Untracked:  output/hazards_rate_lowerbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_fh.rds
-    Untracked:  output/hazards_rate_lowerbound_fh_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_amit.rds
-    Untracked:  output/hazards_rate_upperbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_fh.rds
-    Untracked:  output/hazards_rate_upperbound_fh_EQ.rds
-    Untracked:  output/hr_all.xls
-    Untracked:  output/hrindex.csv
-    Untracked:  output/hrindex_FHs.csv
-    Untracked:  output/hrindex_UKB.csv
-    Untracked:  output/output/
-    Untracked:  output/proportions_table.csv
+Unstaged changes:
+    Modified:   analysis/table1.Rmd
 
 </code></pre>
 <p>
@@ -607,53 +571,83 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/table1.Rmd</code>) and HTML
+(<code>docs/table1.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/analysis/table1.Rmd" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/docs/table1.html" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <p>Here we plot table 1</p>
-<pre class="r"><code>library(table1)</code></pre>
 <pre><code>
 Attaching package: &#39;table1&#39;</code></pre>
 <pre><code>The following objects are masked from &#39;package:base&#39;:
 
     units, units&lt;-</code></pre>
-<pre class="r"><code>df=readRDS(&quot;output/amit_df.rds&quot;)
-dat=df
-
-dat$age=df$phenos.enrollment
-dat$dm    &lt;- factor(dat$prev_disease_dm, levels=0:1, labels=c(&quot;None&quot;, &quot;Diabetes Mellitus&quot;))
-dat$sex     &lt;- factor(dat$sex, levels=c(&quot;male&quot;, &quot;female&quot;), labels=c(&quot;Male&quot;, &quot;Female&quot;))
-dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
-dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
-                      labels=c(&quot;&lt;7.5&quot;,
-                               &quot;7.5-20&quot;,
-                               &quot;20+&quot;))
-dat$smoke=factor(dat$old_smoke,levels=c(-3,0,1,2),
-                      labels=c(&quot;Never&quot;,&quot;Never&quot;,&quot;Former&quot;,
-                               &quot;Current&quot;))
-dat$bp_med=factor(dat$bp_med,levels=c(0,1),labels=c(&quot;No&quot;,&quot;Yes&quot;))
-
-                               
-
-label(dat$age)      &lt;- &quot;Age (y)&quot;
-label(dat$sex)      &lt;- &quot;Sex&quot;
-label(dat$prscat)    &lt;- &quot;Polygenic score category&quot;
-label(dat$dm)    &lt;- &quot;Diabetes status&quot;
-label(dat$sbp)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
-label(dat$choladj)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
-label(dat$hdladj)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
-label(dat$smoke) &lt;- &quot;Smoking Status&quot;
-label(dat$ldladj)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
-label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
-label(dat$ascvdcat)  &lt;- &quot;Pooled cohort equation category (10 year risk)&quot;
-
-table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med , data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -797,9 +791,6 @@ table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
 </tbody>
 </table>
 </div>
-<pre class="r"><code>###
-table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med |ascvdcat, data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1045,8 +1036,6 @@ table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
 </tbody>
 </table>
 </div>
-<pre class="r"><code>table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med |prscat, data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1292,40 +1281,6 @@ table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
 </tbody>
 </table>
 </div>
-<pre class="r"><code>rm(dat)
-
-fh=readRDS(&quot;output/fh_full.rds&quot;)
-dat=fh
-
-dat=na.omit(dat)
-
-dat$age=dat$enroll_age
-dat$dm    &lt;- factor(dat$DMRX1, levels=c(&quot;NA&quot;,&quot;0&quot;,&quot;1&quot;), labels=c(&quot;None&quot;,&quot;None&quot;,&quot;Diabetes Mellitus&quot;))
-dat$sex     &lt;- factor(dat$SEX, levels=c(1, 2), labels=c(&quot;Male&quot;, &quot;Female&quot;))
-# dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
-# dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
-#                       labels=c(&quot;&lt;7.5&quot;,
-#                                &quot;7.5-20&quot;,
-#                                &quot;20+&quot;))
-dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
-                      labels=c(&quot;Never&quot;,
-                               &quot;Current&quot;))
-dat$bp_med=factor(dat$HRX1,levels=c(0,&quot;NA&quot;,1),labels=c(&quot;No&quot;,&quot;No&quot;,&quot;Yes&quot;))
-
-                               
-
-label(dat$AGE1)      &lt;- &quot;Age (y)&quot;
-label(dat$sex)      &lt;- &quot;Sex&quot;
-label(dat$dm)    &lt;- &quot;Diabetes status&quot;
-label(dat$SBP1)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
-label(dat$TC1)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
-label(dat$HDL1)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
-label(dat$smoke) &lt;- &quot;Smoking Status&quot;
-label(dat$CALC_LDL1)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
-label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
-
-table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
-         CALC_LDL1 + bp_med , data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1433,41 +1388,6 @@ table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
 </tbody>
 </table>
 </div>
-<pre class="r"><code>fhp=readRDS(&quot;output/fh_prs.rds&quot;)
-fhp$prs=scale(fhp$V2)
-fhp$prs.r=rank(fhp$prs)/length(fhp$prs)
-fhp$prscat &lt;- cut(fhp$prs.r, breaks=c(0, 0.20,0.80,1), labels=c(&quot;low&quot;, &quot;intermediate&quot;,&quot;high&quot;))
-
-dat=fhp
-dat=na.omit(dat)
-
-dat$age=dat$enroll_age
-dat$dm    &lt;- factor(dat$DMRX1, levels=c(&quot;NA&quot;,&quot;0&quot;,&quot;1&quot;), labels=c(&quot;None&quot;,&quot;None&quot;,&quot;Diabetes Mellitus&quot;))
-dat$sex     &lt;- factor(dat$SEX, levels=c(1, 2), labels=c(&quot;Male&quot;, &quot;Female&quot;))
-dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
-# dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
-#                       labels=c(&quot;&lt;7.5&quot;,
-#                                &quot;7.5-20&quot;,
-#                                &quot;20+&quot;))
-dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
-                      labels=c(&quot;Never&quot;,
-                               &quot;Current&quot;))
-dat$bp_med=factor(dat$HRX1,levels=c(0,&quot;NA&quot;,1),labels=c(&quot;No&quot;,&quot;No&quot;,&quot;Yes&quot;))
-
-                               
-
-label(dat$AGE1)      &lt;- &quot;Age (y)&quot;
-label(dat$sex)      &lt;- &quot;Sex&quot;
-label(dat$dm)    &lt;- &quot;Diabetes status&quot;
-label(dat$SBP1)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
-label(dat$TC1)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
-label(dat$HDL1)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
-label(dat$smoke) &lt;- &quot;Smoking Status&quot;
-label(dat$CALC_LDL1)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
-label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
-label(dat$prscat)    &lt;- &quot;Polygenic score category&quot;
-table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
-         CALC_LDL1 + bp_med , data=dat)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1618,16 +1538,16 @@ other attached packages:
 [1] table1_1.4.3
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.9       Formula_1.2-4    rstudioapi_0.14  knitr_1.40      
- [5] magrittr_2.0.3   workflowr_1.7.0  R6_2.5.1         rlang_1.0.6     
- [9] fastmap_1.1.0    fansi_1.0.3      stringr_1.4.1    tools_4.2.1     
-[13] xfun_0.33        utf8_1.2.2       cli_3.4.1        git2r_0.30.1    
-[17] jquerylib_0.1.4  htmltools_0.5.3  rprojroot_2.0.3  yaml_2.3.5      
-[21] digest_0.6.29    tibble_3.1.8     lifecycle_1.0.3  later_1.3.0     
-[25] sass_0.4.2       vctrs_0.5.2      promises_1.2.0.1 fs_1.5.2        
-[29] cachem_1.0.6     glue_1.6.2       evaluate_0.17    rmarkdown_2.17  
-[33] stringi_1.7.8    bslib_0.4.0      compiler_4.2.1   pillar_1.8.1    
-[37] jsonlite_1.8.2   httpuv_1.6.6     pkgconfig_2.0.3 </code></pre>
+ [1] Rcpp_1.0.9       pillar_1.8.1     compiler_4.2.1   bslib_0.4.0     
+ [5] later_1.3.0      jquerylib_0.1.4  git2r_0.30.1     workflowr_1.7.0 
+ [9] tools_4.2.1      digest_0.6.29    jsonlite_1.8.2   evaluate_0.17   
+[13] lifecycle_1.0.3  tibble_3.1.8     pkgconfig_2.0.3  rlang_1.0.6     
+[17] cli_3.4.1        rstudioapi_0.14  yaml_2.3.5       xfun_0.33       
+[21] fastmap_1.1.0    stringr_1.4.1    knitr_1.40       fs_1.5.2        
+[25] vctrs_0.5.2      sass_0.4.2       rprojroot_2.0.3  glue_1.6.2      
+[29] R6_2.5.1         fansi_1.0.3      rmarkdown_2.17   Formula_1.2-4   
+[33] magrittr_2.0.3   whisker_0.4      promises_1.2.0.1 htmltools_0.5.3 
+[37] httpuv_1.6.6     utf8_1.2.2       stringi_1.7.8    cachem_1.0.6    </code></pre>
 </div>
 
 
