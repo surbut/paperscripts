@@ -432,10 +432,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree13b78355af818edba9849c01a32344143ae2da35targetblank13b7835a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreed6440826ea52a1046a6625ba24d1c10bcfb873actargetblankd644082a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/13b78355af818edba9849c01a32344143ae2da35" target="_blank">13b7835</a>
+<a href="https://github.com/surbut/paperscripts/tree/d6440826ea52a1046a6625ba24d1c10bcfb873ac" target="_blank">d644082</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree13b78355af818edba9849c01a32344143ae2da35targetblank13b7835a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreed6440826ea52a1046a6625ba24d1c10bcfb873actargetblankd644082a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/13b78355af818edba9849c01a32344143ae2da35" target="_blank">13b7835</a>.
+<a href="https://github.com/surbut/paperscripts/tree/d6440826ea52a1046a6625ba24d1c10bcfb873ac" target="_blank">d644082</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -560,14 +560,8 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/flowcharts.Rmd
-
 Unstaged changes:
-    Modified:   .DS_Store
-    Modified:   analysis/.DS_Store
-    Modified:   analysis/generation_rawfiles/creating_FH.R
-    Modified:   analysis/table1.Rmd
+    Modified:   analysis/flowcharts.Rmd
 
 </code></pre>
 <p>
@@ -582,18 +576,80 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/flowcharts.Rmd</code>) and HTML
+(<code>docs/flowcharts.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/d6440826ea52a1046a6625ba24d1c10bcfb873ac/analysis/flowcharts.Rmd" target="_blank">d644082</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/d6440826ea52a1046a6625ba24d1c10bcfb873ac/docs/flowcharts.html" target="_blank">d644082</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="flow-chart-creation" class="section level2">
 <h2>Flow Chart creation</h2>
-<pre class="r"><code>library(khsmisc)
-library(khsverse)</code></pre>
 <pre><code>── Attaching packages ──────────────────────────────────────── khsverse 0.0.2 ──</code></pre>
 <pre><code>✔ dplyr    1.0.10     ✔ broom    1.0.1 
 ✔ tidyr    1.2.1      ✔ labelled 2.10.0
@@ -608,43 +664,10 @@ library(khsverse)</code></pre>
 ✖ dplyr::lag()       masks stats::lag()
 ✖ gt::tab_footnote() masks khsmisc::tab_footnote()
 ✖ gt::tab_style()    masks khsmisc::tab_style()</code></pre>
-<pre class="r"><code>design &lt;- tibble::tribble(
-  ~left,               ~n_left, ~right,              ~n_right,
-  &quot;Study base&quot;,        502485,    &quot;Lack quality-controlled genotypes for risk score generation&quot;,       15209 ,
-  &quot;Polygenic score and Phenotypic information&quot;,  487276  ,     &quot;Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)&quot;, 34635,
-  &quot;With baseline information&quot;, 452641,     &quot;Missing Lipid information&quot;,                  59069,
-  &quot;With Lipid information&quot;,  393572,     &quot;On Statin therapy&quot;,                 63832,
-  &quot;Polygenic score and Phenotypic information off statin therapy&quot;,  329740,     &quot;Remains with coronary artery disease&quot;,                1903,
-  &quot;Complete-case set&quot;, 327837,     &quot;&quot;,                  NA_integer_)
-  
-
-
-
-
-
-e=exclusion_flowchart(design, width = 2)
-e</code></pre>
 <div id="htmlwidget-5c3a3ec5a4b38bce708f" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5c3a3ec5a4b38bce708f">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base\\nn = 502485\"]\ntab1b [label = \"Lack quality-controlled genotypes for risk score generation\\nn = 15209\"]\ntab2a [label = \"Polygenic score and Phenotypic information\\nn = 487276\"]\ntab2b [label = \"Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)\\nn = 34635\"]\ntab3a [label = \"With baseline information\\nn = 452641\"]\ntab3b [label = \"Missing Lipid information\\nn = 59069\"]\ntab4a [label = \"With Lipid information\\nn = 393572\"]\ntab4b [label = \"On Statin therapy\\nn = 63832\"]\ntab5a [label = \"Polygenic score and Phenotypic information off statin therapy\\nn = 329740\"]\ntab5b [label = \"Remains with coronary artery disease\\nn = 1903\"]\ntab6a [label = \"Complete-case set\\nn = 327837\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\n\n{ rank = same; tab5a; tab5b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a ->  tab5a -> tab6a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n\ntab5a -> tab5b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>library(khsmisc)
-library(khsverse)
-
-design &lt;- tibble::tribble(
-  ~left,               ~n_left, ~right,              ~n_right,
-  &quot;Study base with Outcome Data&quot;,        3821 ,   &quot;Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline &quot;,       154 ,
-  &quot;Contain All Covariates&quot;,  3660,     &quot;On Statin at Baseline&quot;, 21,
-  &quot;Contain All Covariates and Statin-free&quot;,  3639,     &quot;With CAD at baseline&quot;, 51,
-  &quot;With baseline covariate and outcome data&quot;, 3588,   &quot;Missing PRS Info&quot;,                 959,
-  &quot;PRS, Pheno, Covariate info&quot;, 2629,  &quot;&quot;,                  NA_integer_)
-
-
-##
-
-e=exclusion_flowchart(design, width = 2)
-e</code></pre>
 <div id="htmlwidget-47abf6feb9c508565805" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-47abf6feb9c508565805">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base with Outcome Data\\nn = 3821\"]\ntab1b [label = \"Lack Total Cholesterol, HDL, Smoking, Systolic or Blood Pressure Information at baseline \\nn = 154\"]\ntab2a [label = \"Contain All Covariates\\nn = 3660\"]\ntab2b [label = \"On Statin at Baseline\\nn = 21\"]\ntab3a [label = \"Contain All Covariates and Statin-free\\nn = 3639\"]\ntab3b [label = \"With CAD at baseline\\nn = 51\"]\ntab4a [label = \"With baseline covariate and outcome data\\nn = 3588\"]\ntab4b [label = \"Missing PRS Info\\nn = 959\"]\ntab5a [label = \"PRS, Pheno, Covariate info\\nn = 2629\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a -> tab5a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>###</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -690,17 +713,17 @@ loaded via a namespace (and not attached):
 [34] generics_0.1.3       jsonlite_1.8.2       googlesheets4_1.0.1 
 [37] magrittr_2.0.3       Matrix_1.5-1         Rcpp_1.0.9          
 [40] munsell_0.5.0        fansi_1.0.3          lifecycle_1.0.3     
-[43] stringi_1.7.8        yaml_2.3.5           gtsummary_1.7.0     
-[46] grid_4.2.1           promises_1.2.0.1     crayon_1.5.2        
-[49] lattice_0.20-45      haven_2.5.1          splines_4.2.1       
-[52] hms_1.1.2            knitr_1.40           pillar_1.8.1        
-[55] reprex_2.0.2         glue_1.6.2           evaluate_0.17       
-[58] broom.helpers_1.12.0 modelr_0.1.9         vctrs_0.5.2         
-[61] tzdb_0.3.0           httpuv_1.6.6         cellranger_1.1.0    
-[64] gtable_0.3.1         assertthat_0.2.1     cachem_1.0.6        
-[67] xfun_0.33            tidyverse_1.3.2      later_1.3.0         
-[70] googledrive_2.0.0    gargle_1.2.0         workflowr_1.7.0     
-[73] DiagrammeR_1.0.9     ellipsis_0.3.2      </code></pre>
+[43] stringi_1.7.8        whisker_0.4          yaml_2.3.5          
+[46] gtsummary_1.7.0      grid_4.2.1           promises_1.2.0.1    
+[49] crayon_1.5.2         lattice_0.20-45      haven_2.5.1         
+[52] splines_4.2.1        hms_1.1.2            knitr_1.40          
+[55] pillar_1.8.1         reprex_2.0.2         glue_1.6.2          
+[58] evaluate_0.17        broom.helpers_1.12.0 modelr_0.1.9        
+[61] vctrs_0.5.2          tzdb_0.3.0           httpuv_1.6.6        
+[64] cellranger_1.1.0     gtable_0.3.1         assertthat_0.2.1    
+[67] cachem_1.0.6         xfun_0.33            tidyverse_1.3.2     
+[70] later_1.3.0          googledrive_2.0.0    gargle_1.2.0        
+[73] workflowr_1.7.0      DiagrammeR_1.0.9     ellipsis_0.3.2      </code></pre>
 </div>
 </div>
 
