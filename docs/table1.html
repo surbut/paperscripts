@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2022-11-20" />
+
+<title>table</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">paperscripts</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/surbut/paperscripts">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">table</h1>
+<h4 class="date">2022-11-20</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2023-03-11
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>paperscripts/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230311code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230311)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230311code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230311)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  .DS_Store
+    Untracked:  Figs/
+    Untracked:  analysis/.DS_Store
+    Untracked:  analysis/Fig1.Rmd
+    Untracked:  analysis/Fig2.Rmd
+    Untracked:  analysis/Fig3.Rmd
+    Untracked:  analysis/Fig4.Rmd
+    Untracked:  analysis/Fig5.Rmd
+    Untracked:  analysis/generation_rawfiles/
+    Untracked:  analysis/table1.Rmd
+    Untracked:  code/TextXX.R
+    Untracked:  code/utils.R
+    Untracked:  output/.DS_Store
+    Untracked:  output/AUC.csv
+    Untracked:  output/PVE_fhs.csv
+    Untracked:  output/PVE_ukb.csv
+    Untracked:  output/amit_df.rds
+    Untracked:  output/fh_full.rds
+    Untracked:  output/fh_prs.rds
+    Untracked:  output/hazards_fhs.rds
+    Untracked:  output/hazards_fhs_EQ.rds
+    Untracked:  output/hazards_rate_UKB_amit.rds
+    Untracked:  output/hazards_rate_UKB_amit_EQ.rds
+    Untracked:  output/hazards_rate_lowerbound_amit.rds
+    Untracked:  output/hazards_rate_lowerbound_amit_EQ.rds
+    Untracked:  output/hazards_rate_lowerbound_fh.rds
+    Untracked:  output/hazards_rate_lowerbound_fh_EQ.rds
+    Untracked:  output/hazards_rate_upperbound_amit.rds
+    Untracked:  output/hazards_rate_upperbound_amit_EQ.rds
+    Untracked:  output/hazards_rate_upperbound_fh.rds
+    Untracked:  output/hazards_rate_upperbound_fh_EQ.rds
+    Untracked:  output/hr_all.xls
+    Untracked:  output/hrindex.csv
+    Untracked:  output/hrindex_FHs.csv
+    Untracked:  output/hrindex_UKB.csv
+    Untracked:  output/output/
+    Untracked:  output/proportions_table.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<p>Here we plot table 1</p>
+<pre class="r"><code>library(table1)</code></pre>
+<pre><code>
+Attaching package: &#39;table1&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    units, units&lt;-</code></pre>
+<pre class="r"><code>df=readRDS(&quot;output/amit_df.rds&quot;)
+dat=df
+
+dat$age=df$phenos.enrollment
+dat$dm    &lt;- factor(dat$prev_disease_dm, levels=0:1, labels=c(&quot;None&quot;, &quot;Diabetes Mellitus&quot;))
+dat$sex     &lt;- factor(dat$sex, levels=c(&quot;male&quot;, &quot;female&quot;), labels=c(&quot;Male&quot;, &quot;Female&quot;))
+dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
+dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
+                      labels=c(&quot;&lt;7.5&quot;,
+                               &quot;7.5-20&quot;,
+                               &quot;20+&quot;))
+dat$smoke=factor(dat$old_smoke,levels=c(-3,0,1,2),
+                      labels=c(&quot;Never&quot;,&quot;Never&quot;,&quot;Former&quot;,
+                               &quot;Current&quot;))
+dat$bp_med=factor(dat$bp_med,levels=c(0,1),labels=c(&quot;No&quot;,&quot;Yes&quot;))
+
+                               
+
+label(dat$age)      &lt;- &quot;Age (y)&quot;
+label(dat$sex)      &lt;- &quot;Sex&quot;
+label(dat$prscat)    &lt;- &quot;Polygenic score category&quot;
+label(dat$dm)    &lt;- &quot;Diabetes status&quot;
+label(dat$sbp)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
+label(dat$choladj)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
+label(dat$hdladj)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
+label(dat$smoke) &lt;- &quot;Smoking Status&quot;
+label(dat$ldladj)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
+label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
+label(dat$ascvdcat)  &lt;- &quot;Pooled cohort equation category (10 year risk)&quot;
+
+table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med , data=dat)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=327837)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Age (y)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>56.1 (8.08)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>56.9 [38.9, 73.7]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>141330 (43.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>186507 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Polygenic score category</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Low</td>
+<td>65696 (20.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Intermediate</td>
+<td>196750 (60.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>High</td>
+<td class='lastrow'>65391 (19.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Systolic blood pressure (mm Hg) </td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>140 (20.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>138 [62.0, 279]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Total cholesterol (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>229 (41.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>226 [69.6, 598]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>High-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>57.2 (14.8)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>55.3 [8.74, 170]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Smoking Status</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never</td>
+<td>186591 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Former</td>
+<td>107377 (32.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Current</td>
+<td class='lastrow'>33869 (10.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Pooled cohort equation category (10 year risk)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'><7.5</td>
+<td>207150 (63.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>7.5-20</td>
+<td>96775 (29.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>20+</td>
+<td class='lastrow'>23912 (7.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>144 (31.9)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>142 [31.1, 476]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Anti-hypertensive</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No</td>
+<td>309420 (94.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Yes</td>
+<td class='lastrow'>18417 (5.6%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>###
+table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med |ascvdcat, data=dat)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'><7.5<br><span class='stratn'>(N=207150)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>7.5-20<br><span class='stratn'>(N=96775)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>20+<br><span class='stratn'>(N=23912)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=327837)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Age (y)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>52.5 (7.08)</td>
+<td>61.4 (5.83)</td>
+<td>65.4 (3.79)</td>
+<td>56.1 (8.08)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>52.2 [38.9, 70.3]</td>
+<td class='lastrow'>62.2 [40.2, 71.1]</td>
+<td class='lastrow'>66.1 [40.4, 73.7]</td>
+<td class='lastrow'>56.9 [38.9, 73.7]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>55003 (26.6%)</td>
+<td>63116 (65.2%)</td>
+<td>23211 (97.1%)</td>
+<td>141330 (43.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>152147 (73.4%)</td>
+<td class='lastrow'>33659 (34.8%)</td>
+<td class='lastrow'>701 (2.9%)</td>
+<td class='lastrow'>186507 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Polygenic score category</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Low</td>
+<td>42166 (20.4%)</td>
+<td>18892 (19.5%)</td>
+<td>4638 (19.4%)</td>
+<td>65696 (20.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Intermediate</td>
+<td>123405 (59.6%)</td>
+<td>58686 (60.6%)</td>
+<td>14659 (61.3%)</td>
+<td>196750 (60.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>High</td>
+<td class='lastrow'>41579 (20.1%)</td>
+<td class='lastrow'>19197 (19.8%)</td>
+<td class='lastrow'>4615 (19.3%)</td>
+<td class='lastrow'>65391 (19.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Systolic blood pressure (mm Hg) </td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>133 (17.1)</td>
+<td>148 (18.4)</td>
+<td>166 (19.1)</td>
+<td>140 (20.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>131 [62.0, 247]</td>
+<td class='lastrow'>147 [83.0, 268]</td>
+<td class='lastrow'>164 [97.0, 279]</td>
+<td class='lastrow'>138 [62.0, 279]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Total cholesterol (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>224 (40.3)</td>
+<td>237 (41.9)</td>
+<td>235 (42.4)</td>
+<td>229 (41.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>222 [69.6, 511]</td>
+<td class='lastrow'>234 [79.2, 598]</td>
+<td class='lastrow'>232 [80.6, 586]</td>
+<td class='lastrow'>226 [69.6, 598]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>High-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>59.7 (14.8)</td>
+<td>54.0 (13.7)</td>
+<td>48.0 (11.6)</td>
+<td>57.2 (14.8)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>58.1 [8.82, 170]</td>
+<td class='lastrow'>52.0 [8.74, 156]</td>
+<td class='lastrow'>46.4 [10.7, 158]</td>
+<td class='lastrow'>55.3 [8.74, 170]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Smoking Status</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never</td>
+<td>129984 (62.7%)</td>
+<td>47864 (49.5%)</td>
+<td>8743 (36.6%)</td>
+<td>186591 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Former</td>
+<td>63295 (30.6%)</td>
+<td>34113 (35.2%)</td>
+<td>9969 (41.7%)</td>
+<td>107377 (32.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Current</td>
+<td class='lastrow'>13871 (6.7%)</td>
+<td class='lastrow'>14798 (15.3%)</td>
+<td class='lastrow'>5200 (21.7%)</td>
+<td class='lastrow'>33869 (10.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Pooled cohort equation category (10 year risk)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'><7.5</td>
+<td>207150 (100%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>207150 (63.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>7.5-20</td>
+<td>0 (0%)</td>
+<td>96775 (100%)</td>
+<td>0 (0%)</td>
+<td>96775 (29.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>20+</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>23912 (100%)</td>
+<td class='lastrow'>23912 (7.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>139 (30.8)</td>
+<td>152 (31.8)</td>
+<td>154 (33.1)</td>
+<td>144 (31.9)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>137 [31.1, 369]</td>
+<td class='lastrow'>150 [37.0, 377]</td>
+<td class='lastrow'>151 [44.4, 476]</td>
+<td class='lastrow'>142 [31.1, 476]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Anti-hypertensive</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No</td>
+<td>205365 (99.1%)</td>
+<td>89074 (92.0%)</td>
+<td>14981 (62.7%)</td>
+<td>309420 (94.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Yes</td>
+<td class='lastrow'>1785 (0.9%)</td>
+<td class='lastrow'>7701 (8.0%)</td>
+<td class='lastrow'>8931 (37.3%)</td>
+<td class='lastrow'>18417 (5.6%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med |prscat, data=dat)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Low<br><span class='stratn'>(N=65696)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Intermediate<br><span class='stratn'>(N=196750)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>High<br><span class='stratn'>(N=65391)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=327837)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Age (y)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>56.1 (8.14)</td>
+<td>56.2 (8.07)</td>
+<td>55.7 (8.05)</td>
+<td>56.1 (8.08)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>56.8 [39.2, 71.1]</td>
+<td class='lastrow'>57.0 [38.9, 73.7]</td>
+<td class='lastrow'>56.3 [40.0, 71.2]</td>
+<td class='lastrow'>56.9 [38.9, 73.7]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>28757 (43.8%)</td>
+<td>85194 (43.3%)</td>
+<td>27379 (41.9%)</td>
+<td>141330 (43.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>36939 (56.2%)</td>
+<td class='lastrow'>111556 (56.7%)</td>
+<td class='lastrow'>38012 (58.1%)</td>
+<td class='lastrow'>186507 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Polygenic score category</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Low</td>
+<td>65696 (100%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>65696 (20.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Intermediate</td>
+<td>0 (0%)</td>
+<td>196750 (100%)</td>
+<td>0 (0%)</td>
+<td>196750 (60.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>High</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>65391 (100%)</td>
+<td class='lastrow'>65391 (19.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Systolic blood pressure (mm Hg) </td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>139 (20.3)</td>
+<td>140 (20.4)</td>
+<td>141 (20.4)</td>
+<td>140 (20.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>137 [62.0, 279]</td>
+<td class='lastrow'>138 [69.0, 261]</td>
+<td class='lastrow'>139 [78.0, 245]</td>
+<td class='lastrow'>138 [62.0, 279]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Total cholesterol (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>222 (40.7)</td>
+<td>229 (41.1)</td>
+<td>234 (42.1)</td>
+<td>229 (41.4)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>220 [69.6, 506]</td>
+<td class='lastrow'>226 [70.7, 586]</td>
+<td class='lastrow'>232 [79.2, 598]</td>
+<td class='lastrow'>226 [69.6, 598]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>High-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>57.6 (14.9)</td>
+<td>57.1 (14.7)</td>
+<td>56.8 (14.7)</td>
+<td>57.2 (14.8)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>55.7 [8.74, 158]</td>
+<td class='lastrow'>55.3 [8.82, 170]</td>
+<td class='lastrow'>54.9 [14.5, 153]</td>
+<td class='lastrow'>55.3 [8.74, 170]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Smoking Status</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never</td>
+<td>37823 (57.6%)</td>
+<td>111650 (56.7%)</td>
+<td>37118 (56.8%)</td>
+<td>186591 (56.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Former</td>
+<td>21143 (32.2%)</td>
+<td>64919 (33.0%)</td>
+<td>21315 (32.6%)</td>
+<td>107377 (32.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Current</td>
+<td class='lastrow'>6730 (10.2%)</td>
+<td class='lastrow'>20181 (10.3%)</td>
+<td class='lastrow'>6958 (10.6%)</td>
+<td class='lastrow'>33869 (10.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Pooled cohort equation category (10 year risk)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'><7.5</td>
+<td>42166 (64.2%)</td>
+<td>123405 (62.7%)</td>
+<td>41579 (63.6%)</td>
+<td>207150 (63.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>7.5-20</td>
+<td>18892 (28.8%)</td>
+<td>58686 (29.8%)</td>
+<td>19197 (29.4%)</td>
+<td>96775 (29.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>20+</td>
+<td class='lastrow'>4638 (7.1%)</td>
+<td class='lastrow'>14659 (7.5%)</td>
+<td class='lastrow'>4615 (7.1%)</td>
+<td class='lastrow'>23912 (7.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>139 (31.4)</td>
+<td>144 (31.7)</td>
+<td>149 (32.4)</td>
+<td>144 (31.9)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>137 [31.1, 349]</td>
+<td class='lastrow'>142 [32.6, 476]</td>
+<td class='lastrow'>147 [37.5, 379]</td>
+<td class='lastrow'>142 [31.1, 476]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Anti-hypertensive</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No</td>
+<td>62038 (94.4%)</td>
+<td>185760 (94.4%)</td>
+<td>61622 (94.2%)</td>
+<td>309420 (94.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Yes</td>
+<td class='lastrow'>3658 (5.6%)</td>
+<td class='lastrow'>10990 (5.6%)</td>
+<td class='lastrow'>3769 (5.8%)</td>
+<td class='lastrow'>18417 (5.6%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>rm(dat)
+
+fh=readRDS(&quot;output/fh_full.rds&quot;)
+dat=fh
+
+dat=na.omit(dat)
+
+dat$age=dat$enroll_age
+dat$dm    &lt;- factor(dat$DMRX1, levels=c(&quot;NA&quot;,&quot;0&quot;,&quot;1&quot;), labels=c(&quot;None&quot;,&quot;None&quot;,&quot;Diabetes Mellitus&quot;))
+dat$sex     &lt;- factor(dat$SEX, levels=c(1, 2), labels=c(&quot;Male&quot;, &quot;Female&quot;))
+# dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
+# dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
+#                       labels=c(&quot;&lt;7.5&quot;,
+#                                &quot;7.5-20&quot;,
+#                                &quot;20+&quot;))
+dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
+                      labels=c(&quot;Never&quot;,
+                               &quot;Current&quot;))
+dat$bp_med=factor(dat$HRX1,levels=c(0,&quot;NA&quot;,1),labels=c(&quot;No&quot;,&quot;No&quot;,&quot;Yes&quot;))
+
+                               
+
+label(dat$AGE1)      &lt;- &quot;Age (y)&quot;
+label(dat$sex)      &lt;- &quot;Sex&quot;
+label(dat$dm)    &lt;- &quot;Diabetes status&quot;
+label(dat$SBP1)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
+label(dat$TC1)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
+label(dat$HDL1)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
+label(dat$smoke) &lt;- &quot;Smoking Status&quot;
+label(dat$CALC_LDL1)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
+label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
+
+table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
+         CALC_LDL1 + bp_med , data=dat)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=3660)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Age (y)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>35.9 (10.3)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>35.0 [9.00, 70.0]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>1817 (49.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>1843 (50.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Systolic blood pressure (mm Hg) </td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>122 (16.5)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>120 [78.0, 240]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Total cholesterol (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>198 (39.2)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>193 [100, 457]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>High-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>51.9 (16.0)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>50.0 [14.0, 132]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Smoking Status</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never</td>
+<td>2048 (56.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Current</td>
+<td class='lastrow'>1612 (44.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>127 (37.2)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>124 [33.0, 394]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Anti-hypertensive</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No</td>
+<td>3538 (96.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Yes</td>
+<td class='lastrow'>122 (3.3%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>fhp=readRDS(&quot;output/fh_prs.rds&quot;)
+fhp$prs=scale(fhp$V2)
+fhp$prs.r=rank(fhp$prs)/length(fhp$prs)
+fhp$prscat &lt;- cut(fhp$prs.r, breaks=c(0, 0.20,0.80,1), labels=c(&quot;low&quot;, &quot;intermediate&quot;,&quot;high&quot;))
+
+dat=fhp
+dat=na.omit(dat)
+
+dat$age=dat$enroll_age
+dat$dm    &lt;- factor(dat$DMRX1, levels=c(&quot;NA&quot;,&quot;0&quot;,&quot;1&quot;), labels=c(&quot;None&quot;,&quot;None&quot;,&quot;Diabetes Mellitus&quot;))
+dat$sex     &lt;- factor(dat$SEX, levels=c(1, 2), labels=c(&quot;Male&quot;, &quot;Female&quot;))
+dat$prscat  &lt;- factor(dat$prscat,  labels=c(&quot;Low&quot;,&quot;Intermediate&quot;, &quot;High&quot;))
+# dat$ascvdcat   &lt;- factor(dat$ascvdcat_all,
+#                       labels=c(&quot;&lt;7.5&quot;,
+#                                &quot;7.5-20&quot;,
+#                                &quot;20+&quot;))
+dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
+                      labels=c(&quot;Never&quot;,
+                               &quot;Current&quot;))
+dat$bp_med=factor(dat$HRX1,levels=c(0,&quot;NA&quot;,1),labels=c(&quot;No&quot;,&quot;No&quot;,&quot;Yes&quot;))
+
+                               
+
+label(dat$AGE1)      &lt;- &quot;Age (y)&quot;
+label(dat$sex)      &lt;- &quot;Sex&quot;
+label(dat$dm)    &lt;- &quot;Diabetes status&quot;
+label(dat$SBP1)  &lt;- &quot;Systolic blood pressure (mm Hg) &quot;
+label(dat$TC1)   &lt;- &quot;Total cholesterol (ng/ml)&quot;
+label(dat$HDL1)  &lt;- &quot;High-density lipoprotein (ng/ml)&quot;
+label(dat$smoke) &lt;- &quot;Smoking Status&quot;
+label(dat$CALC_LDL1)  &lt;- &quot;Low-density lipoprotein (ng/ml)&quot;
+label(dat$bp_med)  &lt;- &quot;Anti-hypertensive&quot;
+label(dat$prscat)    &lt;- &quot;Polygenic score category&quot;
+table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
+         CALC_LDL1 + bp_med , data=dat)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Overall<br><span class='stratn'>(N=2656)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Age (y)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>34.2 (9.57)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>33.0 [9.00, 65.0]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>1253 (47.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>1403 (52.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Systolic blood pressure (mm Hg) </td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>120 (14.5)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>118 [78.0, 209]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Total cholesterol (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>194 (37.0)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>190 [103, 394]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>High-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>52.6 (15.9)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>51.0 [14.0, 126]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Smoking Status</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never</td>
+<td>1589 (59.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Current</td>
+<td class='lastrow'>1067 (40.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Polygenic score category</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Low</td>
+<td>535 (20.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Intermediate</td>
+<td>1590 (59.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>High</td>
+<td class='lastrow'>531 (20.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Low-density lipoprotein (ng/ml)</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Mean (SD)</td>
+<td>124 (35.2)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>120 [33.0, 326]</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Anti-hypertensive</td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No</td>
+<td>2595 (97.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Yes</td>
+<td class='lastrow'>61 (2.3%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] table1_1.4.3
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.9       Formula_1.2-4    rstudioapi_0.14  knitr_1.40      
+ [5] magrittr_2.0.3   workflowr_1.7.0  R6_2.5.1         rlang_1.0.6     
+ [9] fastmap_1.1.0    fansi_1.0.3      stringr_1.4.1    tools_4.2.1     
+[13] xfun_0.33        utf8_1.2.2       cli_3.4.1        git2r_0.30.1    
+[17] jquerylib_0.1.4  htmltools_0.5.3  rprojroot_2.0.3  yaml_2.3.5      
+[21] digest_0.6.29    tibble_3.1.8     lifecycle_1.0.3  later_1.3.0     
+[25] sass_0.4.2       vctrs_0.5.2      promises_1.2.0.1 fs_1.5.2        
+[29] cachem_1.0.6     glue_1.6.2       evaluate_0.17    rmarkdown_2.17  
+[33] stringi_1.7.8    bslib_0.4.0      compiler_4.2.1   pillar_1.8.1    
+[37] jsonlite_1.8.2   httpuv_1.6.6     pkgconfig_2.0.3 </code></pre>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

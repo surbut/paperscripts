@@ -1,0 +1,229 @@
+---
+title: "table"
+output: html_document
+date: '2022-11-20'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here we plot table 1
+
+```{r cars,echo=F}
+# #df=na.omit(readRDS("~/Dropbox/phenotypes/df_ani_new.rds"))
+# df=readRDS("output/amit_df.rds")
+# 
+# df_low=df[df$ascvdcat=="low",]
+# df_mid=df[df$ascvdcat=="intermediate",]
+# df_high=df[df$ascvdcat=="high",]
+# 
+# df_low=(df[df$prs.r<0.20,])
+# df_mid=(df[df$prs.r<0.80&df$prs.r>0.20,])
+# df_high=(df[df$prs.r>0.80,])
+# 
+# sum_func=function(df){
+#   
+#  mean(df$bmi)
+#   sd(df$bmi)
+#   
+#   mean(df$phenos.enrollment)
+#   sd(df$phenos.enrollment)
+#   
+#   ##
+#   mean(df$sex=="male")
+#   sum(df$sex=="male")
+#   
+#   mean(df$Race=="white")
+#   sum(df$Race=="white")
+#   ##
+#   mean(df$phenos.has_CAD)
+#   sum(df$phenos.has_CAD)
+#   ##
+#   mean(df$age_to_censor[df$phenos.has_CAD==1])
+#   sd(df$age_to_censor[df$phenos.has_CAD==1])
+#   ##
+#   mean(df$phenos.CAD_censor_age[df$phenos.has_CAD==1])
+#   sd(df$phenos.CAD_censor_age[df$phenos.has_CAD==1])
+#   
+#    ##
+#   mean(df$ascvd_10y_accaha)
+#   sd(df$ascvd_10y_accaha)
+#   ##
+#   
+#    ##
+#   mean(df$ascvd_10y_accaha)
+#   sd(df$ascvd_10y_accaha)
+#   ##
+#    ##
+#   mean(df$ascvd_10y_accaha<7.5)
+#   sum(df$ascvd_10y_accaha<7.5)
+#   ##
+#    ##
+#   mean(df$ascvd_10y_accaha>7.5&df$ascvd_10y_accaha<20)
+# sum(df$ascvd_10y_accaha>7.5&df$ascvd_10y_accaha<20)
+#   ##
+# 
+#    ##
+#   mean(df$ascvd_10y_accaha>20)
+#   sum(df$ascvd_10y_accaha>20)
+#   ##
+#   mean(df$DM)
+#   sum(df$DM)
+#   
+#   ##
+#   mean(df$smoke)
+#   sum(df$smoke)
+#   
+#   mean(df$ldladj)
+#   sd(df$ldladj)
+#   
+#    mean(df$hdladj)
+#   sd(df$hdladj)
+#   
+#   mean(df$sbp)
+#  sd(df$sbp)
+#  
+#  mean(df$bmi)
+#  sd(df$bmi)
+#  
+#  mean(df$prs.r)
+#   sd(df$prs.r)
+#   
+#   
+#      ##
+#   mean(df$prs.r<.20)
+#   sum(df$prs.r<.20)
+#   ##
+#    ##
+#   mean(df$prs.r>.20&df$prs.r<.80)
+#   sum(df$prs.r>.20&df$prs.r<.80)
+#   ##
+# 
+#    ##
+# mean(df$prs.r>.80)
+#   sum(df$prs.r>.80)
+#   ##
+# }
+```
+
+```{r}
+library(table1)
+df=readRDS("output/amit_df.rds")
+dat=df
+
+dat$age=df$phenos.enrollment
+dat$dm    <- factor(dat$prev_disease_dm, levels=0:1, labels=c("None", "Diabetes Mellitus"))
+dat$sex     <- factor(dat$sex, levels=c("male", "female"), labels=c("Male", "Female"))
+dat$prscat  <- factor(dat$prscat,  labels=c("Low","Intermediate", "High"))
+dat$ascvdcat   <- factor(dat$ascvdcat_all,
+                      labels=c("<7.5",
+                               "7.5-20",
+                               "20+"))
+dat$smoke=factor(dat$old_smoke,levels=c(-3,0,1,2),
+                      labels=c("Never","Never","Former",
+                               "Current"))
+dat$bp_med=factor(dat$bp_med,levels=c(0,1),labels=c("No","Yes"))
+
+                               
+
+label(dat$age)      <- "Age (y)"
+label(dat$sex)      <- "Sex"
+label(dat$prscat)    <- "Polygenic score category"
+label(dat$dm)    <- "Diabetes status"
+label(dat$sbp)  <- "Systolic blood pressure (mm Hg) "
+label(dat$choladj)   <- "Total cholesterol (ng/ml)"
+label(dat$hdladj)  <- "High-density lipoprotein (ng/ml)"
+label(dat$smoke) <- "Smoking Status"
+label(dat$ldladj)  <- "Low-density lipoprotein (ng/ml)"
+label(dat$bp_med)  <- "Anti-hypertensive"
+label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
+
+table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med , data=dat)
+###
+table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med |ascvdcat, data=dat)
+table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med |prscat, data=dat)
+```
+
+
+```{r fhs}
+rm(dat)
+
+fh=readRDS("output/fh_full.rds")
+dat=fh
+
+dat=na.omit(dat)
+
+dat$age=dat$enroll_age
+dat$dm    <- factor(dat$DMRX1, levels=c("NA","0","1"), labels=c("None","None","Diabetes Mellitus"))
+dat$sex     <- factor(dat$SEX, levels=c(1, 2), labels=c("Male", "Female"))
+# dat$prscat  <- factor(dat$prscat,  labels=c("Low","Intermediate", "High"))
+# dat$ascvdcat   <- factor(dat$ascvdcat_all,
+#                       labels=c("<7.5",
+#                                "7.5-20",
+#                                "20+"))
+dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
+                      labels=c("Never",
+                               "Current"))
+dat$bp_med=factor(dat$HRX1,levels=c(0,"NA",1),labels=c("No","No","Yes"))
+
+                               
+
+label(dat$AGE1)      <- "Age (y)"
+label(dat$sex)      <- "Sex"
+label(dat$dm)    <- "Diabetes status"
+label(dat$SBP1)  <- "Systolic blood pressure (mm Hg) "
+label(dat$TC1)   <- "Total cholesterol (ng/ml)"
+label(dat$HDL1)  <- "High-density lipoprotein (ng/ml)"
+label(dat$smoke) <- "Smoking Status"
+label(dat$CALC_LDL1)  <- "Low-density lipoprotein (ng/ml)"
+label(dat$bp_med)  <- "Anti-hypertensive"
+
+table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +
+         CALC_LDL1 + bp_med , data=dat)
+
+
+
+
+
+fhp=readRDS("output/fh_prs.rds")
+fhp$prs=scale(fhp$V2)
+fhp$prs.r=rank(fhp$prs)/length(fhp$prs)
+fhp$prscat <- cut(fhp$prs.r, breaks=c(0, 0.20,0.80,1), labels=c("low", "intermediate","high"))
+
+dat=fhp
+dat=na.omit(dat)
+
+dat$age=dat$enroll_age
+dat$dm    <- factor(dat$DMRX1, levels=c("NA","0","1"), labels=c("None","None","Diabetes Mellitus"))
+dat$sex     <- factor(dat$SEX, levels=c(1, 2), labels=c("Male", "Female"))
+dat$prscat  <- factor(dat$prscat,  labels=c("Low","Intermediate", "High"))
+# dat$ascvdcat   <- factor(dat$ascvdcat_all,
+#                       labels=c("<7.5",
+#                                "7.5-20",
+#                                "20+"))
+dat$smoke=factor(dat$CURRSMK1,levels=c(0,1),
+                      labels=c("Never",
+                               "Current"))
+dat$bp_med=factor(dat$HRX1,levels=c(0,"NA",1),labels=c("No","No","Yes"))
+
+                               
+
+label(dat$AGE1)      <- "Age (y)"
+label(dat$sex)      <- "Sex"
+label(dat$dm)    <- "Diabetes status"
+label(dat$SBP1)  <- "Systolic blood pressure (mm Hg) "
+label(dat$TC1)   <- "Total cholesterol (ng/ml)"
+label(dat$HDL1)  <- "High-density lipoprotein (ng/ml)"
+label(dat$smoke) <- "Smoking Status"
+label(dat$CALC_LDL1)  <- "Low-density lipoprotein (ng/ml)"
+label(dat$bp_med)  <- "Anti-hypertensive"
+label(dat$prscat)    <- "Polygenic score category"
+table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
+         CALC_LDL1 + bp_med , data=dat)
+````
+
+

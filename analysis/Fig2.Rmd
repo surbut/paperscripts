@@ -1,0 +1,257 @@
+---
+title: "Fig2"
+output: html_document
+date: '2023-02-26'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,fig.keep = T)
+```
+
+```{r}
+source("code/utils.R")
+fig_path="./Figs/Fig2/"
+
+df=readRDS("output/amit_df.rds")
+
+
+dt=df[,c("prs.r","phenos.has_CAD","phenos.enrollment")]
+names(dt)=c("x","y","phenos.enrollment")
+
+
+my <- glm(formula =  y~x,data = dt[which(dt$phenos.enrollment<55),],family="binomial")
+
+
+newdf=data.frame(x=seq(0,1,by=0.01),y=rep(1,101),phenos.enrollment=rep(1,101))
+preds <- predict(my, newdata = newdf, type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+predy=data.frame(fit,upr,lwr)
+
+rm(preds)
+rm(my)
+####################
+mm <- glm(formula =  y~ x #+ phenos.enrollment, 
+                     ,data = dt[which(dt$phenos.enrollment<65&dt$phenos.enrollment>55),],family="binomial")
+
+
+preds <- predict(mm, newdata = newdf, type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+predm=data.frame(fit,upr,lwr)
+
+rm(preds)
+rm(mm)
+#########
+mo<- glm(formula =  y~ x #+ phenos.enrollment, 
+                     ,data = dt[which(dt$phenos.enrollment>65),],family="binomial")
+
+
+
+preds <- predict(mo, newdata = newdf, type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+
+predo=data.frame(fit,upr,lwr)
+rm(preds)
+rm(mo)
+
+predf=rbind(predy,predm,predo)
+## link scale
+#predr=exp(predf)/(1+exp(predf))
+predr=predf
+predr$variable=c(rep("<55",101),rep("55-65",101),rep(">65",101))
+predr$x=rep(newdf$x,3)
+
+
+predr$variable=  factor(
+    predr$variable,
+    levels = c(
+      "<55","55-65",">65"
+    )
+  )
+
+gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, color=variable,fill=variable)) + 
+ geom_line(linewidth=2) + 
+ geom_ribbon(alpha=0.3) + 
+ xlab("Polygenic score percentile") + 
+ ylab("Absolute risk of coronary artery disease")+
+scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
+
+ggsave(gp,filename = paste0(fig_path,"gprs_abs.tiff"),dpi=300,height=6,width = 6)
+
+
+```
+
+#### relative fits
+
+```{r}
+predy$fit=predy$fit/min(predy$fit)
+predy$lwr=predy$lwr/min(predy$lwr)
+predy$upr=predy$upr/min(predy$upr)
+
+predm$fit=predm$fit/min(predm$fit)
+predm$lwr=predm$lwr/min(predm$lwr)
+predm$upr=predm$upr/min(predm$upr)
+
+predo$fit=predo$fit/min(predo$fit)
+predo$lwr=predo$lwr/min(predo$lwr)
+predo$upr=predo$upr/min(predo$upr)
+
+
+predr=rbind(predy,predm,predo)
+predr$variable=c(rep("<55",101),rep("55-65",101),rep(">65",101))
+predr$x=rep(newdf$x,3)
+
+gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,color=variable)) + 
+  geom_line(linewidth=2) + 
+ geom_ribbon(alpha=0.3) + 
+ xlab("Polygenic score percentile") + 
+ ylab("Relative Risk")+
+scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
+
+ggsave(gp,filename = paste0(fig_path,"gprs_rel.tiff"),dpi=300,height=6,width = 6)
+
+```
+
+## PCE
+```{r}
+rm(list=ls())
+source("code/utils.R")
+fig_path="./Figs/Fig2/"
+
+df=readRDS("output/amit_df.rds")
+df$ascvd.r=rank(df$ascvd_10y_accaha_all)/length(df$ascvd_10y_accaha_all)
+
+dt=df[,c("ascvd.r","phenos.has_CAD","phenos.enrollment")]
+names(dt)=c("x","y","phenos.enrollment")
+
+
+my <- glm(formula =  y~x,data = dt[which(dt$phenos.enrollment<55),],family="binomial")
+
+
+newdf=data.frame(x=seq(0,1,by=0.01),y=rep(1,101),phenos.enrollment=rep(1,101))
+preds <- predict(my, newdata = newdf[c(5:101),], type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+predy=data.frame(fit,upr,lwr)
+
+rm(preds)
+rm(my)
+####################
+mm <- glm(formula =  y~ x,data = dt[which(dt$phenos.enrollment<65&dt$phenos.enrollment>55),],family="binomial")
+
+
+preds <- predict(mm, newdata = newdf[c(5:101),], type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+predm=data.frame(fit,upr,lwr)
+
+rm(preds)
+rm(mm)
+#########
+mo<- glm(formula =  y~ x #+ phenos.enrollment, 
+                     ,data = dt[which(dt$phenos.enrollment>65),],family="binomial")
+
+
+## for old, the PCE doesn't start until 0.33
+preds <- predict(mo, newdata = newdf[c(34:101),], type = "response", se.fit = TRUE)
+
+critval <- 1.96 ## approx 95% CI
+upr <- preds$fit + (critval * preds$se.fit)
+lwr <- preds$fit - (critval * preds$se.fit)
+fit <- preds$fit
+
+
+predo=data.frame(fit,upr,lwr)
+rm(preds)
+rm(mo)
+
+predf=rbind(predy,predm,predo)
+## link scale
+#predr=exp(predf)/(1+exp(predf))
+predr=predf
+predr$variable=c(rep("<55",97),rep("55-65",97),rep(">65",68))
+predr$x=c(rep(newdf$x[5:101],2),newdf$x[34:101])
+
+
+predr$variable=  factor(
+    predr$variable,
+    levels = c(
+      "<55","55-65",">65"
+    )
+  )
+
+gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,color=variable)) + 
+ geom_line(linewidth=3) + 
+ geom_ribbon(alpha=0.3) + 
+ xlab("PCE Percentile") + 
+ ylab("Absolute risk of coronary artery disease")+
+scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
+
+
+ggsave(gp,filename = paste0(fig_path,"gpce_abs.tiff"),dpi=300,height=6,width = 6)
+
+```
+
+
+#### relative fits
+
+```{r}
+predy$fit=predy$fit/min(predy$fit)
+predy$lwr=predy$lwr/min(predy$lwr)
+predy$upr=predy$upr/min(predy$upr)
+
+predm$fit=predm$fit/min(predm$fit)
+predm$lwr=predm$lwr/min(predm$lwr)
+predm$upr=predm$upr/min(predm$upr)
+
+predo$fit=predo$fit/min(predo$fit)
+predo$lwr=predo$lwr/min(predo$lwr)
+predo$upr=predo$upr/min(predo$upr)
+
+
+predr=rbind(predy,predm,predo)
+predr$variable=c(rep("<55",97),rep("55-65",97),rep(">65",68))
+
+predr$variable=  factor(
+    predr$variable,
+    levels = c(
+      "<55","55-65",">65"
+    )
+  )
+
+predr$x=c(rep(newdf$x[5:101],2),newdf$x[34:101])
+
+gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,color=variable)) + 
+ geom_line(linewidth=3) + 
+ geom_ribbon(alpha=0.3) + 
+ xlab("PCE Percentile") + 
+ ylab("Relative Risk")+
+scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
+
+ggsave(gp,filename = paste0(fig_path,"gpce_rel.tiff"),dpi=300,height=6,width = 6)
+
+
+```

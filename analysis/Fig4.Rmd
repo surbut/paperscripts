@@ -1,0 +1,62 @@
+---
+title: "fig4_verticalvenn"
+output: html_document
+date: '2023-02-26'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Vertical Venn
+
+```{r mergedbar}
+source("code/utils.R")
+
+df=data.frame(readRDS("output/amit_df.rds"))
+df$chd=df$phenos.has_CAD
+
+
+df$AGE1=df$phenos.enrollment
+
+# m=rbind(df[,c("AGE1","prs.r","ascvd_10y_accaha","chd")],dff[,c("AGE1","prs.r","ascvd_10y_accaha","chd")])
+# 
+# df=m
+# df=df[df$AGE1>=40&df$AGE1<=70,]
+
+library(scales)
+hex <- hue_pal()(6)
+
+
+i=df %>% mutate(ints=cut(AGE1,breaks=c(39.99,45,50,55,60,65,70,75)))
+i=i[!is.na(i$ints),]
+fulla=i%>%group_by(ints)%>%summarise("PRS"=sum(chd==1&ascvd_10y_accaha_all<7.5&prs.r>0.80)/sum(chd==1),"PCE"=sum(chd==1&ascvd_10y_accaha_all>7.5&prs.r<0.80)/sum(chd==1),"Both"=sum(chd==1&ascvd_10y_accaha_all>7.5&prs.r>0.80)/sum(chd==1),"n"=length(ints))
+# 
+errors=sqrt(fulla[,c(2:4)]*(1-fulla[,c(2:4)])/fulla$n)
+errors=cbind("ints"=fulla$ints,errors)
+colnames(errors)=colnames(fulla)[1:4]
+hex <- hue_pal()(6)
+# 
+# mat=as.matrix(fulla[,c(2:3)])*100
+# 
+# barplot(t(mat),beside = T,names=fulla$ints,legend=F,col=c(hex[c(1,3)]),main="FHS+UKB Incident Cases Correctly Predicted",ylab="Proportion of Incident Cases Correctly Predicted",las=2)
+# legend("topleft",legend=c("PRS only","PCE only"),fill =c(hex[c(1,3)]))
+# 
+r=melt(data.frame(fulla[,c(1,2,4,3)]),id.vars = "ints")
+s=melt(data.frame(errors),id.vars = "ints")
+
+
+r$lower=r$value-s$value
+r$upper=r$value+s$value
+names(r)[2]="Risk Stratification"
+p <- ggplot(data=r, aes(x=ints, y = value,fill = `Risk Stratification`)) + geom_bar(stat="identity") +labs(y = "Proportion of Lifetime Incident Cases Predicted",x="Age at Risk Estimation")+scale_fill_manual(values=c("tomato",hex[3],"darkblue"))+theme_classic(base_size = 25)+tems#+geom_errorbar(aes(ymin = value-error, ymax = value+error), width = 0.3, position = "identity")
+
+
+
+p
+
+ggplot2::ggsave(p,filename = "Figs/Fig4/proportion_plots_ukbalone.tiff",dpi = 300,height = 5,width = 8)
+
+write.table(r,"output/proportions_table.csv",sep=",",row.names = F,quote=F)
+```
+
