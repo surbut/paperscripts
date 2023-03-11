@@ -60,6 +60,7 @@ design <- tibble::tribble(
   "contain covariate, outcome and genomic information", 2629,  "",                  NA_integer_)
 
 
+e=exclusion_flowchart(design, width = 2)
 
 e %>%
 export_svg() %>%

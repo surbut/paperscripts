@@ -1,0 +1,71 @@
+---
+title: "NRI"
+author: "Your Name"
+date: "2023-03-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+library(ggplot2)
+library(reshape)
+library(ggsci)
+
+df=readRDS("output/amit_df.rds")
+
+NRI_mat=matrix(NA,nrow=2,ncol=6)
+num_mat=matrix(NA,nrow=2,ncol=6)
+ages=c(50,55,60,65,70,75)
+oldf=df
+#for(q in 1:(length(ages)-1)){
+for(q in 1:(length(ages))){
+  is=ages[q]
+  i=ages[q+1]
+  #print(i)
+  #df=oldf[oldf$phenos.enrollment>is&oldf$phenos.enrollment<i,]
+  df=oldf[oldf$phenos.enrollment<is,]
+  
+  (nocad_PCEpos_PRSneg=dim(df[df$phenos.has_CAD==0&df$ascvd_10y_accaha>7.5&df$prs.r<0.80,])[1])
+  (nocad_PCEneg_PRSpos=dim(df[df$phenos.has_CAD==0&df$ascvd_10y_accaha<7.5&df$prs.r>0.80,])[1])
+  
+  
+  (cad_PCEpos_PRSneg=dim(df[df$phenos.has_CAD==1&df$ascvd_10y_accaha>7.5&df$prs.r<0.80,])[1])
+  (cad_PCEneg_PRSpos=dim(df[df$phenos.has_CAD==1&df$ascvd_10y_accaha<7.5&df$prs.r>0.80,])[1])
+  
+  
+  NRI_e=(cad_PCEneg_PRSpos-cad_PCEpos_PRSneg)/(sum(df$phenos.has_CAD==1))
+  NRI_ne=(nocad_PCEpos_PRSneg-nocad_PCEneg_PRSpos)/(sum(df$phenos.has_CAD==0))
+  
+  #print(NRI_e)
+  #print(NRI_ne)
+  
+  NRI_mat[1,q]=NRI_e
+  NRI_mat[2,q]=NRI_ne
+  num_mat[,q]=nrow(df)
+}
+
+errors=sqrt((abs(NRI_mat)*(1-abs(NRI_mat)))/(num_mat))
+rownames(NRI_mat)=rownames(errors)=c("NRI_event","NRI_nonevent")
+t=data.frame(t(NRI_mat))
+e=data.frame(t(errors))
+t$ages=e$ages=c("<50","<55","<60","<65","<70","<75")
+m=melt(t,id.vars = "ages")
+m2=melt(e,id.vars = "ages")
+m$error=m2$value
+m$variable=factor(m$variable,levels = c("NRI_event","NRI_nonevent"),labels = c("Net Reclassification Event","Net Reclassification Non-event"))
+
+n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom_bar(stat="identity")+theme_classic(base_size = 20)+labs(x="Ages of Consideration",y="Net Reclassification Index",fill="Metric Considered")+scale_fill_nejm()+ylim(c(-0.4,0.4))
+
+ggsave(n,filename = "Figs/Supplemental/NRI.tiff",width = 6,height = 6,dpi = 300)
+
+
+n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom_bar(stat="identity")+theme_classic(base_size = 20)+labs(x="Ages of Consideration",y="Net Reclassification Index",fill="Metric Considered")+scale_fill_nejm()+ylim(c(-0.4,0.4))+theme(legend.position="none")
+
+ggsave(n,filename = "Figs/Supplemental/NRI_noleg.tiff",width = 6,height = 6,dpi = 300)
+
+```
+
+
