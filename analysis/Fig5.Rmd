@@ -89,3 +89,12 @@ msave$upper=m$AUC+m$se
 msave$lower=m$AUC-m$se
 write.table(msave,"output/AUC.csv",sep=",",quote=FALSE,row.names = F)
 ```
+
+## Lookup table
+
+```{r}
+library(DT)
+ms=data.frame(msave[,c(1:2)],round(msave[,c(3:6)],2))
+colnames(ms)=colnames(msave)
+datatable(ms)
+```
