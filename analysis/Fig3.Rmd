@@ -10,7 +10,7 @@ editor_options:
 ## Introduction
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/",message = FALSE,warning = FALSE)
 
 ```
 
@@ -211,4 +211,13 @@ p=sa %>% ggplot(aes(x=interaction(age,PCE_cat), y=values,ymin = lower, ymax =upp
 ggsave(p,filename = "Figs/Fig3/interaction.tiff",dpi=300,height = 5,width=8)
 ggplotly(p)
 ```
+
+```{r}
+library(DT)
+
+t=data.frame("Age"=sa$age,"PRS Category"=sa$ind,"ASCVD Cat"=sa$PCE_cat,"Value"=round(sa$values,2),"lower"=round(sa$lower,2),"upper"=round(sa$upper,2))
+
+datatable(t)
+```
+
 
