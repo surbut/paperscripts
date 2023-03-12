@@ -8,7 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
 
 We have the workbook and html output for all the figures in Urbut et al 2023.
 
