@@ -1,12 +1,18 @@
 ---
 title: "Fig2"
-output: html_document
-date: '2023-02-26'
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,fig.keep = T)
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
 ```
+
 
 ```{r}
 source("code/utils.R")
@@ -104,6 +110,7 @@ scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepsky
 scale_color_manual(name="Age Group",values=c("<55 years"="deepskyblue","55-65 years"="deepskyblue3",">65 years"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
 
 ggsave(gp,filename = paste0(fig_path,"gprs_abs.tiff"),dpi=300,height=6,width = 6)
+ggplotly(gp)
 ```
 
 #### relative fits
@@ -134,7 +141,7 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,colo
 scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+theme_classic(base_size =20)+theme(legend.position = "null")
 
 ggsave(gp,filename = paste0(fig_path,"gprs_rel.tiff"),dpi=300,height=6,width = 6)
-
+ggplotly(gp)
 ```
 
 ## PCE
@@ -220,7 +227,7 @@ scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepsky
 
 
 ggsave(gp,filename = paste0(fig_path,"gpce_abs.tiff"),dpi=300,height=6,width = 6)
-
+ggplotly(gp)
 ```
 
 
@@ -261,5 +268,5 @@ scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepsky
 
 ggsave(gp,filename = paste0(fig_path,"gpce_rel.tiff"),dpi=300,height=6,width = 6)
 
-
+ggplotly(gp)
 ```
