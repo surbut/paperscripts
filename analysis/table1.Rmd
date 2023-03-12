@@ -1,14 +1,17 @@
 ---
-title: "table"
-output: html_document
-date: '2022-11-20'
+title: "Table1"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-Here we plot table 1
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
+```
 
 ```{r cars,echo=F}
 
@@ -58,6 +61,11 @@ t1flex(t) %>%
   save_as_docx(path="Figs/Tables/UKBB_table1.docx")
 ```
 
+# UK Biobank 
+```{r}
+t
+```
+
 ```{r byasc,echo=F}
 ###
 t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
@@ -66,7 +74,10 @@ t1flex(t) %>%
   save_as_docx(path="Figs/Tables/UKBB_table1_byASCVD.docx")
 
 ```
-
+# UK Biobank by ASCVD
+```{r}
+t
+```
 
 ```{r byprs,echo=FALSE}
 t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
@@ -75,6 +86,10 @@ t1flex(t) %>%
   save_as_docx(path="Figs/Tables/UKBB_table1_byPRS.docx")
 ```
 
+# UK Biobank by Genomic Risk
+```{r}
+t
+```
 
 ```{r fhs, echo=F}
 rm(dat)
@@ -120,7 +135,10 @@ t1flex(t) %>%
   save_as_docx(path="Figs/Tables/FHS_table1.docx")
 
 ```
-
+# Framingham Overall
+```{r}
+t
+```
 
 ```{r}
 
@@ -166,5 +184,8 @@ t=table1(~ AGE1 + sex + SBP1 + TC1 + HDL1 + smoke +prscat+
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/FHS_table1_PRS.docx")
 ```
-
+# Framingham with PRS
+```{r}
+t
+```
 

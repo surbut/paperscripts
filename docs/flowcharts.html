@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name" />
+<meta name="author" content="Sarah Urbut" />
 
-<meta name="date" content="2023-03-11" />
+<meta name="date" content="2023-03-12" />
 
-<title>flowcharts</title>
+<title>Exclusion Charts</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -37,6 +37,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/viz-1.8.2/viz.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="site_libs/grViz-binding-1.0.9/grViz.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -359,9 +363,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">flowcharts</h1>
-<h4 class="author">Your Name</h4>
-<h4 class="date">2023-03-11</h4>
+<h1 class="title toc-ignore">Exclusion Charts</h1>
+<h4 class="author">Sarah Urbut</h4>
+<h4 class="date">2023-03-12</h4>
 
 </div>
 
@@ -390,7 +394,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-03-11
+<strong>Last updated:</strong> 2023-03-12
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -524,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreee19764b789fc3f3605d51f81dad7df1e5b42f9f7targetblanke19764ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreefd9074eccb1ef963772f12367e29ccf921666ab3targetblankfd9074ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/e19764b789fc3f3605d51f81dad7df1e5b42f9f7" target="_blank">e19764b</a>
+<a href="https://github.com/surbut/paperscripts/tree/fd9074eccb1ef963772f12367e29ccf921666ab3" target="_blank">fd9074e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreee19764b789fc3f3605d51f81dad7df1e5b42f9f7targetblanke19764ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreefd9074eccb1ef963772f12367e29ccf921666ab3targetblankfd9074ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -542,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/e19764b789fc3f3605d51f81dad7df1e5b42f9f7" target="_blank">e19764b</a>.
+<a href="https://github.com/surbut/paperscripts/tree/fd9074eccb1ef963772f12367e29ccf921666ab3" target="_blank">fd9074e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -556,24 +560,15 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  Figs/Fig2/gprs_abs_withleg.tiff
-    Untracked:  Figs/flowchart_fhs.svg
-    Untracked:  Figs/flowchart_ukbb.svg
-    Untracked:  graph.svg
-    Untracked:  vignette flowchart.png
-
 Unstaged changes:
     Modified:   .DS_Store
-    Modified:   Figs/.DS_Store
-    Modified:   Figs/Fig1/hr_pce.tiff
-    Modified:   Figs/Fig2/gprs_abs.tiff
-    Modified:   Figs/Fig3/interaction.tiff
-    Deleted:    Figs/aucplot.tiff
-    Modified:   analysis/Fig1.Rmd
-    Modified:   analysis/Fig2.Rmd
-    Modified:   analysis/Fig3.Rmd
+    Modified:   Figs/Tables/FHS_table1.docx
+    Modified:   Figs/Tables/FHS_table1_PRS.docx
+    Modified:   Figs/Tables/UKBB_table1.docx
+    Modified:   Figs/Tables/UKBB_table1_byASCVD.docx
+    Modified:   Figs/Tables/UKBB_table1_byPRS.docx
     Modified:   analysis/flowcharts.Rmd
+    Modified:   analysis/table1.Rmd
 
 </code></pre>
 <p>
@@ -619,6 +614,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/f427146d103eca1c4ba3651fe3cf38eb925230d9/analysis/flowcharts.Rmd" target="_blank">f427146</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/af9c4d8c474bd2bf561d737eb3511f56d219bd49/analysis/flowcharts.Rmd" target="_blank">af9c4d8</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/af9c4d8c474bd2bf561d737eb3511f56d219bd49/docs/flowcharts.html" target="_blank">af9c4d8</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -696,32 +742,16 @@ Update
 </div>
 <div id="flow-chart-creation" class="section level2">
 <h2>Flow Chart creation</h2>
-<pre><code>── Attaching packages ──────────────────────────────────────── khsverse 0.0.2 ──</code></pre>
-<pre><code>✔ dplyr    1.0.10     ✔ broom    1.0.1 
-✔ tidyr    1.2.1      ✔ labelled 2.10.0
-✔ tibble   3.1.8      ✔ readxl   1.4.1 
-✔ forcats  0.5.2      ✔ survival 3.4.0 
-✔ readr    2.1.2      ✔ cowplot  1.1.1 
-✔ purrr    0.3.5      ✔ viridis  0.6.2 
-✔ stringr  1.4.1      ✔ gt       0.8.0 
-✔ ggplot2  3.4.1      ✔ risks    0.4.1 </code></pre>
-<pre><code>── Conflicts ─────────────────────────────────────────── khsverse_conflicts() ──
-✖ dplyr::filter()    masks stats::filter()
-✖ dplyr::lag()       masks stats::lag()
-✖ gt::tab_footnote() masks khsmisc::tab_footnote()
-✖ gt::tab_style()    masks khsmisc::tab_style()</code></pre>
-<pre><code>Loading required package: magrittr</code></pre>
-<pre><code>
-Attaching package: &#39;magrittr&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    set_names</code></pre>
-<pre><code>The following object is masked from &#39;package:tidyr&#39;:
-
-    extract</code></pre>
-<pre><code>Loading required package: DiagrammeR</code></pre>
-<pre><code>Loading required package: DiagrammeRsvg</code></pre>
-<pre><code>Loading required package: xml2</code></pre>
+</div>
+<div id="exclusion-for-ukbb" class="section level2">
+<h2>Exclusion for UKBB:</h2>
+<div id="htmlwidget-5c3a3ec5a4b38bce708f" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c3a3ec5a4b38bce708f">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base\\nn = 502485\"]\ntab1b [label = \"Lack quality-controlled genotypes for risk score generation\\nn = 15209\"]\ntab2a [label = \"Polygenic score and phenotypic information\\nn = 487276\"]\ntab2b [label = \"Participants with\nmissing baseline covariate information (smoking, anti-hypertensive use, race, and sex)\\nn = 34635\"]\ntab3a [label = \"With baseline information\\nn = 452641\"]\ntab3b [label = \"Missing lipid information\\nn = 59069\"]\ntab4a [label = \"With lipid information\\nn = 393572\"]\ntab4b [label = \"On statin therapy\\nn = 63832\"]\ntab5a [label = \"Polygenic score and phenotypic information off statin therapy\\nn = 329740\"]\ntab5b [label = \"Remains with coronary artery disease\\nn = 1903\"]\ntab6a [label = \"Complete-case set\\nn = 327837\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\n\n{ rank = same; tab5a; tab5b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a ->  tab5a -> tab6a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n\ntab5a -> tab5b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="exclusion-for-fhs" class="section level2">
+<h2>Exclusion for FHS:</h2>
+<div id="htmlwidget-47abf6feb9c508565805" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47abf6feb9c508565805">{"x":{"diagram":"digraph flowchart {\n      node [fontname = Helvetica, shape = rectangle, width = 2]\ntab1a [label = \"Study base with outcome Data\\nn = 3821\"]\ntab1b [label = \"Lack total cholesterol, high-density lipoprotein, smoking status, anti-lipid, anti-hypertensive information at baseline \\nn = 154\"]\ntab2a [label = \"Contain all covariates\\nn = 3660\"]\ntab2b [label = \"On statin at baseline\\nn = 21\"]\ntab3a [label = \"Contain All covariates and are statin-free\\nn = 3639\"]\ntab3b [label = \"With coronary artery disease at baseline\\nn = 51\"]\ntab4a [label = \"With baseline covariate and outcome data\\nn = 3588\"]\ntab4b [label = \"Missing genomic information\\nn = 959\"]\ntab5a [label = \"contain covariate, outcome and genomic information\\nn = 2629\"]{ rank = same; tab1a; tab1b; }\n\n{ rank = same; tab2a; tab2b; }\n\n{ rank = same; tab3a; tab3b; }\n\n{ rank = same; tab4a; tab4b; }\ntab1a ->  tab2a ->  tab3a ->  tab4a -> tab5a;\ntab1a -> tab1b;\n\ntab2a -> tab2b;\n\ntab3a -> tab3b;\n\ntab4a -> tab4b;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -730,7 +760,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.1 (2022-06-23)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur ... 10.16

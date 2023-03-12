@@ -1,16 +1,19 @@
 ---
-title: "flowcharts"
-author: "Your Name"
-date: "2023-03-11"
+title: "Exclusion Charts"
+author: "Sarah Urbut"
+date: "2023-03-12"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
+```
+
 ## Flow Chart creation
-
-
-
 
 ```{r,echo=F}
 
@@ -46,6 +49,11 @@ write_xml("Figs/Flowcharts/flowchart_ukbb.svg")
 
 ```
 
+## Exclusion for UKBB:
+
+```{r}
+e
+```
 
 ```{r,echo=F}
 
@@ -66,5 +74,10 @@ e %>%
 export_svg() %>%
 read_xml() %>%
 write_xml("Figs/Flowcharts/flowchart_fhs.svg")
+```
+
+## Exclusion for FHS:
+```{r}
+e
 ```
 
