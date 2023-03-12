@@ -1,0 +1,256 @@
+---
+title: "FH_generation"
+output: html_document
+date: '2023-02-26'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Here we generate the FHS, 
+
+# Package load
+
+```{r,echo=F,message=FALSE}
+library("dplyr")
+library("tidyverse")
+library("survival")
+library("survminer")
+library("eulerr")
+library("ggplot2")
+library("reshape")
+library("ggfortify")
+library("gridExtra")
+library("survMisc")
+library("rsq")
+library("pROC")
+library("data.table")
+library("RColorBrewer")
+library("gt")
+library("DT")
+library("plotly")
+library("carData")
+library("gapminder")
+library("babynames")
+library("plotly")
+```
+
+## generate FHS hazard mat
+
+```{r cars}
+
+### plot with PVE
+
+#f3=readRDS("~/Dropbox/fh_withPRS.rds")
+#df=readRDS("~/Dropbox/fh-withoutprs.rds")
+
+f3=readRDS("~/Dropbox/fh_prs.rds")
+df=readRDS("~/Dropbox/fh_full.rds")
+
+dat=data.frame(df %>%group_by(round(AGE1,0)) %>%summarise(length(AGE1)))
+dat=dat[c(11:50),]
+
+hazards=matrix(data=NA,nrow=nrow(dat),ncol=27)
+errors=matrix(data=NA,nrow=nrow(dat),ncol=7)
+library("survival")
+df$round_age=round(df$AGE1,0)
+df$ldl.quant=scale(df$CALC_LDL1)
+df$sbp.quant=scale(df$SBP1)
+df$hdl.quant=scale(df$HDL1)
+df$chol.quant=scale(df$TC1)
+df$bmi.quant=scale(df$BMI1)
+
+
+## in framingham 2 is female, 1 is male
+
+df$sex=ifelse(df$SEX==1,1,0)
+f3$round_age=round(f3$AGE1,0)
+f3$prs.quant=scale(f3$V2)
+f3$sex=ifelse(f3$SEX==1,1,0) 
+
+
+## censoring per https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/dataset.cgi?study_id=phs000007.v33.p14&pht=3316
+df$chd.years=df$chddate/365.2+df$AGE1
+f3$round_age=round(f3$AGE1,0)
+f3$chd.years=f3$chddate/365.2+f3$AGE1
+
+hazards = matrix(data = NA,
+                 nrow = nrow(dat),
+                 ncol = 33)
+upperbound = matrix(data = NA,
+                nrow = nrow(dat),
+                ncol = 9)
+lowerbound = matrix(data = NA,
+                nrow = nrow(dat),
+                ncol = 9)
+
+for(i in seq(1:nrow(dat))){
+  
+  age=dat[i,1]
+  
+  # d=df[df$round_age==age|df$round_age==age-1|df$round_age==age+1,]
+  # f=f3[f3$round_age==age|f3$round_age==age-1|f3$round_age==age+1,]
+  
+  d=df[df$round_age<=age,]
+  f=f3[f3$round_age<=age,]
+  
+  
+  # #
+  #prs.quant fit
+  sfit=coxph(Surv(chd.years,chd)~prs.quant,data=f)
+  hazards[i,1]=exp(coef(sfit)[1])
+  lowerbound[i, 1] = summary(sfit)$conf.int[3]
+  upperbound[i,1] = summary(sfit)$conf.int[4]
+   errors[i,1]=sqrt(diag(sfit$var))
+   
+  reg=glm(chd~prs.quant,data=f,family="binomial")
+  hazards[i,2]= exp(coef(reg)[[2]])
+  hazards[i,3]=with(summary(reg), 1 - deviance/null.deviance)
+ 
+
+  # #   LDL fit
+  
+  sfit=coxph(Surv(chd.years,chd)~ldl.quant,data=d)
+  hazards[i,4]=exp(coef(sfit)[1])
+  lowerbound[i, 2] = summary(sfit)$conf.int[3]
+  upperbound[i,2] = summary(sfit)$conf.int[4]
+  errors[i,2]=sqrt(diag(sfit$var))
+  
+  reg=glm(chd~ldl.quant,data=d,family="binomial")
+  hazards[i,5]= exp(coef(reg))[[2]]
+  hazards[i,6]=with(summary(reg), 1 - deviance/null.deviance)
+  #hazards[i,9]=rsq(reg,type="n")
+  
+  # #
+  
+  
+  # #     smoke fit
+  sfit=coxph(Surv(chd.years,chd)~CURRSMK1,data=d)
+  hazards[i,7]=exp(coef(sfit)[1])
+  lowerbound[i, 3] = summary(sfit)$conf.int[3]
+  upperbound[i,3] = summary(sfit)$conf.int[4]
+  reg=glm(chd~CURRSMK1,data=d,family="binomial")
+  hazards[i,8]= exp(coef(reg))[[2]]
+  
+  reg=glm(chd~CURRSMK1,data=d,family="binomial")
+  hazards[i,9]=with(summary(reg), 1 - deviance/null.deviance)
+  
+  
+  #age fit
+  sfit=coxph(Surv(chd.years,chd)~AGE1,data=d)
+  hazards[i,10]=exp(coef(sfit)[1])
+  lowerbound[i, 4] = summary(sfit)$conf.int[3]
+  upperbound[i,4] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~AGE1,data=d,family="binomial")
+  hazards[i,11]= exp(coef(reg))[[2]]
+  hazards[i,12]=with(summary(reg), 1 - deviance/null.deviance)
+  #hazards[i,15]=rsq(reg,type="n")
+  
+  
+  #     #SBP fit
+  sfit=coxph(Surv(chd.years,chd)~d$sbp.quant,data=d)
+  hazards[i,13]=exp(coef(sfit)[1])
+  lowerbound[i,5] = summary(sfit)$conf.int[3]
+  upperbound[i,5] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~sbp.quant,data=d,family="binomial")
+  hazards[i,14]= exp(coef(reg))[[2]]
+  hazards[i,15]=with(summary(reg), 1 - deviance/null.deviance)
+  #hazards[i,18]=rsq(reg,type="n")
+  
+  # #   chol fit
+  
+  sfit=coxph(Surv(chd.years,chd)~chol.quant,data=d)
+  hazards[i,16]=exp(coef(sfit)[1])
+  lowerbound[i,6] = summary(sfit)$conf.int[3]
+  upperbound[i,6] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~chol.quant,data=d,family="binomial")
+  hazards[i,17]= exp(coef(reg))[[2]]
+  hazards[i,18]=with(summary(reg), 1 - deviance/null.deviance)
+  #hazards[i,9]=rsq(reg,type="n")
+  errors[i,2]=sqrt(diag(sfit$var))
+  
+  
+  # ## bmi.fit
+  sfit=coxph(Surv(chd.years,chd)~bmi.quant,data=d)
+  hazards[i,19]=exp(coef(sfit)[1])
+  lowerbound[i,7] = summary(sfit)$conf.int[3]
+  upperbound[i,7] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~bmi.quant,data=d,family="binomial")
+  hazards[i,20]= exp(coef(reg)[[2]])
+  hazards[i,21]=with(summary(reg), 1 - deviance/null.deviance)
+  #   # #hazards[i,3]=rsq(reg,type="n")
+  
+  # ## sex.fit
+  sfit=coxph(Surv(chd.years,chd)~sex,data=d)
+  hazards[i,22]=exp(coef(sfit)[1])
+  lowerbound[i,8] = summary(sfit)$conf.int[3]
+  upperbound[i,8] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~sex,data=d,family="binomial")
+  hazards[i,23]= exp(coef(reg)[[2]])
+  hazards[i,24]=with(summary(reg), 1 - deviance/null.deviance)
+  #   # #hazards[i,3]=rsq(reg,type="n")
+  
+  
+  
+  # #   HDL fit
+  sfit=coxph(Surv(chd.years,chd)~hdl.quant,data=d)
+  hazards[i,25]=exp(coef(sfit)[1])
+  reg=glm(chd~hdl.quant,data=d,family="binomial")
+  hazards[i,26]= exp(coef(reg))[[2]]
+  lowerbound[i,9] = summary(sfit)$conf.int[3]
+  upperbound[i,9] = summary(sfit)$conf.int[4]
+  
+  reg=glm(chd~hdl.quant,data=d,family="binomial")
+  hazards[i,27]=with(summary(reg), 1 - deviance/null.deviance)
+  #hazards[i,9]=rsq(reg,type="n")
+  # #
+  
+}
+
+```
+
+
+```{r,fhsearly}
+hazards=data.frame(hazards)
+
+hazards=data.frame(hazards)
+colnames(hazards)=c("prs.HR","prs.OR","prs.r2",
+                    
+                    "ldl.HR","ldl.OR","ldl.r2",
+                    
+                    "smoke.HR","smoke.OR","smoke.r2",
+                    "age.HR","age.OR","age.r2",
+                    "sbp.HR","sbp.OR","sbp.r2",
+                    #"dm.HR","dm.OR","dm.r2",
+                    "chol.HR","chol.OR","chol.r2",
+                    "bmi.HR","bmi.OR","bmi.r2",
+                    "sex.HR","sex.OR","sex.r2",
+                    
+                    "hdl.HR","hdl.OR","hdl.r2")
+
+
+colnames(upperbound) = colnames(lowerbound)=c(
+  "prs.se",
+  "ldl.se",
+  "smoke.se",
+  "age.se",
+  "sbp.se",
+  "tc.se",
+  "bmi.se",
+  "sex.se",
+  "hdl.se"
+  )
+saveRDS(lowerbound,"output/hazards_rate_lowerbound_fh.rds")
+saveRDS(upperbound,"output/hazards_rate_upperbound_fh.rds")
+
+saveRDS(hazards,"~/Dropbox/paper_scripts/output/hazards_fhs.rds") 
+
+```

@@ -1,0 +1,327 @@
+---
+title: "CreatingHazards"
+output: html_document
+date: '2023-02-26'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## genereate hazars
+
+for the first plots
+
+
+```{r,echo=F,message=FALSE}
+library("dplyr")
+library("tidyverse")
+library("survival")
+library("survminer")
+library("eulerr")
+library("ggplot2")
+library("reshape")
+library("ggfortify")
+library("gridExtra")
+library("survMisc")
+library("rsq")
+library("pROC")
+library("data.table")
+library("RColorBrewer")
+library("gt")
+library("DT")
+library(plotly)
+library(dplyr)
+library(carData)
+library(gapminder)
+library(babynames)
+```
+
+## HR for UKB
+
+
+## make the table
+```{r,eval=T}
+df = readRDS("output/amit_df.rds")
+dat = data.frame(df %>% group_by(round(phenos.enrollment, 0)) %>% summarise(length(phenos.enrollment)))[c(3:32), ]
+
+hazards = matrix(data = NA,
+                 nrow = nrow(dat),
+                 ncol = 33)
+upperbound = matrix(data = NA,
+                nrow = nrow(dat),
+                ncol = 11)
+lowerbound = matrix(data = NA,
+                nrow = nrow(dat),
+                ncol = 11)
+
+## make sure normalized
+df$prs_quant = scale(df$SCORE)
+df$prs.r = (rank(df$prs_quant) / length(df$prs_quant))
+df$round_age = round(df$phenos.enrollment, 0)
+df$ldl.quant = scale(df$ldladj)
+df$sbp.quant = scale(df$sbp)
+df$hdl.quant = scale(df$hdladj)
+df$chol.quant = scale(df$choladj)
+df$age.quant = scale(df$phenos.enrollment)
+df$bmi.quant = scale(df$bmi)
+df$phenos.has_CAD = df$has_disease
+df$sex = ifelse(df$sex == "male", 1, 0)
+
+sum(df$age_to_censor < 0 & df$phenos.has_CAD == 1)
+#df=na.omit(df)
+for (i in seq(1:nrow(dat))) {
+  age = dat[i, 1]
+  print(i)
+  print(age)
+  #d=df[df$round_age>=age-1&df$round_age<=age+1,]
+  d = d2 = df[df$round_age <= age, ]
+
+  # #    PRS fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prs_quant,
+               data = d)
+  hazards[i, 1] = exp(coef(sfit)[1])
+
+  reg = glm(phenos.has_CAD ~ prs_quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 2] = exp(coef(reg)[[2]])
+
+  ## for pve
+  # reg = glm(phenos.has_CAD ~ prs_quant,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 3] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 1] = summary(sfit)$conf.int[3]
+  upperbound[i,1] = summary(sfit)$conf.int[4]
+
+  # #    pce fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha,
+               data = d)
+  hazards[i, 4] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ ascvd_10y_accaha,
+            data = d,
+            family = "binomial")
+  hazards[i, 5] = exp(coef(reg))[[2]]
+
+
+  hazards[i, 6] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 2] = summary(sfit)$conf.int[3]
+  upperbound[i,2] = summary(sfit)$conf.int[4]
+  # #
+  # #   LDL fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ldl.quant,
+               data = d)
+  hazards[i, 7] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ ldl.quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 8] = exp(coef(reg))[[2]]
+
+  # reg = glm(phenos.has_CAD ~ ldl.quant,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 9] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 3] = summary(sfit)$conf.int[3]
+  upperbound[i,3] = summary(sfit)$conf.int[4]
+
+  # #     smoke fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ smoke, data =
+                 d)
+  hazards[i, 10] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ smoke, data = d, family = "binomial")
+  hazards[i, 11] = exp(coef(reg))[[2]]
+
+  # reg = glm(phenos.has_CAD ~ smoke, data = d2, family = "binomial")
+  hazards[i, 12] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 4] = summary(sfit)$conf.int[3]
+  upperbound[i,4] = summary(sfit)$conf.int[4]
+  # #
+
+
+  # #  age fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ phenos.enrollment,
+               data = d)
+  hazards[i, 13] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ phenos.enrollment,
+            data = d,
+            family = "binomial")
+  hazards[i, 14] = exp(coef(reg))[[2]]
+
+  #rm(reg)
+  # reg = glm(phenos.has_CAD ~ phenos.enrollment,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 5] = summary(sfit)$conf.int[3]
+  upperbound[i,5] = summary(sfit)$conf.int[4]
+  #
+  # #     SBP fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sbp.quant,
+               data = d)
+  hazards[i, 16] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ sbp.quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 17] = exp(coef(reg))[[2]]
+
+  # rm(reg)
+  # reg = glm(phenos.has_CAD ~ sbp.quant,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 18] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 6] = summary(sfit)$conf.int[3]
+  upperbound[i,6] = summary(sfit)$conf.int[4]
+ 
+  # #     dmfit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prev_disease_dm,
+               data = d,control=coxph.control(eps=1e-8,iter.max = 30))
+  hazards[i, 19] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ prev_disease_dm,
+            data = d,
+            family = "binomial")
+  hazards[i, 20] = exp(coef(reg))[[2]]
+  # rm(reg)
+  # reg = glm(phenos.has_CAD ~ prev_disease_dm,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 21] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 7] = summary(sfit)$conf.int[3]
+  upperbound[i,7] = summary(sfit)$conf.int[4]
+
+ # # #  bmifit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ bmi.quant,
+               data = d)
+  hazards[i, 22] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ bmi.quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 23] = exp(coef(reg))[[2]]
+  # rm(reg)
+  # reg = glm(phenos.has_CAD ~ bmi.quant,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 24] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 8] = summary(sfit)$conf.int[3]
+  upperbound[i,8] = summary(sfit)$conf.int[4]
+  #
+  #
+  # #  sexfit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sex, data =
+                 d)
+  hazards[i, 25] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ sex, data = d, family = "binomial")
+  hazards[i, 26] = exp(coef(reg))[[2]]
+  # rm(reg)
+  # reg = glm(phenos.has_CAD ~ sex, data = d2, family = "binomial")
+  hazards[i, 27] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 9] = summary(sfit)$conf.int[3]
+  upperbound[i,9] = summary(sfit)$conf.int[4]
+  # #   HDL fit
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ hdl.quant,
+               data = d)
+  hazards[i, 28] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ hdl.quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 29] = exp(coef(reg))[[2]]
+# 
+#   reg = glm(phenos.has_CAD ~ hdl.quant,
+#             data = d2,
+#             family = "binomial")
+  hazards[i, 30] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 10] = summary(sfit)$conf.int[3]
+  upperbound[i,10] = summary(sfit)$conf.int[4]
+
+  #hazards[i,9]=rsq(reg,type="n")
+
+  # #  totalchol
+  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ chol.quant,
+               data = d)
+  hazards[i, 31] = exp(coef(sfit)[1])
+  reg = glm(phenos.has_CAD ~ chol.quant,
+            data = d,
+            family = "binomial")
+  hazards[i, 32] = exp(coef(reg))[[2]]
+  # rm(reg)
+  # reg = glm(phenos.has_CAD ~ chol.quant,
+  #           data = d2,
+  #           family = "binomial")
+  hazards[i, 33] = with(summary(reg), 1 - deviance / null.deviance)
+  lowerbound[i, 11] = summary(sfit)$conf.int[3]
+  upperbound[i,11] = summary(sfit)$conf.int[4]
+}
+
+
+## for some reasona DM not converging even through the coefficients are reasonable, https://stat.ethz.ch/pipermail/r-help/2008-September/174201.html, ignore and change eps and converge parameters
+
+
+colnames(hazards) = c(
+  "prs.HR",
+  "prs.OR",
+  "prs.r2",
+  "PCE.HR",
+  "PCE.OR",
+  "PCE.r2",
+  "ldl.HR",
+  "ldl.OR",
+  "ldl.r2",
+  "smoke.HR",
+  "smoke.OR",
+  "smoke.r2",
+  "age.HR",
+  "age.OR",
+  "age.r2",
+  "sbp.HR",
+  "sbp.OR",
+  "sbp.r2",
+  
+  "dm.HR",
+  "dm.OR",
+  "dm.r2",
+  "bmi.HR",
+  "bmi.OR",
+  "bmi.r2",
+  "sex.HR",
+  "sex.OR",
+  "sex.r2",
+  "hdl.HR",
+  "hdl.OR",
+  "hdl.r2",
+  "tc.HR",
+  "tc.OR",
+  "tc.r2"
+)
+hazards[1, "dm.HR"] = upperbound[1,7]=lowerbound[1,7]=NA
+#hazards[2, "dm.HR"] = NA
+#saveRDS(hazards,"~/Dropbox/hazards_rate_UKB_mixed.rds")
+#saveRDS(hazards,"~/Dropbox/hazards_rate_UKBleq.rds")
+saveRDS(hazards,"output/hazards_rate_UKB_amit.rds")
+
+
+colnames(upperbound) = colnames(lowerbound)=c(
+  "prs.se",
+ 
+  "PCE.se",
+
+  "ldl.se",
+ 
+  "smoke.se",
+ 
+  "age.se",
+  
+  "sbp.se",
+  
+  "dm.se",
+  "bmi.se",
+  "sex.se",
+  "hdl.se",
+  "tc.se"
+)
+saveRDS(lowerbound,"output/hazards_rate_lowerbound_amit.rds")
+saveRDS(upperbound,"output/hazards_rate_upperbound_amit.rds")
+```
+
+
+
+

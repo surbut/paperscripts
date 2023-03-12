@@ -1,12 +1,12 @@
 ---
 title: "Home"
-site: workflowr::wflow_site
-output:
-  workflowr::wflow_html:
-    toc: false
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
+
 
 
 We have the workbook and html output for all the figures in Urbut et al 2023.
