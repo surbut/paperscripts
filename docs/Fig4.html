@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Sarah Urbut" />
 
-<meta name="date" content="2023-02-26" />
+<meta name="date" content="2023-03-12" />
 
-<title>fig4_verticalvenn</title>
+<title>Fig4</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -36,6 +37,18 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.24/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -358,8 +371,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">fig4_verticalvenn</h1>
-<h4 class="date">2023-02-26</h4>
+<h1 class="title toc-ignore">Fig4</h1>
+<h4 class="author">Sarah Urbut</h4>
+<h4 class="date">2023-03-12</h4>
 
 </div>
 
@@ -388,7 +402,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-03-11
+<strong>Last updated:</strong> 2023-03-12
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -426,10 +440,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -522,15 +536,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +554,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>.
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,43 +569,19 @@ were generated:
 </p>
 <pre><code>
 Untracked files:
-    Untracked:  .DS_Store
-    Untracked:  Figs/
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/Fig1.Rmd
-    Untracked:  analysis/Fig2.Rmd
-    Untracked:  analysis/Fig3.Rmd
-    Untracked:  analysis/Fig4.Rmd
-    Untracked:  analysis/Fig5.Rmd
-    Untracked:  analysis/generation_rawfiles/
-    Untracked:  analysis/table1.Rmd
-    Untracked:  code/TextXX.R
-    Untracked:  code/utils.R
-    Untracked:  output/.DS_Store
-    Untracked:  output/AUC.csv
-    Untracked:  output/PVE_fhs.csv
-    Untracked:  output/PVE_ukb.csv
-    Untracked:  output/amit_df.rds
-    Untracked:  output/fh_full.rds
-    Untracked:  output/fh_prs.rds
-    Untracked:  output/hazards_fhs.rds
-    Untracked:  output/hazards_fhs_EQ.rds
-    Untracked:  output/hazards_rate_UKB_amit.rds
-    Untracked:  output/hazards_rate_UKB_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_amit.rds
-    Untracked:  output/hazards_rate_lowerbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_fh.rds
-    Untracked:  output/hazards_rate_lowerbound_fh_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_amit.rds
-    Untracked:  output/hazards_rate_upperbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_fh.rds
-    Untracked:  output/hazards_rate_upperbound_fh_EQ.rds
-    Untracked:  output/hr_all.xls
-    Untracked:  output/hrindex.csv
-    Untracked:  output/hrindex_FHs.csv
-    Untracked:  output/hrindex_UKB.csv
-    Untracked:  output/output/
-    Untracked:  output/proportions_table.csv
+    Untracked:  Figs/Fig1b/
+    Untracked:  analysis/Fig1b.Rmd
+
+Unstaged changes:
+    Modified:   .DS_Store
+    Modified:   Figs/.DS_Store
+    Modified:   Figs/Fig2/gprs_abs.tiff
+    Modified:   Figs/Supplemental/NRI.tiff
+    Modified:   analysis/Fig1.Rmd
+    Modified:   analysis/Fig3.Rmd
+    Modified:   analysis/Fig4.Rmd
+    Modified:   analysis/Fig5.Rmd
+    Modified:   analysis/NRI.Rmd
 
 </code></pre>
 <p>
@@ -606,209 +596,83 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/Fig4.Rmd</code>) and HTML
+(<code>docs/Fig4.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/analysis/Fig4.Rmd" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/docs/Fig4.html" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="vertical-venn" class="section level2">
 <h2>Vertical Venn</h2>
-<pre class="r"><code>source(&quot;code/utils.R&quot;)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.1     ✔ purrr   0.3.5
-✔ tibble  3.1.8     ✔ stringr 1.4.1
-✔ tidyr   1.2.1     ✔ forcats 0.5.2
-✔ readr   2.1.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-Loading required package: ggpubr
-
-
-Attaching package: &#39;survminer&#39;
-
-
-The following object is masked from &#39;package:survival&#39;:
-
-    myeloma
-
-
-
-Attaching package: &#39;reshape&#39;
-
-
-The following objects are masked from &#39;package:tidyr&#39;:
-
-    expand, smiths
-
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    rename
-
-
-
-Attaching package: &#39;gridExtra&#39;
-
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    combine
-
-
-
-Attaching package: &#39;survMisc&#39;
-
-
-The following object is masked from &#39;package:ggplot2&#39;:
-
-    autoplot
-
-
-
-Attaching package: &#39;rsq&#39;
-
-
-The following object is masked from &#39;package:survMisc&#39;:
-
-    rsq
-
-
-Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.
-
-
-Attaching package: &#39;pROC&#39;
-
-
-The following object is masked from &#39;package:survMisc&#39;:
-
-    ci
-
-
-The following objects are masked from &#39;package:stats&#39;:
-
-    cov, smooth, var
-
-
-
-Attaching package: &#39;data.table&#39;
-
-
-The following object is masked from &#39;package:reshape&#39;:
-
-    melt
-
-
-The following object is masked from &#39;package:purrr&#39;:
-
-    transpose
-
-
-The following objects are masked from &#39;package:dplyr&#39;:
-
-    between, first, last
-
-
-
-Attaching package: &#39;plotly&#39;
-
-
-The following object is masked from &#39;package:reshape&#39;:
-
-    rename
-
-
-The following object is masked from &#39;package:ggplot2&#39;:
-
-    last_plot
-
-
-The following object is masked from &#39;package:stats&#39;:
-
-    filter
-
-
-The following object is masked from &#39;package:graphics&#39;:
-
-    layout</code></pre>
-<pre class="r"><code>df=data.frame(readRDS(&quot;output/amit_df.rds&quot;))
-df$chd=df$phenos.has_CAD
-
-
-df$AGE1=df$phenos.enrollment
-
-# m=rbind(df[,c(&quot;AGE1&quot;,&quot;prs.r&quot;,&quot;ascvd_10y_accaha&quot;,&quot;chd&quot;)],dff[,c(&quot;AGE1&quot;,&quot;prs.r&quot;,&quot;ascvd_10y_accaha&quot;,&quot;chd&quot;)])
-# 
-# df=m
-# df=df[df$AGE1&gt;=40&amp;df$AGE1&lt;=70,]
-
-library(scales)</code></pre>
-<pre><code>
-Attaching package: &#39;scales&#39;
-
-The following object is masked from &#39;package:purrr&#39;:
-
-    discard
-
-The following object is masked from &#39;package:readr&#39;:
-
-    col_factor</code></pre>
-<pre class="r"><code>hex &lt;- hue_pal()(6)
-
-
-i=df %&gt;% mutate(ints=cut(AGE1,breaks=c(39.99,45,50,55,60,65,70,75)))
-i=i[!is.na(i$ints),]
-fulla=i%&gt;%group_by(ints)%&gt;%summarise(&quot;PRS&quot;=sum(chd==1&amp;ascvd_10y_accaha_all&lt;7.5&amp;prs.r&gt;0.80)/sum(chd==1),&quot;PCE&quot;=sum(chd==1&amp;ascvd_10y_accaha_all&gt;7.5&amp;prs.r&lt;0.80)/sum(chd==1),&quot;Both&quot;=sum(chd==1&amp;ascvd_10y_accaha_all&gt;7.5&amp;prs.r&gt;0.80)/sum(chd==1),&quot;n&quot;=length(ints))
-# 
-errors=sqrt(fulla[,c(2:4)]*(1-fulla[,c(2:4)])/fulla$n)
-errors=cbind(&quot;ints&quot;=fulla$ints,errors)
-colnames(errors)=colnames(fulla)[1:4]
-hex &lt;- hue_pal()(6)
-# 
-# mat=as.matrix(fulla[,c(2:3)])*100
-# 
-# barplot(t(mat),beside = T,names=fulla$ints,legend=F,col=c(hex[c(1,3)]),main=&quot;FHS+UKB Incident Cases Correctly Predicted&quot;,ylab=&quot;Proportion of Incident Cases Correctly Predicted&quot;,las=2)
-# legend(&quot;topleft&quot;,legend=c(&quot;PRS only&quot;,&quot;PCE only&quot;),fill =c(hex[c(1,3)]))
-# 
-r=melt(data.frame(fulla[,c(1,2,4,3)]),id.vars = &quot;ints&quot;)</code></pre>
-<pre><code>Warning in melt(data.frame(fulla[, c(1, 2, 4, 3)]), id.vars = &quot;ints&quot;): The melt
-generic in data.table has been passed a data.frame and will attempt to redirect
-to the relevant reshape2 method; please note that reshape2 is deprecated, and
-this redirection is now deprecated as well. To continue using melt methods from
-reshape2 while both libraries are attached, e.g. melt.list, you can prepend the
-namespace like reshape2::melt(data.frame(fulla[, c(1, 2, 4, 3)])). In the next
-version, this warning will become an error.</code></pre>
-<pre class="r"><code>s=melt(data.frame(errors),id.vars = &quot;ints&quot;)</code></pre>
-<pre><code>Warning in melt(data.frame(errors), id.vars = &quot;ints&quot;): The melt generic in
-data.table has been passed a data.frame and will attempt to redirect to the
-relevant reshape2 method; please note that reshape2 is deprecated, and this
-redirection is now deprecated as well. To continue using melt methods from
-reshape2 while both libraries are attached, e.g. melt.list, you can prepend the
-namespace like reshape2::melt(data.frame(errors)). In the next version, this
-warning will become an error.</code></pre>
-<pre class="r"><code>r$lower=r$value-s$value
-r$upper=r$value+s$value
-names(r)[2]=&quot;Risk Stratification&quot;
-p &lt;- ggplot(data=r, aes(x=ints, y = value,fill = `Risk Stratification`)) + geom_bar(stat=&quot;identity&quot;) +labs(y = &quot;Proportion of Lifetime Incident Cases Predicted&quot;,x=&quot;Age at Risk Estimation&quot;)+scale_fill_manual(values=c(&quot;tomato&quot;,hex[3],&quot;darkblue&quot;))+theme_classic(base_size = 25)+tems#+geom_errorbar(aes(ymin = value-error, ymax = value+error), width = 0.3, position = &quot;identity&quot;)
-
-
-
-p</code></pre>
-<p><img src="figure/Fig4.Rmd/mergedbar-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggplot2::ggsave(p,filename = &quot;Figs/Fig4/proportion_plots_ukbalone.tiff&quot;,dpi = 300,height = 5,width = 8)
-
-write.table(r,&quot;output/proportions_table.csv&quot;,sep=&quot;,&quot;,row.names = F,quote=F)</code></pre>
+<div id="htmlwidget-5c3a3ec5a4b38bce708f" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c3a3ec5a4b38bce708f">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9],"base":[0.200923787528868,0.260109289617486,0.458242556281772,0.671150971599402,0.79121540312876,0.953846153846154,1],"x":[1,2,3,4,5,6,7],"y":[0.318706697459584,0.285245901639344,0.172113289760349,0.115097159940209,0.0616726835138388,0.0121112929623568,0],"text":["ints: (40,45]<br />value: 0.31870670<br />Risk Stratification: PRS","ints: (45,50]<br />value: 0.28524590<br />Risk Stratification: PRS","ints: (50,55]<br />value: 0.17211329<br />Risk Stratification: PRS","ints: (55,60]<br />value: 0.11509716<br />Risk Stratification: PRS","ints: (60,65]<br />value: 0.06167268<br />Risk Stratification: PRS","ints: (65,70]<br />value: 0.01211129<br />Risk Stratification: PRS","ints: (70,75]<br />value: 0.00000000<br />Risk Stratification: PRS"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,99,71,1)","line":{"width":null,"color":"transparent"}},"name":"PRS","legendgroup":"PRS","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9],"base":[0.10161662817552,0.148633879781421,0.277414669571532,0.43796711509716,0.549037304452467,0.68379705400982,0.784810126582278],"x":[1,2,3,4,5,6,7],"y":[0.0993071593533487,0.111475409836066,0.18082788671024,0.233183856502242,0.242178098676294,0.270049099836334,0.215189873417722],"text":["ints: (40,45]<br />value: 0.09930716<br />Risk Stratification: Both","ints: (45,50]<br />value: 0.11147541<br />Risk Stratification: Both","ints: (50,55]<br />value: 0.18082789<br />Risk Stratification: Both","ints: (55,60]<br />value: 0.23318386<br />Risk Stratification: Both","ints: (60,65]<br />value: 0.24217810<br />Risk Stratification: Both","ints: (65,70]<br />value: 0.27004910<br />Risk Stratification: Both","ints: (70,75]<br />value: 0.21518987<br />Risk Stratification: Both"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","line":{"width":null,"color":"transparent"}},"name":"Both","legendgroup":"Both","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9],"base":[0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7],"y":[0.10161662817552,0.148633879781421,0.277414669571532,0.43796711509716,0.549037304452467,0.68379705400982,0.784810126582278],"text":["ints: (40,45]<br />value: 0.10161663<br />Risk Stratification: PCE","ints: (45,50]<br />value: 0.14863388<br />Risk Stratification: PCE","ints: (50,55]<br />value: 0.27741467<br />Risk Stratification: PCE","ints: (55,60]<br />value: 0.43796712<br />Risk Stratification: PCE","ints: (60,65]<br />value: 0.54903730<br />Risk Stratification: PCE","ints: (65,70]<br />value: 0.68379705<br />Risk Stratification: PCE","ints: (70,75]<br />value: 0.78481013<br />Risk Stratification: PCE"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,0,139,1)","line":{"width":null,"color":"transparent"}},"name":"PCE","legendgroup":"PCE","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":39.2461602324616,"r":16.604400166044,"b":151.100041511,"l":104.607721046077},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,7.6],"tickmode":"array","ticktext":["(40,45]","(45,50]","(50,55]","(55,60]","(60,65]","(65,70]","(70,75]"],"tickvals":[1,2,3,4,5,6,7],"categoryorder":"array","categoryarray":["(40,45]","(45,50]","(50,55]","(55,60]","(60,65]","(65,70]","(70,75]"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(51,51,51,1)","family":"","size":26.5670402656704},"tickangle":-90,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Age at Risk Estimation","font":{"color":"rgba(51,51,51,1)","family":"","size":26.5670402656704}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.05,1.05],"tickmode":"array","ticktext":["0.00","0.25","0.50","0.75","1.00"],"tickvals":[0,0.25,0.5,0.75,1],"categoryorder":"array","categoryarray":["0.00","0.25","0.50","0.75","1.00"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(51,51,51,1)","family":"","size":26.5670402656704},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"Proportion of Lifetime Incident Cases Predicted","font":{"color":"rgba(51,51,51,1)","family":"","size":26.5670402656704}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704},"title":{"text":"Risk Stratification","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"da5d2ab9ed59":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"da5d2ab9ed59","visdat":{"da5d2ab9ed59":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-47abf6feb9c508565805" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47abf6feb9c508565805">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21"],["(40,45]","(45,50]","(50,55]","(55,60]","(60,65]","(65,70]","(70,75]","(40,45]","(45,50]","(50,55]","(55,60]","(60,65]","(65,70]","(70,75]","(40,45]","(45,50]","(50,55]","(55,60]","(60,65]","(65,70]","(70,75]"],["PRS","PRS","PRS","PRS","PRS","PRS","PRS","Both","Both","Both","Both","Both","Both","Both","PCE","PCE","PCE","PCE","PCE","PCE","PCE"],[0.32,0.29,0.17,0.12,0.06,0.01,0,0.1,0.11,0.18,0.23,0.24,0.27,0.22,0.1,0.15,0.28,0.44,0.55,0.68,0.78],[0.32,0.28,0.17,0.11,0.06,0.01,0,0.1,0.11,0.18,0.23,0.24,0.27,0.2,0.1,0.15,0.28,0.44,0.55,0.68,0.77],[0.32,0.29,0.17,0.12,0.06,0.01,0,0.1,0.11,0.18,0.24,0.24,0.27,0.23,0.1,0.15,0.28,0.44,0.55,0.69,0.8]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ints<\/th>\n      <th>Risk Stratification<\/th>\n      <th>value<\/th>\n      <th>lower<\/th>\n      <th>upper<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -817,7 +681,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.1 (2022-06-23)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur ... 10.16
@@ -856,23 +719,24 @@ loaded via a namespace (and not attached):
 [34] tools_4.2.1         gtable_0.3.1        glue_1.6.2         
 [37] reshape2_1.4.4      Rcpp_1.0.9          cellranger_1.1.0   
 [40] jquerylib_0.1.4     vctrs_0.5.2         nlme_3.1-159       
-[43] xfun_0.33           lme4_1.1-30         rvest_1.0.3        
-[46] lifecycle_1.0.3     rstatix_0.7.0       googlesheets4_1.0.1
-[49] MASS_7.3-58.1       zoo_1.8-11          ragg_1.2.3         
-[52] hms_1.1.2           promises_1.2.0.1    yaml_2.3.5         
-[55] KMsurv_0.1-5        sass_0.4.2          stringi_1.7.8      
-[58] highr_0.9           boot_1.3-28         systemfonts_1.0.4  
+[43] crosstalk_1.2.0     xfun_0.33           lme4_1.1-30        
+[46] rvest_1.0.3         lifecycle_1.0.3     rstatix_0.7.0      
+[49] googlesheets4_1.0.1 MASS_7.3-58.1       zoo_1.8-11         
+[52] ragg_1.2.3          hms_1.1.2           promises_1.2.0.1   
+[55] yaml_2.3.5          KMsurv_0.1-5        sass_0.4.2         
+[58] stringi_1.7.8       boot_1.3-28         systemfonts_1.0.4  
 [61] rlang_1.0.6         pkgconfig_2.0.3     evaluate_0.17      
 [64] lattice_0.20-45     labeling_0.4.2      htmlwidgets_1.5.4  
 [67] tidyselect_1.2.0    plyr_1.8.7          magrittr_2.0.3     
 [70] R6_2.5.1            generics_0.1.3      DBI_1.1.3          
-[73] pillar_1.8.1        haven_2.5.1         withr_2.5.0        
-[76] abind_1.4-5         modelr_0.1.9        crayon_1.5.2       
-[79] car_3.1-0           utf8_1.2.2          tzdb_0.3.0         
-[82] rmarkdown_2.17      grid_4.2.1          readxl_1.4.1       
-[85] git2r_0.30.1        reprex_2.0.2        digest_0.6.29      
-[88] xtable_1.8-4        httpuv_1.6.6        textshaping_0.3.6  
-[91] munsell_0.5.0       viridisLite_0.4.1   bslib_0.4.0        </code></pre>
+[73] pillar_1.8.1        haven_2.5.1         whisker_0.4        
+[76] withr_2.5.0         abind_1.4-5         modelr_0.1.9       
+[79] crayon_1.5.2        car_3.1-0           utf8_1.2.2         
+[82] tzdb_0.3.0          rmarkdown_2.17      grid_4.2.1         
+[85] readxl_1.4.1        git2r_0.30.1        reprex_2.0.2       
+[88] digest_0.6.29       xtable_1.8-4        httpuv_1.6.6       
+[91] textshaping_0.3.6   munsell_0.5.0       viridisLite_0.4.1  
+[94] bslib_0.4.0        </code></pre>
 </div>
 </div>
 

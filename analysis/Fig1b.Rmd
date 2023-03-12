@@ -1,0 +1,244 @@
+---
+title: "Fig1b"
+author: "Your Name"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
+```
+
+
+```{r,echo=F,message=FALSE}
+library("dplyr")
+library("tidyverse")
+library("survival")
+library("survminer")
+library("eulerr")
+library("ggplot2")
+library("reshape")
+library("ggfortify")
+library("gridExtra")
+library("survMisc")
+library("rsq")
+library("pROC")
+library("data.table")
+library("RColorBrewer")
+library("gt")
+library("DT")
+library(plotly)
+library(dplyr)
+library(carData)
+library(gapminder)
+library(babynames)
+col_pce <- rev(brewer.pal(10, "Paired"))
+col_p = c(col_pce[1:3],
+          col_pce[5],
+          col_pce[4],
+          col_pce[c(6, 10)],
+          "black",
+          col_pce[9],
+          "turquoise",
+          col_pce[7])
+tems = theme(
+  axis.text.x = element_text(
+    color = "grey20",
+    size = 20,
+    angle = 90,
+    hjust = .5,
+    vjust = .5,
+    face = "plain"
+  ),
+  axis.text.y = element_text(
+    color = "grey20",
+    size = 20,
+    angle = 0,
+    hjust = 1,
+    vjust = 0,
+    face = "plain"
+  ),
+  axis.title.x = element_text(
+    color = "grey20",
+    size = 20,
+    angle = 0,
+    hjust = .5,
+    vjust = 0,
+    face = "plain"
+  ),
+  axis.title.y = element_text(
+    color = "grey20",
+    size = 20,
+    angle = 90,
+    hjust = .5,
+    vjust = .5,
+    face = "plain"
+  )
+)
+
+```
+
+
+
+## FHS
+
+```{r framingham}
+### plot with PVE
+fig_path="./Figs/Fig1b/"
+f3=readRDS("output/fh_PRS.rds")
+df=readRDS("output/fh_full.rds")
+
+
+dat=data.frame(df %>%group_by(round(AGE1,0)) %>%summarise(length(AGE1)))
+dat=dat[c(11:50),]
+
+hazards=matrix(data=NA,nrow=nrow(dat),ncol=27)
+errors=matrix(data=NA,nrow=nrow(dat),ncol=7)
+library("survival")
+df$round_age=round(df$AGE1,0)
+df$ldl.quant=scale(df$CALC_LDL1)
+df$sbp.quant=scale(df$SBP1)
+df$hdl.quant=scale(df$HDL1)
+df$chol.quant=scale(df$TC1)
+df$bmi.quant=scale(df$BMI1)
+df$sex=ifelse(df$SEX==1,1,0)
+df$chd.years=df$chddate/365.2+df$AGE1
+f3$round_age=round(f3$AGE1,0)
+f3$chd.years=f3$chddate/365.2+f3$AGE1
+f3$prs.quant=scale(f3$V2)
+f3$sex=ifelse(f3$SEX==1,1,0) ## in framingham 2 is female, 1 is male
+
+hazards=readRDS("output/hazards_fhs.rds")
+hazards=data.frame(hazards)
+
+hazards=data.frame(hazards)
+colnames(hazards)=c("prs.HR","prs.OR","prs.r2",
+                    
+                    "ldl.HR","ldl.OR","ldl.r2",
+                    
+                    "smoke.HR","smoke.OR","smoke.r2",
+                    "age.HR","age.OR","age.r2",
+                    "sbp.HR","sbp.OR","sbp.r2",
+                    #"dm.HR","dm.OR","dm.r2",
+                    "chol.HR","chol.OR","chol.r2",
+                    "bmi.HR","bmi.OR","bmi.r2",
+                    "sex.HR","sex.OR","sex.r2",
+                    
+                    "hdl.HR","hdl.OR","hdl.r2")
+
+
+
+
+hrmat=hazards[,grep("HR",colnames(hazards))];hrmat$age=dat$round.AGE1..0.
+
+ormat=hazards[,grep("OR",colnames(hazards))];ormat$age=dat$round.AGE1..0.
+r2mat=hazards[,grep("r2",colnames(hazards))];r2mat$age=dat$round.AGE1..0.
+
+colnames(hrmat)=colnames(ormat)=colnames(r2mat)=c("Polygenic Score","LDL Cholesterol","Smoking","Age","Systolic blood pressure","Total cholesterol","Body Mass Index","Male Sex","High-density Lipoprotein","age")
+
+#####
+```
+
+
+````{r new}
+
+upperbound=data.frame(readRDS("output/hazards_rate_upperbound_fh.rds"))
+lowerbound=data.frame(readRDS("output/hazards_rate_lowerbound_fh.rds"))
+
+
+upperbound$age=dat$round.AGE1..0.
+u=melt(upperbound,id.vars="age")
+
+lowerbound$age=dat$round.AGE1..0.
+l=melt(lowerbound,id.vars="age")
+
+
+##### Bring together
+haz=melt(hrmat,id.vars = "age")
+ors=melt(ormat,id.vars = "age")
+r2s=melt(r2mat,id.vars = "age")
+
+haz$low.se = l$value
+haz$upper.se = u$value
+```
+
+```{r}
+
+r2s$variable=ors$variable=haz$variable <- factor(haz$variable, levels = c("Total cholesterol","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Age","High-density Lipoprotein"))
+
+hr_fhs = ggplot(subset(
+  haz,
+  variable %in% c(
+    "Polygenic Score",
+    "Total cholesterol",
+    "Systolic blood pressure",
+    "Pooled cohort equations",
+    #"Age",
+    "Smoking",
+    #"Male Sex"
+    "High-density Lipoprotein",
+    "Smoking")), aes(age, value, colour = variable)) +
+  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Hazard Ratio of Coronary Artery Disease", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure",
+"Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein",
+"Total cholesterol"))
+
+# +scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+
+
+r2_fhs = ggplot(subset(
+  r2s,
+  variable %in% c(
+    "Polygenic Score",
+    "Total cholesterol",
+    "Systolic blood pressure",
+    "Pooled cohort equations",
+    #"Age",
+    "Smoking",
+    #"Male Sex",
+    "High-density Lipoprotein",
+    "Smoking")
+), aes(age, value, colour = variable))+
+  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Proportion of Variation Explained", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+
+  # scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+
+h1=hr_fhs+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
+# 
+# ggsave(h1,file="hr_fhs_nob.tiff",dpi = 300,width = 6,height = 6)
+
+r2=r2_fhs+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
+
+ggsave(h1,file=paste0(fig_path,"hr_fhs.tiff"),dpi = 300,width = 6,height = 6)
+ggsave(r2,file=paste0(fig_path,"r2_fhs.tiff"),dpi = 300,width = 6,height = 6.1)
+```
+
+```{r}
+ggplotly(h1)
+```
+
+
+```{r}
+ggplotly(r2)
+```
+
+
+# Hazard Rate Lookup Table
+```{r}
+library(DT)
+m=cbind(haz[,c(1:2)],round(haz[,c(3:5)],2))
+colnames(m)=colnames(haz)
+DT::datatable(m)
+```
+
+# Proportion Variation Explained Lookup Table
+```{r}
+library(DT)
+m=cbind(r2s[,c(1:2)],round(r2s[,c(3)],2))
+colnames(m)=colnames(r2s)
+DT::datatable(m)
+```

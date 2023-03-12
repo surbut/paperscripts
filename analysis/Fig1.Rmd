@@ -1,14 +1,17 @@
 ---
-title: "Figure 1"
-output: html_document
-date: '2023-02-09'
+title: "Fig1"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,warning = FALSE,message = FALSE)
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
 ```
-
-
 
 ```{r,echo=F,message=FALSE}
 library("dplyr")
@@ -230,6 +233,20 @@ hr_ukb_all_nolegend=hr_ukb_all+theme_classic(base_size = 20)+theme(legend.positi
 
 ## ALL
 
+```{r}
+ggplotly(hall)
+```
+
+# with no legend
+
+```{r}
+hr_ukb_all_nolegend
+```
+
+```{r}
+ggplotly(r2)
+```
+
 ## Save figures
 
 ```{r}
@@ -314,3 +331,26 @@ ggsave(hall_pce,filename = paste0(fig_path,"hr_pce.tiff"),dpi = 300,width = 6,he
 ggsave(r2_pce,filename = paste0(fig_path,"r2_pce.tiff"),dpi = 300,width = 6,height = 6)
 ```
 
+```{r}
+ggplotly(hall_pce)
+```
+
+```{r}
+ggplotly(r2_pce)
+```
+
+# Hazard Rate Lookup Table
+```{r}
+library(DT)
+m=cbind(haz[,c(1:2)],round(haz[,c(3:5)],2))
+colnames(m)=colnames(haz)
+DT::datatable(m)
+```
+
+# Proportion Variation Explained Lookup Table
+```{r}
+library(DT)
+m=cbind(r2s[,c(1:2)],round(r2s[,c(3)],2))
+colnames(m)=colnames(r2s)
+DT::datatable(m)
+```

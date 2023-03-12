@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Sarah Urbut" />
 
-<meta name="date" content="2023-02-26" />
+<meta name="date" content="2023-03-12" />
 
-<title>AUCmat</title>
+<title>Fig5</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -36,6 +37,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -358,8 +366,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">AUCmat</h1>
-<h4 class="date">2023-02-26</h4>
+<h1 class="title toc-ignore">Fig5</h1>
+<h4 class="author">Sarah Urbut</h4>
+<h4 class="date">2023-03-12</h4>
 
 </div>
 
@@ -388,7 +397,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-03-11
+<strong>Last updated:</strong> 2023-03-12
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -426,10 +435,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -522,15 +531,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeb7ec3d31c9b22ed3da00f10a2cf8332e8974463ctargetblankb7ec3d3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +549,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/b7ec3d31c9b22ed3da00f10a2cf8332e8974463c" target="_blank">b7ec3d3</a>.
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,43 +564,16 @@ were generated:
 </p>
 <pre><code>
 Untracked files:
-    Untracked:  .DS_Store
-    Untracked:  Figs/
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/Fig1.Rmd
-    Untracked:  analysis/Fig2.Rmd
-    Untracked:  analysis/Fig3.Rmd
-    Untracked:  analysis/Fig4.Rmd
-    Untracked:  analysis/Fig5.Rmd
-    Untracked:  analysis/generation_rawfiles/
-    Untracked:  analysis/table1.Rmd
-    Untracked:  code/TextXX.R
-    Untracked:  code/utils.R
-    Untracked:  output/.DS_Store
-    Untracked:  output/AUC.csv
-    Untracked:  output/PVE_fhs.csv
-    Untracked:  output/PVE_ukb.csv
-    Untracked:  output/amit_df.rds
-    Untracked:  output/fh_full.rds
-    Untracked:  output/fh_prs.rds
-    Untracked:  output/hazards_fhs.rds
-    Untracked:  output/hazards_fhs_EQ.rds
-    Untracked:  output/hazards_rate_UKB_amit.rds
-    Untracked:  output/hazards_rate_UKB_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_amit.rds
-    Untracked:  output/hazards_rate_lowerbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_lowerbound_fh.rds
-    Untracked:  output/hazards_rate_lowerbound_fh_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_amit.rds
-    Untracked:  output/hazards_rate_upperbound_amit_EQ.rds
-    Untracked:  output/hazards_rate_upperbound_fh.rds
-    Untracked:  output/hazards_rate_upperbound_fh_EQ.rds
-    Untracked:  output/hr_all.xls
-    Untracked:  output/hrindex.csv
-    Untracked:  output/hrindex_FHs.csv
-    Untracked:  output/hrindex_UKB.csv
-    Untracked:  output/output/
-    Untracked:  output/proportions_table.csv
+    Untracked:  Figs/Fig1b/
+    Untracked:  analysis/Fig1b.Rmd
+
+Unstaged changes:
+    Modified:   .DS_Store
+    Modified:   Figs/.DS_Store
+    Modified:   Figs/Fig2/gprs_abs.tiff
+    Modified:   analysis/Fig1.Rmd
+    Modified:   analysis/Fig3.Rmd
+    Modified:   analysis/Fig5.Rmd
 
 </code></pre>
 <p>
@@ -606,266 +588,84 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/Fig5.Rmd</code>) and HTML
+(<code>docs/Fig5.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/analysis/Fig5.Rmd" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/7ddb13f71c5960cbe535759d89d9ee4716ee27a8/docs/Fig5.html" target="_blank">7ddb13f</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+</div>
 <div id="auc-overall" class="section level2">
 <h2>AUC overall</h2>
-<pre class="r"><code>source(&quot;code/utils.R&quot;)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.1     ✔ purrr   0.3.5
-✔ tibble  3.1.8     ✔ stringr 1.4.1
-✔ tidyr   1.2.1     ✔ forcats 0.5.2
-✔ readr   2.1.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-Loading required package: ggpubr
-
-
-Attaching package: &#39;survminer&#39;
-
-
-The following object is masked from &#39;package:survival&#39;:
-
-    myeloma
-
-
-
-Attaching package: &#39;reshape&#39;
-
-
-The following objects are masked from &#39;package:tidyr&#39;:
-
-    expand, smiths
-
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    rename
-
-
-
-Attaching package: &#39;gridExtra&#39;
-
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    combine
-
-
-
-Attaching package: &#39;survMisc&#39;
-
-
-The following object is masked from &#39;package:ggplot2&#39;:
-
-    autoplot
-
-
-
-Attaching package: &#39;rsq&#39;
-
-
-The following object is masked from &#39;package:survMisc&#39;:
-
-    rsq
-
-
-Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.
-
-
-Attaching package: &#39;pROC&#39;
-
-
-The following object is masked from &#39;package:survMisc&#39;:
-
-    ci
-
-
-The following objects are masked from &#39;package:stats&#39;:
-
-    cov, smooth, var
-
-
-
-Attaching package: &#39;data.table&#39;
-
-
-The following object is masked from &#39;package:reshape&#39;:
-
-    melt
-
-
-The following object is masked from &#39;package:purrr&#39;:
-
-    transpose
-
-
-The following objects are masked from &#39;package:dplyr&#39;:
-
-    between, first, last
-
-
-
-Attaching package: &#39;plotly&#39;
-
-
-The following object is masked from &#39;package:reshape&#39;:
-
-    rename
-
-
-The following object is masked from &#39;package:ggplot2&#39;:
-
-    last_plot
-
-
-The following object is masked from &#39;package:stats&#39;:
-
-    filter
-
-
-The following object is masked from &#39;package:graphics&#39;:
-
-    layout</code></pre>
-<pre class="r"><code>library(ggplot2)
-
-df=readRDS(&quot;output/amit_df.rds&quot;)
-
-ages=c(40,45,50,55,60,65,70,75)
-
-df$prscat &lt;- cut(df$prs.r, breaks=c(0, 0.20,0.80,1), labels=c(&quot;low&quot;, &quot;intermediate&quot;,&quot;high&quot;))
-set.seed(456)
-aucmat=matrix(NA,nrow=length(ages)-1,ncol=3)
-semat=matrix(NA,nrow=length(ages)-1,ncol=3)
-for(i in 1:(length(ages)-1))
-{
-  par(mfrow=c(1,2))
-  #which(df$phenos.enrollment&gt;ages[i]&amp;df$phenos.enrollment&lt;ages[i+1])
-  d=df[which(df$phenos.enrollment&gt;ages[i]&amp;df$phenos.enrollment&lt;ages[i+1]),]
-  indices=sample(nrow(d))
-  
-  d_train=d[indices[1:(length(indices)/2)],]
-  d_test=d[indices[(length(indices)/2+1):length(indices)],]
-  model_glm = glm(phenos.has_CAD  ~ prscat, data = d_train, family = &quot;binomial&quot;)
-  
-  test_prob = predict(model_glm, newdata = d_test, type = &quot;response&quot;)
-  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0(&quot;PRS,age&quot;,ages[i],&quot;to&quot;,ages[i+1]))
-  aucmat[i,1]=test_roc$auc
-  semat[i,1]=sqrt(var(test_roc))
-  
-  
-  model_glm = glm(phenos.has_CAD  ~ ascvdcat_all, data = d_train, family = &quot;binomial&quot;)
-  
-  test_prob = predict(model_glm, newdata = d_test, type = &quot;response&quot;)
-  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0(&quot;PCE,age&quot;,ages[i],&quot;to&quot;,ages[i+1]))
-  aucmat[i,2]=test_roc$auc
-  semat[i,2]=sqrt(var(test_roc))
-  
-  model_glm = glm(phenos.has_CAD  ~ ascvdcat_all+prscat, data = d_train, family = &quot;binomial&quot;)
-  
-  test_prob = predict(model_glm, newdata = d_test, type = &quot;response&quot;)
-  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0(&quot;PCE+PRS,age&quot;,ages[i],&quot;to&quot;,ages[i+1]))
-  aucmat[i,3]=test_roc$auc
-  semat[i,3]=sqrt(var(test_roc))
-}</code></pre>
-<pre><code>Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases
-Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases</code></pre>
-<pre class="r"><code>rownames(aucmat)=c(&quot;40-45&quot;,&quot;45-50&quot;,&quot;50-55&quot;,&quot;55-60&quot;,&quot;60-65&quot;,&quot;65-70&quot;,&quot;70-75&quot;)
-
-m=melt(aucmat,id.vars=&quot;Age&quot;)</code></pre>
-<pre><code>Warning in melt(aucmat, id.vars = &quot;Age&quot;): The melt generic in data.table has
-been passed a matrix and will attempt to redirect to the relevant reshape2
-method; please note that reshape2 is deprecated, and this redirection is now
-deprecated as well. To continue using melt methods from reshape2 while both
-libraries are attached, e.g. melt.list, you can prepend the namespace like
-reshape2::melt(aucmat). In the next version, this warning will become an error.</code></pre>
-<pre class="r"><code>m3=melt(semat)</code></pre>
-<pre><code>Warning in melt(semat): The melt generic in data.table has been passed a matrix
-and will attempt to redirect to the relevant reshape2 method; please note that
-reshape2 is deprecated, and this redirection is now deprecated as well. To
-continue using melt methods from reshape2 while both libraries are attached,
-e.g. melt.list, you can prepend the namespace like reshape2::melt(semat). In the
-next version, this warning will become an error.</code></pre>
-<pre class="r"><code>m[which(m$X2==1),2]=&quot;PRS&quot;
-m[which(m$X2==2),2]=&quot;PCE&quot;
-m[which(m$X2==3),2]=&quot;PRS+PCE&quot;
-
-names(m)=c(&quot;Age&quot;,&quot;Model&quot;,&quot;AUC&quot;)
-m$Model=as.factor(m$Model)
-levels(m$Model)[1]=&quot;Genomic&quot;
-levels(m$Model)[2]=&quot;Non Genomic&quot;
-levels(m$Model)[3]=&quot;Combined&quot;
-
-print(levels(m$Model))</code></pre>
-<pre><code>[1] &quot;Genomic&quot;     &quot;Non Genomic&quot; &quot;Combined&quot;   </code></pre>
-<pre class="r"><code>m$se=m3$value
-gplot &lt;- ggplot(m,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),size=3)+geom_pointrange()+ylim(0.5,1)+scale_color_manual(values=c(&quot;tomato&quot;,&quot;cornflowerblue&quot;,&quot;darkorchid4&quot;))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))</code></pre>
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-<pre class="r"><code>gplot</code></pre>
-<p><img src="figure/Fig5.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>#ggsave(gplot,filename = &quot;aucplot.pdf&quot;,dpi=300)
-ggsave(gplot,filename = &quot;Figs/Fig5/aucplot.tiff&quot;,dpi=300,width = 9,height = 7)
-
-msave=m
-msave$upper=m$AUC+m$se
-msave$lower=m$AUC-m$se
-write.table(msave,&quot;output/AUC.csv&quot;,sep=&quot;,&quot;,quote=FALSE,row.names = F)</code></pre>
+<div id="htmlwidget-efb06a546a62dd9b3186" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-efb06a546a62dd9b3186">{"x":{"data":[{"x":[1,2,3,4,5,6,7],"y":[0.603508868177828,0.618129832795801,0.604610126283228,0.600013810324928,0.574907417902552,0.573232497833908,0.577667629381001],"text":["Age: 40-45<br />AUC: 0.6035089<br />Model: Genomic<br />AUC + se: 0.6209768<br />AUC - se: 0.5860409","Age: 45-50<br />AUC: 0.6181298<br />Model: Genomic<br />AUC + se: 0.6306543<br />AUC - se: 0.6056053","Age: 50-55<br />AUC: 0.6046101<br />Model: Genomic<br />AUC + se: 0.6143863<br />AUC - se: 0.5948340","Age: 55-60<br />AUC: 0.6000138<br />Model: Genomic<br />AUC + se: 0.6082729<br />AUC - se: 0.5917547","Age: 60-65<br />AUC: 0.5749074<br />Model: Genomic<br />AUC + se: 0.5812234<br />AUC - se: 0.5685914","Age: 65-70<br />AUC: 0.5732325<br />Model: Genomic<br />AUC + se: 0.5798349<br />AUC - se: 0.5666301","Age: 70-75<br />AUC: 0.5776676<br />Model: Genomic<br />AUC + se: 0.6142613<br />AUC - se: 0.5410739"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(255,99,71,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(255,99,71,1)"}},"hoveron":"points","name":"Genomic","legendgroup":"Genomic","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0174679597674443,-0.0125245118518773,-0.00977614045420716,-0.00825910337937563,-0.00631602294122324,-0.00660237381141537,-0.0365936969642033],"arrayminus":[-0.0174679597674443,-0.0125245118518773,-0.00977614045420716,-0.00825910337937563,-0.00631602294122324,-0.00660237381141537,-0.0365936969642033],"type":"data","width":0,"symmetric":false,"color":"rgba(255,99,71,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.564009263732859,0.60421354117341,0.649034492816867,0.658803656431441,0.657432960122214,0.626299676209135,0.564631956912029],"text":["Age: 40-45<br />AUC: 0.5640093<br />Model: Non Genomic<br />AUC + se: 0.5763540<br />AUC - se: 0.5516646","Age: 45-50<br />AUC: 0.6042135<br />Model: Non Genomic<br />AUC + se: 0.6149688<br />AUC - se: 0.5934583","Age: 50-55<br />AUC: 0.6490345<br />Model: Non Genomic<br />AUC + se: 0.6589094<br />AUC - se: 0.6391596","Age: 55-60<br />AUC: 0.6588037<br />Model: Non Genomic<br />AUC + se: 0.6670155<br />AUC - se: 0.6505918","Age: 60-65<br />AUC: 0.6574330<br />Model: Non Genomic<br />AUC + se: 0.6635091<br />AUC - se: 0.6513568","Age: 65-70<br />AUC: 0.6262997<br />Model: Non Genomic<br />AUC + se: 0.6328562<br />AUC - se: 0.6197432","Age: 70-75<br />AUC: 0.5646320<br />Model: Non Genomic<br />AUC + se: 0.6028855<br />AUC - se: 0.5263784"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(100,149,237,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(100,149,237,1)"}},"hoveron":"points","name":"Non Genomic","legendgroup":"Non Genomic","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0123447125048409,-0.0107552308274187,-0.00987490295765303,-0.00821182160490808,-0.00607612567104099,-0.00655648147525489,-0.0382535495498061],"arrayminus":[-0.0123447125048409,-0.0107552308274187,-0.00987490295765303,-0.00821182160490808,-0.00607612567104099,-0.00655648147525489,-0.0382535495498061],"type":"data","width":0,"symmetric":false,"color":"rgba(100,149,237,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.65169062894172,0.682521445177249,0.698766888726916,0.700422593056625,0.685958804772606,0.658498014361957,0.602275388338147],"text":["Age: 40-45<br />AUC: 0.6516906<br />Model: Combined<br />AUC + se: 0.6701083<br />AUC - se: 0.6332730","Age: 45-50<br />AUC: 0.6825214<br />Model: Combined<br />AUC + se: 0.6958889<br />AUC - se: 0.6691540","Age: 50-55<br />AUC: 0.6987669<br />Model: Combined<br />AUC + se: 0.7093815<br />AUC - se: 0.6881522","Age: 55-60<br />AUC: 0.7004226<br />Model: Combined<br />AUC + se: 0.7088950<br />AUC - se: 0.6919502","Age: 60-65<br />AUC: 0.6859588<br />Model: Combined<br />AUC + se: 0.6924119<br />AUC - se: 0.6795057","Age: 65-70<br />AUC: 0.6584980<br />Model: Combined<br />AUC + se: 0.6655408<br />AUC - se: 0.6514553","Age: 70-75<br />AUC: 0.6022754<br />Model: Combined<br />AUC + se: 0.6426472<br />AUC - se: 0.5619036"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(104,34,139,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(104,34,139,1)"}},"hoveron":"points","name":"Combined","legendgroup":"Combined","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0184176260096303,-0.0133674329056948,-0.0106146498888603,-0.00847239579717396,-0.00645311902197576,-0.00704276428404793,-0.0403718198824071],"arrayminus":[-0.0184176260096303,-0.0133674329056948,-0.0106146498888603,-0.00847239579717396,-0.00645311902197576,-0.00704276428404793,-0.0403718198824071],"type":"data","width":0,"symmetric":false,"color":"rgba(104,34,139,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.603508868177828,0.618129832795801,0.604610126283228,0.600013810324928,0.574907417902552,0.573232497833908,0.577667629381001],"text":["Age: 40-45<br />AUC: 0.6035089<br />Model: Genomic<br />AUC + se: 0.6209768<br />AUC - se: 0.5860409<br />Model: Genomic","Age: 45-50<br />AUC: 0.6181298<br />Model: Genomic<br />AUC + se: 0.6306543<br />AUC - se: 0.6056053<br />Model: Genomic","Age: 50-55<br />AUC: 0.6046101<br />Model: Genomic<br />AUC + se: 0.6143863<br />AUC - se: 0.5948340<br />Model: Genomic","Age: 55-60<br />AUC: 0.6000138<br />Model: Genomic<br />AUC + se: 0.6082729<br />AUC - se: 0.5917547<br />Model: Genomic","Age: 60-65<br />AUC: 0.5749074<br />Model: Genomic<br />AUC + se: 0.5812234<br />AUC - se: 0.5685914<br />Model: Genomic","Age: 65-70<br />AUC: 0.5732325<br />Model: Genomic<br />AUC + se: 0.5798349<br />AUC - se: 0.5666301<br />Model: Genomic","Age: 70-75<br />AUC: 0.5776676<br />Model: Genomic<br />AUC + se: 0.6142613<br />AUC - se: 0.5410739<br />Model: Genomic"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(255,99,71,1)","dash":"solid"},"hoveron":"points","name":"Genomic","legendgroup":"Genomic","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.564009263732859,0.60421354117341,0.649034492816867,0.658803656431441,0.657432960122214,0.626299676209135,0.564631956912029],"text":["Age: 40-45<br />AUC: 0.5640093<br />Model: Non Genomic<br />AUC + se: 0.5763540<br />AUC - se: 0.5516646<br />Model: Non Genomic","Age: 45-50<br />AUC: 0.6042135<br />Model: Non Genomic<br />AUC + se: 0.6149688<br />AUC - se: 0.5934583<br />Model: Non Genomic","Age: 50-55<br />AUC: 0.6490345<br />Model: Non Genomic<br />AUC + se: 0.6589094<br />AUC - se: 0.6391596<br />Model: Non Genomic","Age: 55-60<br />AUC: 0.6588037<br />Model: Non Genomic<br />AUC + se: 0.6670155<br />AUC - se: 0.6505918<br />Model: Non Genomic","Age: 60-65<br />AUC: 0.6574330<br />Model: Non Genomic<br />AUC + se: 0.6635091<br />AUC - se: 0.6513568<br />Model: Non Genomic","Age: 65-70<br />AUC: 0.6262997<br />Model: Non Genomic<br />AUC + se: 0.6328562<br />AUC - se: 0.6197432<br />Model: Non Genomic","Age: 70-75<br />AUC: 0.5646320<br />Model: Non Genomic<br />AUC + se: 0.6028855<br />AUC - se: 0.5263784<br />Model: Non Genomic"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(100,149,237,1)","dash":"solid"},"hoveron":"points","name":"Non Genomic","legendgroup":"Non Genomic","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.65169062894172,0.682521445177249,0.698766888726916,0.700422593056625,0.685958804772606,0.658498014361957,0.602275388338147],"text":["Age: 40-45<br />AUC: 0.6516906<br />Model: Combined<br />AUC + se: 0.6701083<br />AUC - se: 0.6332730<br />Model: Combined","Age: 45-50<br />AUC: 0.6825214<br />Model: Combined<br />AUC + se: 0.6958889<br />AUC - se: 0.6691540<br />Model: Combined","Age: 50-55<br />AUC: 0.6987669<br />Model: Combined<br />AUC + se: 0.7093815<br />AUC - se: 0.6881522<br />Model: Combined","Age: 55-60<br />AUC: 0.7004226<br />Model: Combined<br />AUC + se: 0.7088950<br />AUC - se: 0.6919502<br />Model: Combined","Age: 60-65<br />AUC: 0.6859588<br />Model: Combined<br />AUC + se: 0.6924119<br />AUC - se: 0.6795057<br />Model: Combined","Age: 65-70<br />AUC: 0.6584980<br />Model: Combined<br />AUC + se: 0.6655408<br />AUC - se: 0.6514553<br />Model: Combined","Age: 70-75<br />AUC: 0.6022754<br />Model: Combined<br />AUC + se: 0.6426472<br />AUC - se: 0.5619036<br />Model: Combined"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(104,34,139,1)","dash":"solid"},"hoveron":"points","name":"Combined","legendgroup":"Combined","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":39.2461602324616,"r":16.604400166044,"b":131.174761311748,"l":97.9659609796596},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,7.6],"tickmode":"array","ticktext":["40-45","45-50","50-55","55-60","60-65","65-70","70-75"],"tickvals":[1,2,3,4,5,6,7],"categoryorder":"array","categoryarray":["40-45","45-50","50-55","55-60","60-65","65-70","70-75"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":26.5670402656704},"tickangle":-90,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Age","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.475,1.025],"tickmode":"array","ticktext":["0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":26.5670402656704},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"AUC","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704},"title":{"text":"Model","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"d5d7113f552a":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{},"type":"scatter"},"d5d754f0413e":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{}},"d5d7694b7902":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{}}},"cur_data":"d5d7113f552a","visdat":{"d5d7113f552a":["function (y) ","x"],"d5d754f0413e":["function (y) ","x"],"d5d7694b7902":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -874,7 +674,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.1 (2022-06-23)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur ... 10.16
@@ -913,24 +712,24 @@ loaded via a namespace (and not attached):
 [34] tools_4.2.1         gtable_0.3.1        glue_1.6.2         
 [37] reshape2_1.4.4      Rcpp_1.0.9          cellranger_1.1.0   
 [40] jquerylib_0.1.4     vctrs_0.5.2         nlme_3.1-159       
-[43] xfun_0.33           lme4_1.1-30         rvest_1.0.3        
-[46] lifecycle_1.0.3     rstatix_0.7.0       googlesheets4_1.0.1
-[49] MASS_7.3-58.1       zoo_1.8-11          scales_1.2.1       
-[52] ragg_1.2.3          hms_1.1.2           promises_1.2.0.1   
-[55] yaml_2.3.5          KMsurv_0.1-5        sass_0.4.2         
-[58] stringi_1.7.8       highr_0.9           boot_1.3-28        
+[43] crosstalk_1.2.0     xfun_0.33           lme4_1.1-30        
+[46] rvest_1.0.3         lifecycle_1.0.3     rstatix_0.7.0      
+[49] googlesheets4_1.0.1 MASS_7.3-58.1       zoo_1.8-11         
+[52] scales_1.2.1        ragg_1.2.3          hms_1.1.2          
+[55] promises_1.2.0.1    yaml_2.3.5          KMsurv_0.1-5       
+[58] sass_0.4.2          stringi_1.7.8       boot_1.3-28        
 [61] systemfonts_1.0.4   rlang_1.0.6         pkgconfig_2.0.3    
 [64] evaluate_0.17       lattice_0.20-45     labeling_0.4.2     
 [67] htmlwidgets_1.5.4   tidyselect_1.2.0    plyr_1.8.7         
 [70] magrittr_2.0.3      R6_2.5.1            generics_0.1.3     
 [73] DBI_1.1.3           pillar_1.8.1        haven_2.5.1        
-[76] withr_2.5.0         abind_1.4-5         modelr_0.1.9       
-[79] crayon_1.5.2        car_3.1-0           utf8_1.2.2         
-[82] tzdb_0.3.0          rmarkdown_2.17      grid_4.2.1         
-[85] readxl_1.4.1        git2r_0.30.1        reprex_2.0.2       
-[88] digest_0.6.29       xtable_1.8-4        httpuv_1.6.6       
-[91] textshaping_0.3.6   munsell_0.5.0       viridisLite_0.4.1  
-[94] bslib_0.4.0        </code></pre>
+[76] whisker_0.4         withr_2.5.0         abind_1.4-5        
+[79] modelr_0.1.9        crayon_1.5.2        car_3.1-0          
+[82] utf8_1.2.2          tzdb_0.3.0          rmarkdown_2.17     
+[85] grid_4.2.1          readxl_1.4.1        git2r_0.30.1       
+[88] reprex_2.0.2        digest_0.6.29       xtable_1.8-4       
+[91] httpuv_1.6.6        textshaping_0.3.6   munsell_0.5.0      
+[94] viridisLite_0.4.1   bslib_0.4.0        </code></pre>
 </div>
 </div>
 

@@ -1,15 +1,18 @@
 ---
-title: "PCE_supplement"
-output: html_document
-date: '2023-03-11'
+title: "Supp_ASCVD"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
 ```
 
-
-## Vertical Venn
 
 ```{r mergedbar}
 source("code/utils.R")
@@ -56,9 +59,19 @@ p <- ggplot(data=r, aes(x=ints, y = value,fill = `ASCVD 10 year-Risk`)) + geom_b
 
 
 
-p
 
 ggplot2::ggsave(p,filename = "Figs/Supplemental/proportion_plots_ascvd.tiff",dpi = 300,height = 5,width = 8)
 
 write.table(r,"output/proportions_table_ascvd.csv",sep=",",row.names = F,quote=F)
+```
+
+```{r}
+ggplotly(p)
+```
+
+```{r}
+library(DT)
+m=cbind(r[,c(1:2)],round(r[,c(3:5)],2))
+colnames(m)=colnames(r)
+DT::datatable(m)
 ```

@@ -9,3 +9,38 @@ editor_options:
 ---
 
 Welcome to my research website.
+
+We have the workbook and html output for all the figures in Urbut et al 2023.
+
+[Figure 1](Fig1.html) Here is the hazard rate and proportion of variation explained in the UK Biobank
+
+[Figure 1n](Fig1b.html) Here is the hazard rate and proportion of variation explained in the Framingham Offspring Cohort
+
+[Figure 2](Fig2.html) Here are the relative and absolute rates of CAD by PRS and PCE percentile for three age categories
+
+[Figure 3](Fig3.html) Here is the stratification by age and PCE using the UK Biobank
+
+[Figure 4](Fig4.html) Here is the proportion of future events captured using a PCE threshold of 7.5% versus a PRS threshold of greater than 80% to predict future events
+
+[Figure 5](Fig5.html) Here is the AUC of models using genomic, non genomic or both
+
+[Figure 1 Supplemental ](NRI.html) Here is the net reclassification of events and non events using PCE versus PRS
+
+
+[Figure 2 Supplemental](SuppASCVD.html) Here is the proportion of individuals in each PCE risk class by age
+
+# Tables
+
+We also have a variety of exlucsion tables and summary tables 
+
+[Table 1](table1.html) Here is the summary characterisitics of each cohort, and of division by ASCVD and PRS risk calss in the UK Biobank subset
+
+[Exclusions](flowcharts.html) Here are the flowcharts of exclusionary criteria for creating the cohorts used in these analyses.
+
+
+
+
+
+
+
+

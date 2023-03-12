@@ -1,11 +1,17 @@
 ---
-title: "fig4_verticalvenn"
-output: html_document
-date: '2023-02-26'
+title: "Fig4"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
+
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
 ```
 
 ## Vertical Venn
@@ -53,10 +59,17 @@ p <- ggplot(data=r, aes(x=ints, y = value,fill = `Risk Stratification`)) + geom_
 
 
 
-p
 
+ggplotly(p)
 ggplot2::ggsave(p,filename = "Figs/Fig4/proportion_plots_ukbalone.tiff",dpi = 300,height = 5,width = 8)
 
 write.table(r,"output/proportions_table.csv",sep=",",row.names = F,quote=F)
 ```
 
+```{r}
+library("DT")
+
+r2=cbind(r[,c(1,2)],round(r[,c(3:5)],2))
+colnames(r2)=colnames(r)
+datatable(r2)
+```

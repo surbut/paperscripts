@@ -1,20 +1,26 @@
 ---
-title: "fig3_interaction"
-output: html_document
-date: '2023-02-26'
+title: "Fig3"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Introduction
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
+```
 
 ## Resolution increases
 
 Here we stratify by PRS and by ASCVD to show folks that are captured by PRS but not by PCE. Critically, for these younger folks CAC offers little NPV for restratification under existing means.
 
 ```{r,message=FALSE,eval=TRUE}
-
+library(ggplot2)
+library(plotly)
 df=readRDS("output/amit_df.rds")
 df$chd=df$phenos.has_CAD
 df=na.omit(df)
@@ -203,6 +209,6 @@ p=sa %>% ggplot(aes(x=interaction(age,PCE_cat), y=values,ymin = lower, ymax =upp
 #         axis.ticks.y=element_blank()  #remove y axis ticks
 #         )
 ggsave(p,filename = "Figs/Fig3/interaction.tiff",dpi=300,height = 5,width=8)
-
+ggplotly(p)
 ```
 

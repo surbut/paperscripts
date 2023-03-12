@@ -1,11 +1,17 @@
 ---
-title: "AUCmat"
-output: html_document
-date: '2023-02-26'
+title: "Fig5"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
 ---
 
+## Introduction
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
 ```
 
 ## AUC overall
@@ -70,11 +76,11 @@ levels(m$Model)[1]="Genomic"
 levels(m$Model)[2]="Non Genomic"
 levels(m$Model)[3]="Combined"
 
-print(levels(m$Model))
-m$se=m3$value
-gplot <- ggplot(m,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),size=3)+geom_pointrange()+ylim(0.5,1)+scale_color_manual(values=c("tomato","cornflowerblue","darkorchid4"))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))
 
-gplot
+m$se=m3$value
+gplot <- ggplot(m,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),linewidth=3)+geom_pointrange()+ylim(0.5,1)+scale_color_manual(values=c("tomato","cornflowerblue","darkorchid4"))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))
+
+ggplotly(gplot)
 #ggsave(gplot,filename = "aucplot.pdf",dpi=300)
 ggsave(gplot,filename = "Figs/Fig5/aucplot.tiff",dpi=300,width = 9,height = 7)
 

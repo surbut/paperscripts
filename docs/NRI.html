@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name" />
+<meta name="author" content="Sarah Urbut" />
 
-<meta name="date" content="2023-03-11" />
+<meta name="date" content="2023-03-12" />
 
-<title>NRI</title>
+<title>Supplement_NRI</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -37,6 +37,18 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.24/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -359,9 +371,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">NRI</h1>
-<h4 class="author">Your Name</h4>
-<h4 class="date">2023-03-11</h4>
+<h1 class="title toc-ignore">Supplement_NRI</h1>
+<h4 class="author">Sarah Urbut</h4>
+<h4 class="date">2023-03-12</h4>
 
 </div>
 
@@ -390,7 +402,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-03-11
+<strong>Last updated:</strong> 2023-03-12
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -428,10 +440,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -524,15 +536,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeaf9c4d8c474bd2bf561d737eb3511f56d219bd49targetblankaf9c4d8a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/surbut/paperscripts/tree/af9c4d8c474bd2bf561d737eb3511f56d219bd49" target="_blank">af9c4d8</a>
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreeaf9c4d8c474bd2bf561d737eb3511f56d219bd49targetblankaf9c4d8a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstreef427146d103eca1c4ba3651fe3cf38eb925230d9targetblankf427146a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -542,7 +554,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/surbut/paperscripts/tree/af9c4d8c474bd2bf561d737eb3511f56d219bd49" target="_blank">af9c4d8</a>.
+<a href="https://github.com/surbut/paperscripts/tree/f427146d103eca1c4ba3651fe3cf38eb925230d9" target="_blank">f427146</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -557,17 +569,18 @@ were generated:
 </p>
 <pre><code>
 Untracked files:
-    Untracked:  Figs/Supplemental/NRI.tiff
-    Untracked:  Figs/Supplemental/NRI_noleg.tiff
-    Untracked:  analysis/NRI.Rmd
-    Untracked:  analysis/SuppASCVD.Rmd
-    Untracked:  nrimat.pdf
+    Untracked:  Figs/Fig1b/
+    Untracked:  analysis/Fig1b.Rmd
 
 Unstaged changes:
     Modified:   .DS_Store
     Modified:   Figs/.DS_Store
-    Deleted:    SuppASCVD.Rmd
-    Deleted:    SuppASCVD.html
+    Modified:   Figs/Fig2/gprs_abs.tiff
+    Modified:   Figs/Supplemental/NRI.tiff
+    Modified:   analysis/Fig1.Rmd
+    Modified:   analysis/Fig3.Rmd
+    Modified:   analysis/Fig5.Rmd
+    Modified:   analysis/NRI.Rmd
 
 </code></pre>
 <p>
@@ -582,71 +595,86 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/NRI.Rmd</code>) and HTML
+(<code>docs/NRI.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/surbut/paperscripts/blob/f427146d103eca1c4ba3651fe3cf38eb925230d9/analysis/NRI.Rmd" target="_blank">f427146</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/surbut/paperscripts/f427146d103eca1c4ba3651fe3cf38eb925230d9/docs/NRI.html" target="_blank">f427146</a>
+</td>
+<td>
+Your Name
+</td>
+<td>
+2023-03-11
+</td>
+<td>
+Update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<pre class="r"><code>library(ggplot2)
-library(reshape)
-library(ggsci)
-
-df=readRDS(&quot;output/amit_df.rds&quot;)
-
-NRI_mat=matrix(NA,nrow=2,ncol=6)
-num_mat=matrix(NA,nrow=2,ncol=6)
-ages=c(50,55,60,65,70,75)
-oldf=df
-#for(q in 1:(length(ages)-1)){
-for(q in 1:(length(ages))){
-  is=ages[q]
-  i=ages[q+1]
-  #print(i)
-  #df=oldf[oldf$phenos.enrollment&gt;is&amp;oldf$phenos.enrollment&lt;i,]
-  df=oldf[oldf$phenos.enrollment&lt;is,]
-  
-  (nocad_PCEpos_PRSneg=dim(df[df$phenos.has_CAD==0&amp;df$ascvd_10y_accaha&gt;7.5&amp;df$prs.r&lt;0.80,])[1])
-  (nocad_PCEneg_PRSpos=dim(df[df$phenos.has_CAD==0&amp;df$ascvd_10y_accaha&lt;7.5&amp;df$prs.r&gt;0.80,])[1])
-  
-  
-  (cad_PCEpos_PRSneg=dim(df[df$phenos.has_CAD==1&amp;df$ascvd_10y_accaha&gt;7.5&amp;df$prs.r&lt;0.80,])[1])
-  (cad_PCEneg_PRSpos=dim(df[df$phenos.has_CAD==1&amp;df$ascvd_10y_accaha&lt;7.5&amp;df$prs.r&gt;0.80,])[1])
-  
-  
-  NRI_e=(cad_PCEneg_PRSpos-cad_PCEpos_PRSneg)/(sum(df$phenos.has_CAD==1))
-  NRI_ne=(nocad_PCEpos_PRSneg-nocad_PCEneg_PRSpos)/(sum(df$phenos.has_CAD==0))
-  
-  #print(NRI_e)
-  #print(NRI_ne)
-  
-  NRI_mat[1,q]=NRI_e
-  NRI_mat[2,q]=NRI_ne
-  num_mat[,q]=nrow(df)
-}
-
-errors=sqrt((abs(NRI_mat)*(1-abs(NRI_mat)))/(num_mat))
-rownames(NRI_mat)=rownames(errors)=c(&quot;NRI_event&quot;,&quot;NRI_nonevent&quot;)
-t=data.frame(t(NRI_mat))
-e=data.frame(t(errors))
-t$ages=e$ages=c(&quot;&lt;50&quot;,&quot;&lt;55&quot;,&quot;&lt;60&quot;,&quot;&lt;65&quot;,&quot;&lt;70&quot;,&quot;&lt;75&quot;)
-m=melt(t,id.vars = &quot;ages&quot;)
-m2=melt(e,id.vars = &quot;ages&quot;)
-m$error=m2$value
-m$variable=factor(m$variable,levels = c(&quot;NRI_event&quot;,&quot;NRI_nonevent&quot;),labels = c(&quot;Net Reclassification Event&quot;,&quot;Net Reclassification Non-event&quot;))
-
-n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom_bar(stat=&quot;identity&quot;)+theme_classic(base_size = 20)+labs(x=&quot;Ages of Consideration&quot;,y=&quot;Net Reclassification Index&quot;,fill=&quot;Metric Considered&quot;)+scale_fill_nejm()+ylim(c(-0.4,0.4))
-
-ggsave(n,filename = &quot;Figs/Supplemental/NRI.tiff&quot;,width = 6,height = 6,dpi = 300)
-
-
-n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom_bar(stat=&quot;identity&quot;)+theme_classic(base_size = 20)+labs(x=&quot;Ages of Consideration&quot;,y=&quot;Net Reclassification Index&quot;,fill=&quot;Metric Considered&quot;)+scale_fill_nejm()+ylim(c(-0.4,0.4))+theme(legend.position=&quot;none&quot;)
-
-ggsave(n,filename = &quot;Figs/Supplemental/NRI_noleg.tiff&quot;,width = 6,height = 6,dpi = 300)</code></pre>
+</div>
+<div id="introduction-1" class="section level2">
+<h2>Introduction</h2>
+<div id="htmlwidget-5c3a3ec5a4b38bce708f" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c3a3ec5a4b38bce708f">{"x":{"data":[{"orientation":"v","width":[0.45,0.45,0.45,0.45,0.449999999999999,0.449999999999999],"base":[0,0,-0.107845210403891,-0.250745156482861,-0.353168887288441,-0.355942806076854],"x":[0.775,1.775,2.775,3.775,4.775,5.775],"y":[0.161218424962853,0.0341284403669725,0.107845210403891,0.250745156482861,0.353168887288441,0.355942806076854],"text":["ages: <50<br />value: 0.16121842<br />variable: Net Reclassification Event","ages: <55<br />value: 0.03412844<br />variable: Net Reclassification Event","ages: <60<br />value: 0.10784521<br />variable: Net Reclassification Event","ages: <65<br />value: 0.25074516<br />variable: Net Reclassification Event","ages: <70<br />value: 0.35316889<br />variable: Net Reclassification Event","ages: <75<br />value: 0.35594281<br />variable: Net Reclassification Event"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(188,60,41,1)","line":{"width":null,"color":"transparent"}},"name":"Net Reclassification Event","legendgroup":"Net Reclassification Event","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.45,0.45,0.45,0.45,0.449999999999999,0.449999999999999],"base":[-0.154983249099135,-0.109652327130517,-0.0346525901043114,0,0,0],"x":[1.225,2.225,3.225,4.225,5.225,6.225],"y":[0.154983249099135,0.109652327130517,0.0346525901043114,0.0600166040601767,0.149061944322061,0.151386243987784],"text":["ages: <50<br />value: 0.15498325<br />variable: Net Reclassification Non-event","ages: <55<br />value: 0.10965233<br />variable: Net Reclassification Non-event","ages: <60<br />value: 0.03465259<br />variable: Net Reclassification Non-event","ages: <65<br />value: 0.06001660<br />variable: Net Reclassification Non-event","ages: <70<br />value: 0.14906194<br />variable: Net Reclassification Non-event","ages: <75<br />value: 0.15138624<br />variable: Net Reclassification Non-event"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,114,181,1)","line":{"width":null,"color":"transparent"}},"name":"Net Reclassification Non-event","legendgroup":"Net Reclassification Non-event","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.775,1.775,2.775,3.775,4.775,5.775],"y":[0.161218424962853,0.0341284403669725,-0.107845210403891,-0.250745156482861,-0.353168887288441,-0.355942806076854],"text":["ages: <50<br />value:  0.16121842<br />variable: Net Reclassification Event<br />value - error:  0.15998026<br />value + error:  0.16245659","ages: <55<br />value:  0.03412844<br />variable: Net Reclassification Event<br />value - error:  0.03364721<br />value + error:  0.03460967","ages: <60<br />value: -0.10784521<br />variable: Net Reclassification Event<br />value - error: -0.10853418<br />value + error: -0.10715624","ages: <65<br />value: -0.25074516<br />variable: Net Reclassification Event<br />value - error: -0.25156921<br />value + error: -0.24992110","ages: <70<br />value: -0.35316889<br />variable: Net Reclassification Event<br />value - error: -0.35400522<br />value + error: -0.35233256","ages: <75<br />value: -0.35594281<br />variable: Net Reclassification Event<br />value - error: -0.35677903<br />value + error: -0.35510658"],"type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[0.00123816992889147,0.000481233613892566,0.000688969648443977,0.000824056680944568,0.00083633045929471,0.000836225379453215],"arrayminus":[0.00123816992889147,0.000481233613892566,0.000688969648443977,0.00082405668094454,0.00083633045929471,0.000836225379453215],"type":"data","width":2.70967741935484,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"Net Reclassification Event","legendgroup":"Net Reclassification Event","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1.225,2.225,3.225,4.225,5.225,6.225],"y":[-0.154983249099135,-0.109652327130517,-0.0346525901043114,0.0600166040601767,0.149061944322061,0.151386243987784],"text":["ages: <50<br />value: -0.15498325<br />variable: Net Reclassification Non-event<br />value - error: -0.15620174<br />value + error: -0.15376475","ages: <55<br />value: -0.10965233<br />variable: Net Reclassification Non-event<br />value - error: -0.11048051<br />value + error: -0.10882414","ages: <60<br />value: -0.03465259<br />variable: Net Reclassification Non-event<br />value - error: -0.03505884<br />value + error: -0.03424634","ages: <65<br />value:  0.06001660<br />variable: Net Reclassification Non-event<br />value - error:  0.05956504<br />value + error:  0.06046817","ages: <70<br />value:  0.14906194<br />variable: Net Reclassification Non-event<br />value - error:  0.14843875<br />value + error:  0.14968514","ages: <75<br />value:  0.15138624<br />variable: Net Reclassification Non-event<br />value - error:  0.15076025<br />value + error:  0.15201224"],"type":"scatter","mode":"lines","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[0.00121849433360546,0.0008281839034113,0.000406246116106457,0.000451566617592353,0.000623194496118723,0.000625992683404991],"arrayminus":[0.00121849433360546,0.0008281839034113,0.000406246116106457,0.000451566617592353,0.000623194496118723,0.000625992683404991],"type":"data","width":2.70967741935484,"symmetric":false,"color":"rgba(0,0,0,1)"},"name":"Net Reclassification Non-event","legendgroup":"Net Reclassification Non-event","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":34.5969281859693,"r":13.2835201328352,"b":73.0593607305936,"l":88.9995848899959},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,6.6],"tickmode":"array","ticktext":["<50","<55","<60","<65","<70","<75"],"tickvals":[1,2,3,4,5,6],"categoryorder":"array","categoryarray":["<50","<55","<60","<65","<70","<75"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":6.6417600664176,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":21.2536322125363},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Ages of Consideration","font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.44,0.44],"tickmode":"array","ticktext":["-0.4","-0.2","0.0","0.2","0.4"],"tickvals":[-0.4,-0.2,0,0.2,0.4],"categoryorder":"array","categoryarray":["-0.4","-0.2","0.0","0.2","0.4"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":6.6417600664176,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":21.2536322125363},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"Net Reclassification Index","font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":21.2536322125363}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"d82b5af6b3a8":{"x":{},"y":{},"fill":{},"type":"bar"},"d82b7a8d093f":{"x":{},"y":{},"fill":{},"ymin":{},"ymax":{}}},"cur_data":"d82b5af6b3a8","visdat":{"d82b5af6b3a8":["function (y) ","x"],"d82b7a8d093f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-47abf6feb9c508565805" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47abf6feb9c508565805">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["&lt;50","&lt;55","&lt;60","&lt;65","&lt;70","&lt;75","&lt;50","&lt;55","&lt;60","&lt;65","&lt;70","&lt;75"],["Net Reclassification Event","Net Reclassification Event","Net Reclassification Event","Net Reclassification Event","Net Reclassification Event","Net Reclassification Event","Net Reclassification Non-event","Net Reclassification Non-event","Net Reclassification Non-event","Net Reclassification Non-event","Net Reclassification Non-event","Net Reclassification Non-event"],[0.16,0.03,-0.11,-0.25,-0.35,-0.36,-0.15,-0.11,-0.03,0.06,0.15,0.15],[0,0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ages<\/th>\n      <th>variable<\/th>\n      <th>value<\/th>\n      <th>error<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -655,7 +683,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.1 (2022-06-23)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur ... 10.16
@@ -671,23 +698,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] ggsci_2.9     reshape_0.8.9 ggplot2_3.4.1
+[1] DT_0.24       plotly_4.10.0 ggsci_2.9     reshape_0.8.9 ggplot2_3.4.1
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.0  xfun_0.33         bslib_0.4.0       colorspace_2.0-3 
- [5] vctrs_0.5.2       generics_0.1.3    htmltools_0.5.3   yaml_2.3.5       
- [9] utf8_1.2.2        rlang_1.0.6       jquerylib_0.1.4   later_1.3.0      
-[13] pillar_1.8.1      glue_1.6.2        withr_2.5.0       DBI_1.1.3        
-[17] lifecycle_1.0.3   plyr_1.8.7        stringr_1.4.1     munsell_0.5.0    
-[21] gtable_0.3.1      workflowr_1.7.0   ragg_1.2.3        evaluate_0.17    
-[25] labeling_0.4.2    knitr_1.40        fastmap_1.1.0     httpuv_1.6.6     
-[29] fansi_1.0.3       Rcpp_1.0.9        promises_1.2.0.1  scales_1.2.1     
-[33] cachem_1.0.6      jsonlite_1.8.2    farver_2.1.1      fs_1.5.2         
-[37] systemfonts_1.0.4 textshaping_0.3.6 digest_0.6.29     stringi_1.7.8    
-[41] dplyr_1.0.10      grid_4.2.1        rprojroot_2.0.3   cli_3.4.1        
-[45] tools_4.2.1       magrittr_2.0.3    sass_0.4.2        tibble_3.1.8     
-[49] pkgconfig_2.0.3   assertthat_0.2.1  rmarkdown_2.17    rstudioapi_0.14  
-[53] R6_2.5.1          git2r_0.30.1      compiler_4.2.1   </code></pre>
+ [1] tidyselect_1.2.0  xfun_0.33         bslib_0.4.0       purrr_0.3.5      
+ [5] colorspace_2.0-3  vctrs_0.5.2       generics_0.1.3    viridisLite_0.4.1
+ [9] htmltools_0.5.3   yaml_2.3.5        utf8_1.2.2        rlang_1.0.6      
+[13] jquerylib_0.1.4   later_1.3.0       pillar_1.8.1      glue_1.6.2       
+[17] withr_2.5.0       DBI_1.1.3         lifecycle_1.0.3   plyr_1.8.7       
+[21] stringr_1.4.1     munsell_0.5.0     gtable_0.3.1      workflowr_1.7.0  
+[25] ragg_1.2.3        htmlwidgets_1.5.4 evaluate_0.17     labeling_0.4.2   
+[29] knitr_1.40        fastmap_1.1.0     crosstalk_1.2.0   httpuv_1.6.6     
+[33] fansi_1.0.3       Rcpp_1.0.9        promises_1.2.0.1  scales_1.2.1     
+[37] cachem_1.0.6      jsonlite_1.8.2    farver_2.1.1      systemfonts_1.0.4
+[41] fs_1.5.2          textshaping_0.3.6 digest_0.6.29     stringi_1.7.8    
+[45] dplyr_1.0.10      grid_4.2.1        rprojroot_2.0.3   cli_3.4.1        
+[49] tools_4.2.1       magrittr_2.0.3    sass_0.4.2        lazyeval_0.2.2   
+[53] tibble_3.1.8      tidyr_1.2.1       whisker_0.4       pkgconfig_2.0.3  
+[57] data.table_1.14.2 assertthat_0.2.1  rmarkdown_2.17    httr_1.4.4       
+[61] rstudioapi_0.14   R6_2.5.1          git2r_0.30.1      compiler_4.2.1   </code></pre>
 </div>
 </div>
 

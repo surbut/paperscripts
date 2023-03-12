@@ -1,7 +1,7 @@
 ---
-title: "NRI"
-author: "Your Name"
-date: "2023-03-11"
+title: "Supplement_NRI"
+author: "Sarah Urbut"
+date: "2023-03-12"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
@@ -9,10 +9,17 @@ editor_options:
 
 ## Introduction
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
+```
+## Introduction
+
 ```{r}
 library(ggplot2)
 library(reshape)
 library(ggsci)
+library(plotly)
 
 df=readRDS("output/amit_df.rds")
 
@@ -62,10 +69,16 @@ n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom
 ggsave(n,filename = "Figs/Supplemental/NRI.tiff",width = 6,height = 6,dpi = 300)
 
 
-n=ggplot(m,aes(ages,value,fill=variable,ymin=value-error,ymax=value+error))+geom_bar(stat="identity")+theme_classic(base_size = 20)+labs(x="Ages of Consideration",y="Net Reclassification Index",fill="Metric Considered")+scale_fill_nejm()+ylim(c(-0.4,0.4))+theme(legend.position="none")
+n=ggplot(m,aes(ages,value,fill=variable))+geom_bar(stat="identity",position=position_dodge())+
+theme_classic(base_size = 20)+labs(x="Ages of Consideration",y="Net Reclassification Index",fill="Metric Considered")+scale_fill_nejm()+ylim(c(-0.4,0.4))+theme(legend.position="none")+
+geom_errorbar(aes(ymin=value-error,ymax=value+error), width=.2,position=position_dodge(.9)) 
 
 ggsave(n,filename = "Figs/Supplemental/NRI_noleg.tiff",width = 6,height = 6,dpi = 300)
-
+write.table(m,"output/SupplementalNRI.csv",row.names = F,quote=F,sep=",")
+ggplotly(n)
+library(DT)
+m=cbind(m[,c(1:2)],round(m[,c(3:4)],2))
+DT::datatable(m)
 ```
 
 
