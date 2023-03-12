@@ -13,7 +13,7 @@ We have the workbook and html output for all the figures in Urbut et al 2023.
 
 [Figure 1](Fig1.html) Here is the hazard rate and proportion of variation explained in the UK Biobank
 
-[Figure 1n](Fig1b.html) Here is the hazard rate and proportion of variation explained in the Framingham Offspring Cohort
+[Figure 1b](Fig1b.html) Here is the hazard rate and proportion of variation explained in the Framingham Offspring Cohort
 
 [Figure 2](Fig2.html) Here are the relative and absolute rates of CAD by PRS and PCE percentile for three age categories
 
