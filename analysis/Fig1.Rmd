@@ -339,7 +339,7 @@ ggplotly(hall_pce)
 ggplotly(r2_pce)
 ```
 
-# Hazard Rate Lookup Table
+## Hazard Rate Lookup Table
 ```{r}
 library(DT)
 m=cbind(haz[,c(1:2)],round(haz[,c(3:5)],2))
@@ -347,7 +347,8 @@ colnames(m)=colnames(haz)
 DT::datatable(m)
 ```
 
-# Proportion Variation Explained Lookup Table
+## Proportion Variation Explained Lookup Table
+
 ```{r}
 library(DT)
 m=cbind(r2s[,c(1:2)],round(r2s[,c(3)],2))
