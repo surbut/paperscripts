@@ -182,12 +182,11 @@ hr_fhs = ggplot(subset(
     "Smoking",
     #"Male Sex"
     "High-density Lipoprotein",
-    "Smoking")), aes(age, value, colour = variable)) +
+    "Smoking")), aes(age, value, colour = variable,fill=variable)) +
   geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Hazard Ratio of Coronary Artery Disease", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure",
 "Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein",
-"Total cholesterol"))
-
-# +scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+"Total cholesterol"))+
+  scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
 
 
 r2_fhs = ggplot(subset(
@@ -202,10 +201,8 @@ r2_fhs = ggplot(subset(
     #"Male Sex",
     "High-density Lipoprotein",
     "Smoking")
-), aes(age, value, colour = variable))+
-  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Proportion of Variation Explained", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
-
-  # scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+), aes(age, value, colour = variable,fill=variable))+
+  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Proportion of Variation Explained", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))+scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
 
 h1=hr_fhs+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
 # 

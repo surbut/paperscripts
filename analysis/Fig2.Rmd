@@ -253,7 +253,7 @@ predo$upr=predo$upr/min(predo$upr)
 
 
 predr=rbind(predy,predm,predo)
-predr$variable=c(rep("<55",97),rep("55-65",97),rep(">65",68))
+predr$variable=c(rep("<55",nrow(predy)),rep("55-65",nrow(predm)),rep(">65",nrow(predo)))
 
 predr$variable=  factor(
     predr$variable,
@@ -267,7 +267,7 @@ predr$x=c(newdf$x[1:nrow(predy)],rep(newdf$x[1:nrow(predm)],2))
 gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,color=variable)) + 
  geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
- xlab("PCE Percentile") + 
+ xlab("10-year risk") + 
  ylab("Relative Risk")+scale_fill_futurama()+scale_color_futurama()+
 # scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
   theme_classic(base_size =20)+
