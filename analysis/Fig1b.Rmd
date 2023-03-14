@@ -178,9 +178,9 @@ hr_fhs = ggplot(subset(
     "Total cholesterol",
     "Systolic blood pressure",
     "Pooled cohort equations",
-    #"Age",
+    "Age",
     "Smoking",
-    #"Male Sex"
+    "Male Sex",
     "High-density Lipoprotein",
     "Smoking")), aes(age, value, colour = variable,fill=variable)) +
   geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Hazard Ratio of Coronary Artery Disease", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure",
@@ -196,9 +196,9 @@ r2_fhs = ggplot(subset(
     "Total cholesterol",
     "Systolic blood pressure",
     "Pooled cohort equations",
-    #"Age",
+    "Age",
     "Smoking",
-    #"Male Sex",
+    "Male Sex",
     "High-density Lipoprotein",
     "Smoking")
 ), aes(age, value, colour = variable,fill=variable))+

@@ -109,7 +109,9 @@ r2s$variable = ors$variable = haz$variable <-
       "Total cholesterol"
     )
   )
+```
 
+```{r fillF,echo=F}
 
 
 hr_ukb_all = ggplot(subset(
@@ -188,10 +190,12 @@ aes(age, value, colour = variable)) +
     )
   )
 
+```
+
+```{r fillT,echo=F}
 
 
-
-tgt = c("Diabetes mellitus", "Smoking", "Polygenic score", "Systolic blood pressure","High-density lipoprotein", "Total cholesterol")
+tgt = c("Diabetes mellitus", "Smoking", "Polygenic score", "Age","Male Sex","Systolic blood pressure","High-density lipoprotein", "Total cholesterol")
 
 dat = haz %>% filter(variable %in% tgt)
 datr = r2s %>%filter(variable %in% tgt)
@@ -199,7 +203,7 @@ datr = r2s %>%filter(variable %in% tgt)
 hr_ukb_all = dat %>%
   ggplot(aes(x = age, y = value, colour = variable, fill = variable
              )) +
-  geom_point(size = 1) +
+  geom_point(size = 0.5) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
    scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"))+
@@ -216,8 +220,10 @@ r2_ukb_all = datr %>%
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
    scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"))+
   labs(y = "Proportion of Variation Explained", x = "Age of Risk Assessment", colour = "Risk Factor")
+```
 
-# 
+
+```{r format, echo=F}
   
 ## formatting
 source("code/utils.R")
