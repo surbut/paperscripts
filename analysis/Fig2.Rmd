@@ -93,7 +93,7 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, color=variable,fil
  geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
  xlab("Polygenic score percentile") + 
- ylab("Absolute risk of coronary artery disease")+scale_fill_futurama()+scale_color_futurama()+
+ ylab("Absolute risk of coronary artery disease")+scale_fill_futurama(name="Age")+scale_color_futurama(name="Age")+
 # scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
 # scale_color_manual(name="Age Group",values=c("<55 years"="deepskyblue","55-65 years"="deepskyblue3",">65 years"="deepskyblue4"))+
   theme_classic(base_size =20)#+theme(legend.position = "null")
@@ -106,7 +106,7 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, color=variable,fil
  geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
  xlab("Polygenic score percentile") + 
- ylab("Absolute risk of coronary artery disease")+scale_fill_futurama()+scale_color_futurama()+
+ ylab("Absolute risk of coronary artery disease")+scale_fill_futurama(name="Age Group")+scale_color_futurama(name="Age")+
 # scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
 # scale_color_manual(name="Age Group",values=c("<55 years"="deepskyblue","55-65 years"="deepskyblue3",">65 years"="deepskyblue4"))+
   theme_classic(base_size =20)+theme(legend.position = "null")
@@ -139,13 +139,14 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,colo
   geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
  xlab("Polygenic score percentile") + 
- ylab("Relative Risk")+scale_fill_futurama()+scale_color_futurama()+
+ ylab("Relative Risk")+scale_fill_futurama(name="Age")+scale_color_futurama(name="Age")+
 #scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
   theme_classic(base_size =20)+theme(legend.position = "null")
 
 ggsave(gp,filename = paste0(fig_path,"gprs_rel.tiff"),dpi=300,height=6,width = 6)
 ggplotly(gp)
 ```
+
 
 ## PCE
 ```{r}
@@ -226,7 +227,7 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,colo
  geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
  xlab("10 year Risk") + 
- ylab("Absolute risk of coronary artery disease")+scale_fill_futurama()+scale_color_futurama()+
+ ylab("Absolute risk of coronary artery disease")+scale_fill_futurama(name="Age")+scale_color_futurama(name="Age")+
 # scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
   theme_classic(base_size =20)+theme(legend.position = "null")
 
@@ -268,7 +269,7 @@ gp=ggplot(data=predr, aes(x=x*100, y=fit, ymin=lwr, ymax=upr, fill=variable,colo
  geom_line(linewidth=2) + 
  geom_ribbon(alpha=0.3) + 
  xlab("10-year risk") + 
- ylab("Relative Risk")+scale_fill_futurama()+scale_color_futurama()+
+ ylab("Relative Risk")+scale_fill_futurama(name="Age")+scale_color_futurama(name="Age")+
 # scale_fill_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+scale_color_manual(name="Age Group",values=c("<55"="deepskyblue","55-65"="deepskyblue3",">65"="deepskyblue4"))+
   theme_classic(base_size =20)+
   theme(legend.position = "null")

@@ -1,6 +1,6 @@
 ---
 title: "density"
-author: "Your Name"
+author: "Sarah Urbut"
 date: "2023-03-14"
 output: workflowr::wflow_html
 editor_options:
@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE
 
 ## Introduction
 
+Here we display the density of PRS and ASCVD 10 year Risk:
+
 ```{r}
 library("ggridges")
 source("code/utils.R")
@@ -23,29 +25,26 @@ df=readRDS("output/amit_df.rds")
 df$agecat=cut(df$phenos.enrollment,breaks=c(0,55,65,100),labels=c("<55","55-65",">65"))
 
 prs=ggplot(df, aes(x = prs_quant, y = agecat,fill=agecat)) + 
-  geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Age Category")+scale_fill_futurama()
+  geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Age Category")+scale_fill_futurama()+theme_classic()
+
 
 prs
 ```
 
+```{r}
+ggsave(prs,filename = "Figs/density/prs_distribution.tiff",width = 6,height = 3,dpi=300)
+```
 
 ```{r}
 
 pce=ggplot(df, aes(x = ascvd_10y_accaha_all, y = agecat,fill=agecat)) + 
-  geom_density_ridges() + theme_ridges()+labs(x = "Predicted 10-year ASCVD Percentile ", y = "Age Category")+scale_fill_futurama()+xlim(0,40)
+  geom_density_ridges() + theme_ridges()+labs(x = "Predicted 10-year ASCVD Percentile ", y = "Age Category")+scale_fill_futurama()+xlim(0,40)+theme_classic()
 
 pce
-
-ggplot(df,aes(y = ascvd_10y_accaha_all, x = agecat,color=ascvd_10y_accaha_all)) +
-  geom_quasirandom(alpha = 0.5) + 
-  coord_flip() + 
-  theme_minimal(base_size = 13) 
-+ 
-  scale_color_viridis_c(guide = "none") + 
-  scale_y_continuous(labels = label_dollar()) + 
-  labs(x = "Largest group in Census tract", 
-       y = "Median household income", 
-       title = "Household income distribution by largest racial/ethnic group", 
-       subtitle = "Census tracts, New York City", 
-       caption = "Data source: 2016-2020 ACS")
 ```
+
+```{r}
+ggsave(pce,filename = "Figs/density/pce_distribution.tiff",width = 6,height = 3,dpi=300)
+```
+
+
