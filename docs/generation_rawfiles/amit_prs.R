@@ -153,6 +153,8 @@ table1(~ factor(sex) + ldladj + sbp + factor(bp_med) +factor(smoke) +
          phenos.enrollment +prs.r|ascvdcat,data=df)
 
 
+
+
 # 
 # prs=fread("~/Dropbox/phenotypes/CAD_prs.txt")
 # lipids=read.table("~/Dropbox/ukbb-lipids-meds.txt",sep = "\t",header = T)
@@ -253,6 +255,16 @@ table1(~ factor(sex) + ldladj + sbp + factor(bp_med) +factor(smoke) +
 # ################
 # 
 # 
+
+
+dfukb_baseline=readRDS("output/dfukbbaseline.rds")
+dat2=merge(x = dad,y = dfukb_baseline,by.x = "eid",by.y = "identifier",all.x = TRUE)
+dat2$bp_med2=ifelse(dat2$f.6153.0.0==2|dat2$f.6153.0.1==2|dat2$f.6153.0.2==2|dat2$f.6177.0.0==2|dat2$f.6177.0.1==2|dat2$f.6177.0.2==2,1,0)
+dat2$bp_med2[which(is.na(dat2$bp_med2))]=0
+
+dad=dat
+dad$bp_med2=dat2$bp_med2
+saveRDS(da,"~/paperscripts/output/amit_df_bp.rds")
 
 compute_CVrisk2=function (df, scores = c("ascvd_10y_accaha", "as2", 
                          "ascvd_10y_frs_simple", "chd_10y_mesa", "chd_10y_mesa_cac"), 
