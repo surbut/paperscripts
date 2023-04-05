@@ -201,7 +201,7 @@ sa = rbind(sa1,sa2,sa3,sa4,sa5,sa6)
 #sa = rbind(sa1, sa2,sa3)  
 b=rev(brewer.pal(n = 8, name = "RdBu")[1:3])
 
-p=sa %>% ggplot(aes(x=interaction(age,PCE_cat), y=values,ymin = lower, ymax =upper,color=ind)) + geom_point(size=3)+labs(x = "Age and ASCVD-Risk",title="Absolute Risk by PRS-PCE Category",y="Absolute Risk",colour="PRS Category")+scale_color_manual(values = colgrad)+theme_classic(base_size = 20)+geom_errorbar(width = 0.2)+scale_x_discrete("Age at Risk Estimation",labels = rep(c("45-50","50-55","55-60","60-65","65-70"),3))+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+p=sa %>% ggplot(aes(x=interaction(age,PCE_cat), y=values,ymin = lower, ymax =upper,color=ind)) + geom_point(size=3)+labs(x = "Age and ASCVD-Risk",title="Absolute Risk by PRS-PCE Category",y="Absolute Risk",colour="PRS Category")+scale_color_manual(values = colgrad)+theme_classic(base_size = 20)+geom_errorbar(width = 0.2)+scale_x_discrete("Age at Risk Estimation",labels = rep(c("40-45","45-50","50-55","55-60","60-65","65-70"),3))+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 # p=p+theme(axis.text.x=element_blank(), #remove x axis labels
 #         axis.ticks.x=element_blank(), #remove x axis ticks
