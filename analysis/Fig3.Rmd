@@ -196,7 +196,7 @@ sa=sa6
 ```
 
 ```{r}
-sa = rbind(sa2,sa3,sa4,sa5,sa6)
+sa = rbind(sa1,sa2,sa3,sa4,sa5,sa6)
 
 #sa = rbind(sa1, sa2,sa3)  
 b=rev(brewer.pal(n = 8, name = "RdBu")[1:3])
