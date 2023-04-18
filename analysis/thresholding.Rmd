@@ -1,0 +1,70 @@
+---
+title: "Fig5"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+  
+## Introduction
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/",message = FALSE,warning = FALSE)
+
+```
+
+## AUC overall
+
+```{r}
+source("code/utils.R")
+library(ggplot2)
+
+df=readRDS("output/amit_df.rds")
+
+ages=c(40,45,50,55,60,65,70,75)
+df$age.cat=cut(df$phenos.enrollment,breaks = c(40,45,50,55,60,65,70,75))
+thresh=seq(0.5,1,by=0.01)
+true.pos.p=matrix(NA,nrow=length(levels(df$age.cat)),ncol=length(thresh))
+false.pos.p=matrix(NA,nrow=length(levels(df$age.cat)),ncol=length(thresh))
+
+for(a in 1:length(levels(df$age.cat))){
+  #print(a)
+for(i in 1:length(thresh)){
+  t=thresh[i]
+  age=levels(df$age.cat)[a]
+  case=intersect(which(df$phenos.has_CAD==1),which(df$age.cat==age))
+  control=intersect(which(df$phenos.has_CAD==0),which(df$age.cat==age))
+  true.pos.p[a,i]=mean(df[case,prs.r>t])
+  false.pos.p[a,i]=mean(na.omit(df[control,prs.r>t]))
+}}
+
+par(mfrow=c(3,3))
+for(i in 1:length(levels(df$age.cat))){
+  plot(false.pos.p[i,],true.pos.p[1,],pch=19,col=i,xlab="False Positive Rate",ylab="True Positive Rate",main=paste0("PRS:",df$age.cat[i]))
+  }
+
+true.pos.a=matrix(NA,nrow=length(levels(df$age.cat)),ncol=length(thresh))
+false.pos.a=matrix(NA,nrow=length(levels(df$age.cat)),ncol=length(thresh))
+
+thresh=seq(5,25,by=1)
+for(a in 1:length(levels(df$age.cat))){
+  #print(a)
+for(i in 1:length(thresh)){
+  t=thresh[i]
+  age=levels(df$age.cat)[a]
+  case=intersect(which(df$phenos.has_CAD==1),which(df$age.cat==age))
+  control=intersect(which(df$phenos.has_CAD==0),which(df$age.cat==age))
+  true.pos.a[a,i]=mean(df[case,ascvd_10y_accaha_all>t])
+  false.pos.a[a,i]=mean(na.omit(df[control,ascvd_10y_accaha_all>t]))
+}}
+
+  true.pos.a=sum(df$asc>i[df$phenos.has_CAD==1&df$phenos.age.cat==a])
+  false.pos.p=sum(df$prs.r>i[df$phenos.has_CAD==0&df$phenos.age.cat==a])
+  
+par(mfrow=c(3,3))
+for(i in 1:length(levels(df$age.cat))){
+  plot(false.pos.a[i,],true.pos.a[1,],pch=19,col=i,xlab="False Positive Rate",ylab="True Positive Rate",main=paste0("ASCVD:",df$age.cat[i]))
+  }
+``

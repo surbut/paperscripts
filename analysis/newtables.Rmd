@@ -1,0 +1,59 @@
+---
+title: "newtables"
+author: "Your Name"
+date: "2023-04-14"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+
+library(table1)
+
+library(table1)
+library(magrittr)
+library("flextable")
+df=readRDS("output/amit_df_bp.rds")
+dat=df
+
+select=dat[which(dat$prscat=="low"),c("choladj","sbp","enroll_age")]
+
+meanCIfunct=function(select)
+  {
+  sapply(1:ncol(select),function(i){
+  n=names(select)[i]
+  print(n)
+  x=select[,get(n)]
+  names(select)[i]
+ mean_x <- mean(x)
+ci_x <- t.test(x)$conf.int
+
+# Print the results
+cat("Mean:", round(mean_x, 2), "\n")
+cat("95% CI:", round(ci_x[1], 2), "-", round(ci_x[2], 2), "\n")
+  })}
+
+select=dat[which(dat$prscat=="high"),c("choladj","sbp","enroll_age")]
+meanCIfunct(select)
+
+summary(select)
+
+select=dat[which(dat$prscat=="low"),c("choladj","sbp","enroll_age")]
+meanCIfunct(select)
+
+summary(select)
+
+summary(dat$phenos.CAD_censor_age[dat$phenos.has_CAD==1&dat$prscat=="high"])
+
+summary(dat$phenos.CAD_censor_age[dat$phenos.has_CAD==1&dat$ascvdcat_all=="high"])
+summary(dat$phenos.enrollment[dat$ascvdcat_all=="high"])
+
+> mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r<0.02),phenos.has_CAD==1])
+
+> mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r>0.98),phenos.has_CAD==1])
+
+```
+

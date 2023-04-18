@@ -57,7 +57,7 @@ label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
 
 t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med+Race, data=dat)
+         ldladj + bp_med, data=dat)
 
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1.docx")
@@ -70,8 +70,8 @@ t
 
 ```{r byasc,echo=F}
 ###
-t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med+dm+Race |ascvdcat, data=dat)
+t=table1(~ age + sex + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med+dm+prscat |ascvdcat, data=dat)
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1_byASCVD.docx")
 
@@ -82,8 +82,8 @@ t
 ```
 
 ```{r byprs,echo=FALSE}
-t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med +dm +Race|prscat, data=dat)
+t=table1(~ age + sex  + sbp + choladj + hdladj + smoke + ascvdcat+
+         ldladj + bp_med +dm +ascvdcat|prscat, data=dat)
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1_byPRS.docx")
 ```

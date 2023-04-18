@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Sarah Urbut" />
+
+<meta name="date" content="2023-03-12" />
+
+<title>Fig5</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.24/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">paperscripts</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/surbut/paperscripts">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Fig5</h1>
+<h4 class="author">Sarah Urbut</h4>
+<h4 class="date">2023-03-12</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2023-04-06
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>paperscripts/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230311code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230311)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230311code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230311)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree9703784d326eeded74580342392b8c86987b127dtargetblank9703784a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/surbut/paperscripts/tree/9703784d326eeded74580342392b8c86987b127d" target="_blank">9703784</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomsurbutpaperscriptstree9703784d326eeded74580342392b8c86987b127dtargetblank9703784a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/surbut/paperscripts/tree/9703784d326eeded74580342392b8c86987b127d" target="_blank">9703784</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    output/amit_df_bp.rds
+    Ignored:    output/dfukbaseline.rds
+
+Untracked files:
+    Untracked:  analysis/Fig5_con.Rmd
+
+Unstaged changes:
+    Modified:   .DS_Store
+    Modified:   Figs/.DS_Store
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+</div>
+<div id="auc-overall" class="section level2">
+<h2>AUC overall</h2>
+<div id="htmlwidget-efb06a546a62dd9b3186" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-efb06a546a62dd9b3186">{"x":{"data":[{"x":[1,2,3,4,5,6,7],"y":[0.603508868177828,0.618129832795801,0.604610126283228,0.600013810324928,0.574907417902552,0.573232497833908,0.577667629381001],"text":["Age: 40-45<br />AUC: 0.6035089<br />Model: Genomic<br />AUC + se: 0.6209768<br />AUC - se: 0.5860409","Age: 45-50<br />AUC: 0.6181298<br />Model: Genomic<br />AUC + se: 0.6306543<br />AUC - se: 0.6056053","Age: 50-55<br />AUC: 0.6046101<br />Model: Genomic<br />AUC + se: 0.6143863<br />AUC - se: 0.5948340","Age: 55-60<br />AUC: 0.6000138<br />Model: Genomic<br />AUC + se: 0.6082729<br />AUC - se: 0.5917547","Age: 60-65<br />AUC: 0.5749074<br />Model: Genomic<br />AUC + se: 0.5812234<br />AUC - se: 0.5685914","Age: 65-70<br />AUC: 0.5732325<br />Model: Genomic<br />AUC + se: 0.5798349<br />AUC - se: 0.5666301","Age: 70-75<br />AUC: 0.5776676<br />Model: Genomic<br />AUC + se: 0.6142613<br />AUC - se: 0.5410739"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(255,99,71,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(255,99,71,1)"}},"hoveron":"points","name":"Genomic","legendgroup":"Genomic","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0174679597674443,-0.0125245118518773,-0.00977614045420716,-0.00825910337937563,-0.00631602294122324,-0.00660237381141537,-0.0365936969642033],"arrayminus":[-0.0174679597674443,-0.0125245118518773,-0.00977614045420716,-0.00825910337937563,-0.00631602294122324,-0.00660237381141537,-0.0365936969642033],"type":"data","width":0,"symmetric":false,"color":"rgba(255,99,71,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.777553197080453,0.763098951316222,0.737251079370619,0.707462106748472,0.690077730497035,0.656227662308015,0.619506673952072],"text":["Age: 40-45<br />AUC: 0.7775532<br />Model: Non Genomic<br />AUC + se: 0.7925609<br />AUC - se: 0.7625455","Age: 45-50<br />AUC: 0.7630990<br />Model: Non Genomic<br />AUC + se: 0.7744640<br />AUC - se: 0.7517339","Age: 50-55<br />AUC: 0.7372511<br />Model: Non Genomic<br />AUC + se: 0.7466549<br />AUC - se: 0.7278472","Age: 55-60<br />AUC: 0.7074621<br />Model: Non Genomic<br />AUC + se: 0.7156612<br />AUC - se: 0.6992631","Age: 60-65<br />AUC: 0.6900777<br />Model: Non Genomic<br />AUC + se: 0.6965251<br />AUC - se: 0.6836303","Age: 65-70<br />AUC: 0.6562277<br />Model: Non Genomic<br />AUC + se: 0.6633518<br />AUC - se: 0.6491035","Age: 70-75<br />AUC: 0.6195067<br />Model: Non Genomic<br />AUC + se: 0.6606851<br />AUC - se: 0.5783282"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(100,149,237,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(100,149,237,1)"}},"hoveron":"points","name":"Non Genomic","legendgroup":"Non Genomic","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0150076844863879,-0.0113650088276975,-0.00940384424749663,-0.00819904329296728,-0.00644740005812561,-0.00712414234799441,-0.0411784740709527],"arrayminus":[-0.0150076844863879,-0.0113650088276975,-0.00940384424749663,-0.00819904329296728,-0.00644740005812561,-0.00712414234799441,-0.0411784740709527],"type":"data","width":0,"symmetric":false,"color":"rgba(100,149,237,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.755779460090434,0.755115778785954,0.740943949100704,0.724540081545856,0.69966018760428,0.671237287545365,0.625204902037312],"text":["Age: 40-45<br />AUC: 0.7557795<br />Model: Combined<br />AUC + se: 0.7720685<br />AUC - se: 0.7394904","Age: 45-50<br />AUC: 0.7551158<br />Model: Combined<br />AUC + se: 0.7678050<br />AUC - se: 0.7424266","Age: 50-55<br />AUC: 0.7409439<br />Model: Combined<br />AUC + se: 0.7508758<br />AUC - se: 0.7310121","Age: 55-60<br />AUC: 0.7245401<br />Model: Combined<br />AUC + se: 0.7326540<br />AUC - se: 0.7164262","Age: 60-65<br />AUC: 0.6996602<br />Model: Combined<br />AUC + se: 0.7061741<br />AUC - se: 0.6931463","Age: 65-70<br />AUC: 0.6712373<br />Model: Combined<br />AUC + se: 0.6783897<br />AUC - se: 0.6640849","Age: 70-75<br />AUC: 0.6252049<br />Model: Combined<br />AUC + se: 0.6656367<br />AUC - se: 0.5847731"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(104,34,139,1)","opacity":1,"size":1.88976377952756,"symbol":"circle","line":{"width":3.77952755905512,"color":"rgba(104,34,139,1)"}},"hoveron":"points","name":"Combined","legendgroup":"Combined","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_y":{"array":[-0.0162890283387698,-0.0126892102856577,-0.00993186579371452,-0.00811391491158475,-0.00651393535394695,-0.00715237137401092,-0.0404317807023072],"arrayminus":[-0.0162890283387698,-0.0126892102856577,-0.00993186579371452,-0.00811391491158475,-0.00651393535394695,-0.00715237137401092,-0.0404317807023072],"type":"data","width":0,"symmetric":false,"color":"rgba(104,34,139,1)"},"frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.603508868177828,0.618129832795801,0.604610126283228,0.600013810324928,0.574907417902552,0.573232497833908,0.577667629381001],"text":["Age: 40-45<br />AUC: 0.6035089<br />Model: Genomic<br />AUC + se: 0.6209768<br />AUC - se: 0.5860409<br />Model: Genomic","Age: 45-50<br />AUC: 0.6181298<br />Model: Genomic<br />AUC + se: 0.6306543<br />AUC - se: 0.6056053<br />Model: Genomic","Age: 50-55<br />AUC: 0.6046101<br />Model: Genomic<br />AUC + se: 0.6143863<br />AUC - se: 0.5948340<br />Model: Genomic","Age: 55-60<br />AUC: 0.6000138<br />Model: Genomic<br />AUC + se: 0.6082729<br />AUC - se: 0.5917547<br />Model: Genomic","Age: 60-65<br />AUC: 0.5749074<br />Model: Genomic<br />AUC + se: 0.5812234<br />AUC - se: 0.5685914<br />Model: Genomic","Age: 65-70<br />AUC: 0.5732325<br />Model: Genomic<br />AUC + se: 0.5798349<br />AUC - se: 0.5666301<br />Model: Genomic","Age: 70-75<br />AUC: 0.5776676<br />Model: Genomic<br />AUC + se: 0.6142613<br />AUC - se: 0.5410739<br />Model: Genomic"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(255,99,71,1)","dash":"solid"},"hoveron":"points","name":"Genomic","legendgroup":"Genomic","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.777553197080453,0.763098951316222,0.737251079370619,0.707462106748472,0.690077730497035,0.656227662308015,0.619506673952072],"text":["Age: 40-45<br />AUC: 0.7775532<br />Model: Non Genomic<br />AUC + se: 0.7925609<br />AUC - se: 0.7625455<br />Model: Non Genomic","Age: 45-50<br />AUC: 0.7630990<br />Model: Non Genomic<br />AUC + se: 0.7744640<br />AUC - se: 0.7517339<br />Model: Non Genomic","Age: 50-55<br />AUC: 0.7372511<br />Model: Non Genomic<br />AUC + se: 0.7466549<br />AUC - se: 0.7278472<br />Model: Non Genomic","Age: 55-60<br />AUC: 0.7074621<br />Model: Non Genomic<br />AUC + se: 0.7156612<br />AUC - se: 0.6992631<br />Model: Non Genomic","Age: 60-65<br />AUC: 0.6900777<br />Model: Non Genomic<br />AUC + se: 0.6965251<br />AUC - se: 0.6836303<br />Model: Non Genomic","Age: 65-70<br />AUC: 0.6562277<br />Model: Non Genomic<br />AUC + se: 0.6633518<br />AUC - se: 0.6491035<br />Model: Non Genomic","Age: 70-75<br />AUC: 0.6195067<br />Model: Non Genomic<br />AUC + se: 0.6606851<br />AUC - se: 0.5783282<br />Model: Non Genomic"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(100,149,237,1)","dash":"solid"},"hoveron":"points","name":"Non Genomic","legendgroup":"Non Genomic","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7],"y":[0.755779460090434,0.755115778785954,0.740943949100704,0.724540081545856,0.69966018760428,0.671237287545365,0.625204902037312],"text":["Age: 40-45<br />AUC: 0.7557795<br />Model: Combined<br />AUC + se: 0.7720685<br />AUC - se: 0.7394904<br />Model: Combined","Age: 45-50<br />AUC: 0.7551158<br />Model: Combined<br />AUC + se: 0.7678050<br />AUC - se: 0.7424266<br />Model: Combined","Age: 50-55<br />AUC: 0.7409439<br />Model: Combined<br />AUC + se: 0.7508758<br />AUC - se: 0.7310121<br />Model: Combined","Age: 55-60<br />AUC: 0.7245401<br />Model: Combined<br />AUC + se: 0.7326540<br />AUC - se: 0.7164262<br />Model: Combined","Age: 60-65<br />AUC: 0.6996602<br />Model: Combined<br />AUC + se: 0.7061741<br />AUC - se: 0.6931463<br />Model: Combined","Age: 65-70<br />AUC: 0.6712373<br />Model: Combined<br />AUC + se: 0.6783897<br />AUC - se: 0.6640849<br />Model: Combined","Age: 70-75<br />AUC: 0.6252049<br />Model: Combined<br />AUC + se: 0.6656367<br />AUC - se: 0.5847731<br />Model: Combined"],"type":"scatter","mode":"lines","line":{"width":null,"color":"rgba(104,34,139,1)","dash":"solid"},"hoveron":"points","name":"Combined","legendgroup":"Combined","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":39.2461602324616,"r":16.604400166044,"b":131.174761311748,"l":97.9659609796596},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,7.6],"tickmode":"array","ticktext":["40-45","45-50","50-55","55-60","60-65","65-70","70-75"],"tickvals":[1,2,3,4,5,6,7],"categoryorder":"array","categoryarray":["40-45","45-50","50-55","55-60","60-65","65-70","70-75"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":26.5670402656704},"tickangle":-90,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Age","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.475,1.025],"tickmode":"array","ticktext":["0.5","0.6","0.7","0.8","0.9","1.0"],"tickvals":[0.5,0.6,0.7,0.8,0.9,1],"categoryorder":"array","categoryarray":["0.5","0.6","0.7","0.8","0.9","1.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":8.302200083022,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":26.5670402656704},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"AUC","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":26.5670402656704},"title":{"text":"Model","font":{"color":"rgba(0,0,0,1)","family":"","size":33.208800332088}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"c04d1a2db3eb":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{},"type":"scatter"},"c04d2e7f16ba":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{}},"c04d19ad252f":{"x":{},"y":{},"colour":{},"ymin":{},"ymax":{}}},"cur_data":"c04d1a2db3eb","visdat":{"c04d1a2db3eb":["function (y) ","x"],"c04d2e7f16ba":["function (y) ","x"],"c04d19ad252f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="lookup-table" class="section level2">
+<h2>Lookup table</h2>
+<div id="htmlwidget-49690dc10e9b0e2383b9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-49690dc10e9b0e2383b9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21"],["40-45","45-50","50-55","55-60","60-65","65-70","70-75","40-45","45-50","50-55","55-60","60-65","65-70","70-75","40-45","45-50","50-55","55-60","60-65","65-70","70-75"],["Genomic","Genomic","Genomic","Genomic","Genomic","Genomic","Genomic","Non Genomic","Non Genomic","Non Genomic","Non Genomic","Non Genomic","Non Genomic","Non Genomic","Combined","Combined","Combined","Combined","Combined","Combined","Combined"],[0.6,0.62,0.6,0.6,0.57,0.57,0.58,0.78,0.76,0.74,0.71,0.69,0.66,0.62,0.76,0.76,0.74,0.72,0.7,0.67,0.63],[0.02,0.01,0.01,0.01,0.01,0.01,0.04,0.02,0.01,0.01,0.01,0.01,0.01,0.04,0.02,0.01,0.01,0.01,0.01,0.01,0.04],[0.62,0.63,0.61,0.61,0.58,0.58,0.61,0.79,0.77,0.75,0.72,0.7,0.66,0.66,0.77,0.77,0.75,0.73,0.71,0.68,0.67],[0.59,0.61,0.59,0.59,0.57,0.57,0.54,0.76,0.75,0.73,0.7,0.68,0.65,0.58,0.74,0.74,0.73,0.72,0.69,0.66,0.58]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Age<\/th>\n      <th>Model<\/th>\n      <th>AUC<\/th>\n      <th>se<\/th>\n      <th>upper<\/th>\n      <th>lower<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] babynames_1.0.1    gapminder_0.3.0    carData_3.0-5      plotly_4.10.0     
+ [5] DT_0.24            gt_0.8.0           RColorBrewer_1.1-3 data.table_1.14.2 
+ [9] pROC_1.18.0        rsq_2.5            survMisc_0.5.6     gridExtra_2.3     
+[13] ggfortify_0.4.14   reshape_0.8.9      eulerr_6.1.1       survminer_0.4.9   
+[17] ggpubr_0.4.0       survival_3.4-0     forcats_0.5.2      stringr_1.4.1     
+[21] purrr_0.3.5        readr_2.1.2        tidyr_1.2.1        tibble_3.1.8      
+[25] ggplot2_3.4.1      tidyverse_1.3.2    dplyr_1.0.10       ggsci_2.9         
+
+loaded via a namespace (and not attached):
+ [1] googledrive_2.0.0   minqa_1.2.4         colorspace_2.0-3   
+ [4] ggsignif_0.6.4      ellipsis_0.3.2      rprojroot_2.0.3    
+ [7] fs_1.5.2            rstudioapi_0.14     farver_2.1.1       
+[10] Deriv_4.1.3         fansi_1.0.3         lubridate_1.8.0    
+[13] xml2_1.3.3          splines_4.2.1       cachem_1.0.6       
+[16] knitr_1.40          jsonlite_1.8.2      workflowr_1.7.0    
+[19] nloptr_2.0.3        broom_1.0.1         km.ci_0.5-6        
+[22] dbplyr_2.2.1        compiler_4.2.1      httr_1.4.4         
+[25] backports_1.4.1     assertthat_0.2.1    Matrix_1.5-1       
+[28] fastmap_1.1.0       lazyeval_0.2.2      gargle_1.2.0       
+[31] cli_3.4.1           later_1.3.0         htmltools_0.5.3    
+[34] tools_4.2.1         gtable_0.3.1        glue_1.6.2         
+[37] reshape2_1.4.4      Rcpp_1.0.9          cellranger_1.1.0   
+[40] jquerylib_0.1.4     vctrs_0.5.2         nlme_3.1-159       
+[43] crosstalk_1.2.0     xfun_0.33           lme4_1.1-30        
+[46] rvest_1.0.3         lifecycle_1.0.3     rstatix_0.7.0      
+[49] googlesheets4_1.0.1 MASS_7.3-58.1       zoo_1.8-11         
+[52] scales_1.2.1        ragg_1.2.3          hms_1.1.2          
+[55] promises_1.2.0.1    yaml_2.3.5          KMsurv_0.1-5       
+[58] sass_0.4.2          stringi_1.7.8       boot_1.3-28        
+[61] systemfonts_1.0.4   rlang_1.0.6         pkgconfig_2.0.3    
+[64] evaluate_0.17       lattice_0.20-45     labeling_0.4.2     
+[67] htmlwidgets_1.5.4   tidyselect_1.2.0    plyr_1.8.7         
+[70] magrittr_2.0.3      R6_2.5.1            generics_0.1.3     
+[73] DBI_1.1.3           pillar_1.8.1        haven_2.5.1        
+[76] withr_2.5.0         abind_1.4-5         modelr_0.1.9       
+[79] crayon_1.5.2        car_3.1-0           utf8_1.2.2         
+[82] tzdb_0.3.0          rmarkdown_2.17      grid_4.2.1         
+[85] readxl_1.4.1        git2r_0.30.1        reprex_2.0.2       
+[88] digest_0.6.29       xtable_1.8-4        httpuv_1.6.6       
+[91] textshaping_0.3.6   munsell_0.5.0       viridisLite_0.4.1  
+[94] bslib_0.4.0        </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

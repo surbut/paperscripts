@@ -1,0 +1,100 @@
+---
+title: "Fig5"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,fig.path = "./Figs/")
+
+```
+
+## AUC overall
+
+```{r}
+source("code/utils.R")
+library(ggplot2)
+
+df=readRDS("output/amit_df.rds")
+
+ages=c(40,45,50,55,60,65,70,75)
+
+df$prs.quant <- cut(df$prs.r, breaks=c(0, 0.20,0.80,1), labels=c("low", "intermediate","high"))
+set.seed(456)
+aucmat=matrix(NA,nrow=length(ages)-1,ncol=3)
+semat=matrix(NA,nrow=length(ages)-1,ncol=3)
+for(i in 1:(length(ages)-1))
+{
+  par(mfrow=c(1,2))
+  #which(df$phenos.enrollment>ages[i]&df$phenos.enrollment<ages[i+1])
+  d=df[which(df$phenos.enrollment>ages[i]&df$phenos.enrollment<ages[i+1]),]
+  indices=sample(nrow(d))
+  
+  d_train=d[indices[1:(length(indices)/2)],]
+  d_test=d[indices[(length(indices)/2+1):length(indices)],]
+  model_glm = glm(phenos.has_CAD  ~ prs.quant, data = d_train, family = "binomial")
+  
+  test_prob = predict(model_glm, newdata = d_test, type = "response")
+  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0("PRS,age",ages[i],"to",ages[i+1]))
+  aucmat[i,1]=test_roc$auc
+  semat[i,1]=sqrt(var(test_roc))
+  
+  
+  model_glm = glm(phenos.has_CAD  ~ ascvd_10y_accaha_all, data = d_train, family = "binomial")
+  
+  test_prob = predict(model_glm, newdata = d_test, type = "response")
+  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0("PCE,age",ages[i],"to",ages[i+1]))
+  aucmat[i,2]=test_roc$auc
+  semat[i,2]=sqrt(var(test_roc))
+  
+  model_glm = glm(phenos.has_CAD  ~ ascvd_10y_accaha_all+prs.quant, data = d_train, family = "binomial")
+  
+  test_prob = predict(model_glm, newdata = d_test, type = "response")
+  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F,main=paste0("PCE+PRS,age",ages[i],"to",ages[i+1]))
+  aucmat[i,3]=test_roc$auc
+  semat[i,3]=sqrt(var(test_roc))
+}
+rownames(aucmat)=c("40-45","45-50","50-55","55-60","60-65","65-70","70-75")
+
+m=melt(aucmat,id.vars="Age")
+
+
+m3=melt(semat)
+
+m[which(m$X2==1),2]="PRS"
+m[which(m$X2==2),2]="PCE"
+m[which(m$X2==3),2]="PRS+PCE"
+
+names(m)=c("Age","Model","AUC")
+m$Model=as.factor(m$Model)
+levels(m$Model)[1]="Genomic"
+levels(m$Model)[2]="Non Genomic"
+levels(m$Model)[3]="Combined"
+
+
+m$se=m3$value
+gplot <- ggplot(m,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),linewidth=3)+geom_pointrange()+ylim(0.5,1)+scale_color_manual(values=c("tomato","cornflowerblue","darkorchid4"))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))
+
+ggplotly(gplot)
+#ggsave(gplot,filename = "aucplot.pdf",dpi=300)
+ggsave(gplot,filename = "Figs/Fig5/aucplot_cont.tiff",dpi=300,width = 9,height = 7)
+
+msave=m
+msave$upper=m$AUC+m$se
+msave$lower=m$AUC-m$se
+write.table(msave,"output/AUC_cont.csv",sep=",",quote=FALSE,row.names = F)
+```
+
+## Lookup table
+
+```{r}
+library(DT)
+ms=data.frame(msave[,c(1:2)],round(msave[,c(3:6)],2))
+colnames(ms)=colnames(msave)
+datatable(ms)
+```

@@ -1,0 +1,91 @@
+---
+title: "Verify Plots"
+author: "Sarah Urbut"
+date: "2023-03-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE,message = FALSE,warning = FALSE)
+
+```
+
+
+## Plot median by age for all 500K with SCORE normalized by ALl
+
+```{r}
+library('data.table')
+library("CVrisk")
+library("dplyr")
+library("ggplot2")
+
+prs=fread("~/Dropbox/phenotypes/CAD_prs.txt")
+dim(na.omit(prs)) 
+# 487409      3
+cad_pheno=fread("~/Dropbox (Personal)/phenotypes/UKBB_HardCAD_202109.tsv")[,c(1:7,10)]
+df=readRDS("output/amit_df.rds")
+
+
+## here scale all together
+mall=merge(prs,cad_pheno[,c("sample_id","enroll_age")],by.x="SAMPLE",by.y="sample_id")
+mall$SCORE=scale(mall$SCORE)
+m2=mall[SAMPLE%in%df$eid,]
+
+all=aggregate(SCORE ~ round(enroll_age,0), data = mall, median)
+sub=aggregate(SCORE ~ round(enroll_age,0), data = m2, median)
+colnames(sub)=colnames(all)
+
+meld=merge(all,sub,by="round(enroll_age, 0)")
+colnames(meld)=c("age","all_median","subset_median")
+mt=melt(meld[3:33,],id.vars="age")
+
+ggplot(mt,aes(age,y = value,col=variable))+geom_point()+ylim(c(-0.2,0.2))
+````
+
+
+
+## now do it with scaling by df
+
+```{r}
+all=aggregate(SCORE ~ round(enroll_age,0), data = mall, median)
+sub=aggregate(prs_quant ~ round(phenos.enrollment,0), data = df, median)
+colnames(sub)=colnames(all)
+
+meld=merge(all,sub,by="round(enroll_age, 0)")
+
+colnames(meld)=c("age","all_median","subset_median")
+mt=reshape2::melt(meld[3:33,],id.vars="age")
+
+ggplot(mt,aes(age,y = value,col=variable))+geom_point()+ylim(c(-0.2,0.2))
+
+###
+```
+
+## Density plots
+
+Plotting just our 325 (scaled within 325K)
+```{r}
+
+library(ggplot2)
+library("ggridges")
+source("code/utils.R")
+
+df=readRDS("output/amit_df.rds")
+df$agecat=cut(df$phenos.enrollment,breaks=c(0,55,65,100),labels=c("<55","55-65",">65"))
+
+ggplot(df, aes(x = prs_quant, y = agecat,fill=agecat)) + 
+  geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Age Category")+scale_fill_futurama()+theme_classic()
+```
+
+## Plotting with all:
+
+```{r}
+mall$agecat=cut(mall$enroll_age,breaks=c(0,55,65,100),labels=c("<55","55-65",">65"))
+ggplot(mall, aes(x = SCORE, y = agecat,fill=agecat)) + 
+  geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Age Category")+scale_fill_futurama()+theme_classic()
+```
+
