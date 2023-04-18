@@ -44,7 +44,7 @@ colnames(meld)=c("age","all_median","subset_median")
 mt=melt(meld[3:33,],id.vars="age")
 
 ggplot(mt,aes(age,y = value,col=variable))+geom_point()+ylim(c(-0.2,0.2))
-````
+```
 
 
 
@@ -89,3 +89,20 @@ ggplot(mall, aes(x = SCORE, y = agecat,fill=agecat)) +
   geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Age Category")+scale_fill_futurama()+theme_classic()
 ```
 
+## Number of events at each age by category: PRS
+
+```{r}
+d=data.frame(df[df$phenos.has_CAD==1,]%>%group_by(round(phenos.CAD_censor_age,0),prscat)%>%summarise(num_events = n()))
+colnames(d)=c("Age of Event","Prs Category","Number of Events")
+
+ggplot(d,aes(x=`Age of Event`,y=`Number of Events`,fill=`Prs Category`))+geom_bar(stat='identity')
+```
+
+## Number of events at each age by category: PCE
+
+```{r}
+d=data.frame(df[df$phenos.has_CAD==1,]%>%group_by(round(phenos.CAD_censor_age,0),ascvdcat_all)%>%summarise(num_events = n()))
+colnames(d)=c("Age of Event","ASCVD Category","Number of Events")
+
+ggplot(d,aes(x=`Age of Event`,y=`Number of Events`,fill=`ASCVD Category`))+geom_bar(stat='identity')
+```
