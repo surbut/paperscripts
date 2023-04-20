@@ -28,6 +28,15 @@ We have the workbook and html output for all the figures in Urbut et al 2023.
 
 [Figure 2 Supplemental](SuppASCVD.html) Here is the proportion of individuals in each PCE risk class by age
 
+# Validation
+
+[Proportional Hazards](zph.html) Here is the demonstration cox PH is violated with typical model.
+
+[Cum Events](cumulativeinc.html) Here I plot cumulative events by ACVD strata or by age.
+
+[Density Plots](verifyplots.html) Here I show PRS distirbution for overall cohort, and for ours, with different scaling.
+
+
 # Tables
 
 We also have a variety of exlucsion tables and summary tables 

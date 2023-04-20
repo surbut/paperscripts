@@ -48,6 +48,10 @@ dat = data.frame(df %>% group_by(round(phenos.enrollment, 0)) %>% summarise(leng
 hazards = matrix(data = NA,
                  nrow = nrow(dat),
                  ncol = 33)
+zph = matrix(data = NA,
+                 nrow = nrow(dat),
+                 ncol = 33)
+
 upperbound = matrix(data = NA,
                 nrow = nrow(dat),
                 ncol = 11)
@@ -81,7 +85,10 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prs_quant,
                data = d)
   hazards[i, 1] = exp(coef(sfit)[1])
-
+  
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ prs_quant,
             data = d,
             family = "binomial")
@@ -99,6 +106,9 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha,
                data = d)
   hazards[i, 4] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ ascvd_10y_accaha,
             data = d,
             family = "binomial")
@@ -108,15 +118,20 @@ for (i in seq(1:nrow(dat))) {
   hazards[i, 6] = with(summary(reg), 1 - deviance / null.deviance)
   lowerbound[i, 2] = summary(sfit)$conf.int[3]
   upperbound[i,2] = summary(sfit)$conf.int[4]
+  
   # #
   # #   LDL fit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ldl.quant,
                data = d)
   hazards[i, 7] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ ldl.quant,
             data = d,
             family = "binomial")
   hazards[i, 8] = exp(coef(reg))[[2]]
+ 
 
   # reg = glm(phenos.has_CAD ~ ldl.quant,
   #           data = d2,
@@ -128,6 +143,9 @@ for (i in seq(1:nrow(dat))) {
   # #     smoke fit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ smoke, data =
                  d)
+   cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   hazards[i, 10] = exp(coef(sfit)[1])
   reg = glm(phenos.has_CAD ~ smoke, data = d, family = "binomial")
   hazards[i, 11] = exp(coef(reg))[[2]]
@@ -143,6 +161,9 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ phenos.enrollment,
                data = d)
   hazards[i, 13] = exp(coef(sfit)[1])
+   cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ phenos.enrollment,
             data = d,
             family = "binomial")
@@ -160,6 +181,9 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sbp.quant,
                data = d)
   hazards[i, 16] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ sbp.quant,
             data = d,
             family = "binomial")
@@ -177,6 +201,9 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prev_disease_dm,
                data = d,control=coxph.control(eps=1e-8,iter.max = 30))
   hazards[i, 19] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ prev_disease_dm,
             data = d,
             family = "binomial")
@@ -192,6 +219,9 @@ for (i in seq(1:nrow(dat))) {
  # # #  bmifit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ bmi.quant,
                data = d)
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   hazards[i, 22] = exp(coef(sfit)[1])
   reg = glm(phenos.has_CAD ~ bmi.quant,
             data = d,
@@ -210,6 +240,9 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sex, data =
                  d)
   hazards[i, 25] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ sex, data = d, family = "binomial")
   hazards[i, 26] = exp(coef(reg))[[2]]
   # rm(reg)
@@ -217,10 +250,14 @@ for (i in seq(1:nrow(dat))) {
   hazards[i, 27] = with(summary(reg), 1 - deviance / null.deviance)
   lowerbound[i, 9] = summary(sfit)$conf.int[3]
   upperbound[i,9] = summary(sfit)$conf.int[4]
+  
   # #   HDL fit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ hdl.quant,
                data = d)
   hazards[i, 28] = exp(coef(sfit)[1])
+  cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ hdl.quant,
             data = d,
             family = "binomial")
@@ -238,7 +275,11 @@ for (i in seq(1:nrow(dat))) {
   # #  totalchol
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ chol.quant,
                data = d)
+
   hazards[i, 31] = exp(coef(sfit)[1])
+   cox.zph.fit <- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   reg = glm(phenos.has_CAD ~ chol.quant,
             data = d,
             family = "binomial")
@@ -296,8 +337,8 @@ hazards[1, "dm.HR"] = upperbound[1,7]=lowerbound[1,7]=NA
 #hazards[2, "dm.HR"] = NA
 #saveRDS(hazards,"~/Dropbox/hazards_rate_UKB_mixed.rds")
 #saveRDS(hazards,"~/Dropbox/hazards_rate_UKBleq.rds")
-saveRDS(hazards,"output/hazards_rate_UKB_amit.rds")
-
+#saveRDS(hazards,"output/hazards_rate_UKB_amit.rds")
+saveRDS(zph,"output/zph_rate_UKB_amit.rds")
 
 colnames(upperbound) = colnames(lowerbound)=c(
   "prs.se",

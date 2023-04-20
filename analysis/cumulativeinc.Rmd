@@ -1,0 +1,141 @@
+---
+title: "cumulativeinc"
+author: "Your Name"
+date: "2023-04-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
+```
+
+
+## Cumulative incidence plot
+```{r,eval=T,echo=F,warning=FALSE,message=FALSE}
+df = readRDS("output/amit_df.rds")
+## make sure normalized
+df$prs_quant = scale(df$SCORE)
+df$prs.r = (rank(df$prs_quant) / length(df$prs_quant))
+df$round_age = round(df$phenos.enrollment, 0)
+df$ldl.quant = scale(df$ldladj)
+df$sbp.quant = scale(df$sbp)
+df$hdl.quant = scale(df$hdladj)
+df$chol.quant = scale(df$choladj)
+df$age.quant = scale(df$phenos.enrollment)
+df$bmi.quant = scale(df$bmi)
+df$phenos.has_CAD = df$has_disease
+df$sex = ifelse(df$sex == "male", 1, 0)
+
+library(survival)
+library(ggplot2)
+library(dplyr)
+library(survminer)
+
+df$enroll_age_cat=cut(df$phenos.enrollment,breaks = c(0,45,50,55,60,65,70,75))
+df$censor_age_cat=cut(df$phenos.CAD_censor_age,breaks = c(0,45,50,55,60,65,70,75,80,85))
+
+incidence_data <- df %>%
+group_by(enroll_age_cat, censor_age_cat) %>%
+summarize(cases = mean(phenos.has_CAD))%>%
+  ungroup()
+
+incidence_data <- incidence_data %>%
+  group_by(enroll_age_cat) %>%
+  mutate(cumulative_cases = cumsum(cases))
+
+id=incidence_data
+
+
+
+library(ggplot2)
+ggplot(incidence_data, aes(x = censor_age_cat, y = cumulative_cases, color = enroll_age_cat,group=enroll_age_cat)) +geom_line() +
+  stat_smooth()+
+  xlab("Age of event") +
+  ylab("Cumulative cases") +
+  ggtitle("Cumulative incidence by age group")
+
+
+###
+df$pce=df$ascvdcat_all
+df$enroll_age_cat=cut(df$phenos.enrollment,breaks = c(0,55,65,100))
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD)~enroll_age_cat, data=df[df$pce=="low",])
+
+g_low=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size=15),fun = "cumhaz",xlim=c(40,100),xlab="Age",risk.table = T) 
+
+###
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD)~enroll_age_cat, data=df[df$pce=="intermediate",])
+
+g_int=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size=15),fun = "cumhaz",xlim=c(40,100),xlab="Age",risk.table = T) 
+
+###
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD)~enroll_age_cat, data=df[df$pce=="high",])
+
+g_high=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size=15),fun = "cumhaz",xlim=c(40,100),xlab="Age",risk.table = T) 
+```
+
+## Here we plot the cumulative hazard for each risk category and stratify by age
+
+```{r,fig.height=8,fig.width=6}
+g_low
+```
+
+```{r,fig.height=8,fig.width=6}
+g_int
+```
+
+```{r,fig.height=8,fig.width=6}
+g_high
+```
+
+## Now we plot for each age and stratify by risk status:
+
+```{r}
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment<55,])
+
+g_young=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,75),xlab="Age",risk.table = T) 
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
+
+g_mid=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,70),xlab="Age",risk.table = T)  
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>65,])
+
+g_old=ggsurvplot(fit,
+           conf.int = TRUE,
+           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(60,80),xlab="Age",risk.table = T) 
+```
+
+```{r,fig.height=8,fig.width=6}
+g_young
+```
+
+```{r,fig.height=8,fig.width=6}
+g_mid
+```
+
+```{r,fig.height=8,fig.width=6}
+g_old
+```
+

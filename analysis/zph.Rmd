@@ -1,0 +1,103 @@
+---
+title: "zph"
+author: "Your Name"
+date: "2023-04-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE)
+
+```
+
+
+```{r,echo=F}
+zph=readRDS("~/paperscripts/output/zph_amit_EQ.rds")
+
+colnames(zph)=c("Polygenic Score","PCE","LDL Cholesterol","Smoking","Age","Systolic blood pressure","Diabetes","Body Mass Index","Male Sex","High-density Lipoprotein","Total cholesterol","age")
+
+
+library(reshape2)
+library(ggplot2)
+library(dplyr)
+
+m=melt(zph,id.vars = "age")
+
+
+p <- ggplot(m, aes(factor(variable), value)) +
+  geom_boxplot(width = 0.5, outlier.size = 3, outlier.color = "darkred", 
+               fill = "lightblue", color = "darkblue") +
+  facet_wrap(~variable, scales = "free") +
+  labs(x = "", y = "Value", title = "Distribution of P Value for Cox Zph") +
+  theme(plot.title = element_text(size = 20, hjust = 0.5),
+        axis.text.x = element_blank(),
+        axis.title = element_text(size = 20),
+        strip.text = element_text(size = 10, face = "bold"))+theme_classic()
+
+# Show plot
+p
+```
+
+Now show non-proptional
+
+```{r,echo=F}
+df = readRDS("output/amit_df.rds")
+## make sure normalized
+df$prs_quant = scale(df$SCORE)
+df$prs.r = (rank(df$prs_quant) / length(df$prs_quant))
+df$round_age = round(df$phenos.enrollment, 0)
+df$ldl.quant = scale(df$ldladj)
+df$sbp.quant = scale(df$sbp)
+df$hdl.quant = scale(df$hdladj)
+df$chol.quant = scale(df$choladj)
+df$age.quant = scale(df$phenos.enrollment)
+df$bmi.quant = scale(df$bmi)
+df$phenos.has_CAD = df$has_disease
+df$sex = ifelse(df$sex == "male", 1, 0)
+
+library(survival)
+library(ggplot2)
+library(dplyr)
+library(survminer)
+
+# Fit 6 Cox regression models
+fit1 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prs_quant, data = df)
+cox.zph.fit <- cox.zph(fit1)
+ggcoxzph(cox.zph.fit)
+         
+fit2 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha_all, data = df)
+cox.zph.fit <- cox.zph(fit2)
+ggcoxzph(cox.zph.fit)
+
+fit3 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD)~ ldl.quant, data = df)
+cox.zph.fit <- cox.zph(fit3)
+ggcoxzph(cox.zph.fit)
+
+fit4 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ hdl.quant, data = df)
+cox.zph.fit <- cox.zph(fit4)
+ggcoxzph(cox.zph.fit)
+
+fit5 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD)~ sbp.quant, data = df)
+cox.zph.fit <- cox.zph(fit5)
+ggcoxzph(cox.zph.fit)
+
+fit6 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ chol.quant, data = df)
+cox.zph.fit <- cox.zph(fit6)
+ggcoxzph(cox.zph.fit)
+
+fit7 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prev_disease_dm, data = df)
+cox.zph.fit <- cox.zph(fit7)
+ggcoxzph(cox.zph.fit)
+
+fit8 <- coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sex, data = df)
+cox.zph.fit <- cox.zph(fit8)
+ggcoxzph(cox.zph.fit)
+
+ps=readRDS("output/zph_all.rds")
+barplot(-log10(as.matrix(ps)),las=2,xlab="Variable",ylab="-log10pvalue",main="-log10p: Model without stratification by age of enrollment")
+```
+
