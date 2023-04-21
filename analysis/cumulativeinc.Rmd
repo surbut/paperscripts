@@ -299,130 +299,11 @@ g_old
 ```
 
 
-# Here we do the same for PCE
+# Here we do the same for PCE:age normalized percentile
 
--- here we standardize PCE distribution within each age to ~N(0,1)
--- we look at bottom 20%, mid 20%, and top 20%
--- I also do the same for nominal 10 year category with caveat that 10 year risk category is a low number in young folks
-
-```{r}
-
-dyoung=df[df$phenos.enrollment<55,]
-dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
-dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
-dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
-fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dyoung)
-
-g_young=ggsurvplot(fit,
-  xlim = c(0,15),
-  risk.table = F,
-  pval = TRUE,
-  #risk.table.col = "strata",
-  fun = "cumhaz",
-  xlab = "Time since Enrollment",
-  ylab = "Cumulative Hazard",
-  #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
-    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
-
-
-###
-
-dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
-dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
-dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
-dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
-fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD)~pce.cat, data=dmid)
-
-
-g_mid=ggsurvplot(fit,
-  xlim = c(0,15),
-  risk.table = F,
-  pval = TRUE,
-  #risk.table.col = "strata",
-  fun = "cumhaz",
-  xlab = "Time since Enrollment",
-  ylab = "Cumulative Hazard",
-  #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
-    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
-
-####
-
-dold=df[df$phenos.enrollment>65,]
-dold$pce.age=scale(dold$ascvd_10y_accaha_all)
-dold$pce.r=rank(dold$pce.age)/length(dold$pce.age)
-dold$pce.cat=cut(dold$pce.r,breaks=c(0,0.20,0.80,1))
-fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dold)
-
-g_old=ggsurvplot(fit,
-xlim = c(0,15),
-  risk.table = F,
-  pval = TRUE,
-  #risk.table.col = "strata",
-  fun = "cumhaz",
-  xlab = "Time since Enrollment",
-  ylab = "Cumulative Hazard",
-  #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
-    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
-
-
-
-# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment),phenos.has_CAD)~prscat, data=df[df$phenos.enrollment>65,])
-# 
-# 
-# g_old=ggsurvplot(fit,
-#            conf.int = TRUE,
-#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",risk.table = T) 
-# 
-# 
-# 
-# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
-# 
-# g_young=ggsurvplot(fit,
-#            conf.int = TRUE,
-#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",risk.table = T) 
-# 
-# 
-# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment>65,])
-# 
-# 
-# g_young=ggsurvplot(fit,
-#            conf.int = TRUE,
-#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Event Age",risk.table = T,xlim=c(40,70)) 
-# 
-# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
-# 
-# g_mid=ggsurvplot(fit,
-#            conf.int = TRUE,
-#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,70),xlab="Age",risk.table = T)  
-# 
-# 
-# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>65,])
-# 
-# g_old=ggsurvplot(fit,
-#            conf.int = TRUE,
-#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(60,80),xlab="Age",risk.table = T) 
-```
-
-## <55
-
-```{r,fig.height=8,fig.width=6}
-g_young
-```
-
-## 55-65
-```{r,fig.height=8,fig.width=6}
-g_mid
-```
-
-## 65 +
-```{r,fig.height=8,fig.width=6}
-g_old
-```
-
-## Here by age normalized percentile
+- here we standardize PCE distribution within each age to ~N(0,1)
+- we look at bottom 20%, mid 20%, and top 20%
+- I also do the same for nominal 10 year category with caveat that 10 year risk category is a low number in young folks
 
 ```{r}
 
@@ -442,7 +323,7 @@ g_young=ggsurvplot(fit,
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
   legend.title = "Age Category",
-    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+  legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
 
 
 ###
