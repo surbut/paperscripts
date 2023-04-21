@@ -121,8 +121,8 @@ g_all= ggsurvplot(fit,
            
            xlab = "Time of Event (age in years)",
            ylab = "Cumulative Hazard",
-           main = "Cumulative Hazard by PCE Category",
-          legend.title = "Age Category",
+           #main = "Cumulative Hazard by PCE Category",
+          legend.title = "PRS Category",
           legend.labs = c("PRS<20%", "PRS 20%-80%", "PRS>80%"))
          
 
@@ -156,7 +156,7 @@ g_all = ggsurvplot(
   xlab = "Time of Event (age in years)",
   ylab = "Cumulative Hazard",
   main = "Cumulative Hazard by PRS Category",
-  legend.title = "Age Category",
+  legend.title = "10 year risk Category",
     legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
 
 
@@ -322,7 +322,7 @@ g_young=ggsurvplot(fit,
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "Percentile Category",
   legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
 
 
@@ -344,7 +344,7 @@ g_mid=ggsurvplot(fit,
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "Percentile Category",
     legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
 
 ####
@@ -364,7 +364,7 @@ xlim = c(0,15),
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "Percentile Category",
     legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
 
 
@@ -405,7 +405,7 @@ g_young=ggsurvplot(fit,
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "10 year risk Category",
 legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
 
 
@@ -427,7 +427,7 @@ g_mid=ggsurvplot(fit,
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "10 year risk Category",
     legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
 
 ####
@@ -447,7 +447,7 @@ xlim = c(0,15),
   xlab = "Time since Enrollment",
   ylab = "Cumulative Hazard",
   #main = "Cumulative Hazard by PCE Category",
-  legend.title = "Age Category",
+  legend.title = "10 -year risk Category",
    legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
 
 
