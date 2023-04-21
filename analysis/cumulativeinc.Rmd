@@ -89,53 +89,551 @@ g_high=ggsurvplot(fit,
            ggtheme = theme_classic(base_size=15),fun = "cumhaz",xlim=c(40,100),xlab="Age",risk.table = T) 
 ```
 
-## Here we plot the cumulative hazard for each risk category and stratify by age
+<!-- ## Here we plot the cumulative hazard for each risk category and stratify by age -->
 
-```{r,fig.height=8,fig.width=6}
-g_low
-```
+<!-- ```{r,fig.height=8,fig.width=6} -->
+<!-- g_low -->
+<!-- ``` -->
 
-```{r,fig.height=8,fig.width=6}
-g_int
-```
+<!-- ```{r,fig.height=8,fig.width=6} -->
+<!-- g_int -->
+<!-- ``` -->
 
-```{r,fig.height=8,fig.width=6}
-g_high
-```
+<!-- ```{r,fig.height=8,fig.width=6} -->
+<!-- g_high -->
+<!-- ``` -->
 
-## Now we plot for each age and stratify by risk status:
+# All age plots
+
+-- Because we are using all individuals, Event time (age in years) is on the X axis, because time since enrollment would treat the 12 years from 50-62 as 70-82.
+-- First we do for all and stratify by PRS category
 
 ```{r}
 
-fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment<55,])
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df)
+
+g_all= ggsurvplot(fit,
+           pval = TRUE, conf.int = TRUE,
+           #risk.table = TRUE, 
+           #risk.table.col = "strata",
+           fun="cumhaz",
+           xlim = c(40,80), 
+           
+           xlab = "Time of Event (age in years)",
+           ylab = "Cumulative Hazard",
+           main = "Cumulative Hazard by PCE Category",
+          legend.title = "Age Category",
+          legend.labs = c("PRS<20%", "PRS 20%-80%", "PRS>80%"))
+         
+
+
+```
+
+
+```{r}
+g_all
+```
+
+## Now we stratify by PCE category, again for all
+
+```{r}
+
+
+fit <-
+  survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvdcat_all,
+          data = df)
+
+g_all = ggsurvplot(
+  fit,
+  conf.int = TRUE,
+  #ggtheme = theme_classic(base_size =15),
+  
+  xlim = c(40, 80),
+  risk.table = F,
+  pval = TRUE,
+  risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time of Event (age in years)",
+  ylab = "Cumulative Hazard",
+  main = "Cumulative Hazard by PRS Category",
+  legend.title = "Age Category",
+    legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
+
+
+```
+
+
+```{r,fig}
+g_all
+```
+
+## Now we plot cumulative incidence by age of enrollment
+
+```{r}
+df$agecat=cut(df$enroll_age,breaks=c(0,55,65,100),labels=c("<55","55-65","65+"))
+
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~agecat, data=df)
+
+
+ggsurvplot(fit, data = df,
+           pval = TRUE, conf.int = TRUE,
+           risk.table = F, 
+           risk.table.col = "strata",
+           fun="cumhaz",
+           xlim = c(0, 15), 
+           
+           xlab = "Time since Enrollment",
+           ylab = "Cumulative Hazard",
+           main = "Cumulative Hazard by Age Category since Enrollment",
+            legend.title = "Age Category",
+           legend.labs = c("Age <55", "Age 55-65", "Age >65"))
+
+```
+
+
+# Age cat specific plots
+
+# Here we break into three age groups and stratify by PRS, asking about resolution by PRS:
+
+```{r}
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
 
 g_young=ggsurvplot(fit,
-           conf.int = TRUE,
-           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,75),xlab="Age",risk.table = T) 
+           pval = TRUE, conf.int = TRUE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           xlim = c(0, 15), 
+            xlab = "Time since Enrollment",
+           ylab = "Cumulative Hazard",
+           main = "Cumulative Hazard by PRS Category since Enrollment, Enrollment <55",
+            legend.title = "PRS Category",
+           legend.labs = c("PRS <20%", "PRS 20%-80%", "PRS >80%"))
 
-fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
+
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
+
 
 g_mid=ggsurvplot(fit,
-           conf.int = TRUE,
-           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,70),xlab="Age",risk.table = T)  
+           pval = TRUE, conf.int = TRUE,
+           #risk.table = TRUE, 
+           #risk.table.col = "strata",
+           fun="cumhaz",
+           xlim = c(0, 15), 
+           
+           xlab = "Time since Enrollment",
+           ylab = "Cumulative Hazard",
+           main = "Cumulative Hazard by PRS Category since Enrollment, Enrollment 55-65",
+            legend.title = "PRS Category",
+           legend.labs = c("PRS <20%", "PRS 20%-80%", "PRS >80%"))
 
 
-fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>65,])
+### 
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment>65,])
 
 g_old=ggsurvplot(fit,
-           conf.int = TRUE,
-           ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(60,80),xlab="Age",risk.table = T) 
+           pval = TRUE, conf.int = TRUE,
+           #risk.table = TRUE, 
+           #risk.table.col = "strata",
+           fun="cumhaz",
+           xlim = c(0, 15), 
+           
+           xlab = "Time since Enrollment",
+           ylab = "Cumulative Hazard",
+           main = "Cumulative Hazard by PRS Category since Enrollment, Enrollment >55",
+            legend.title = "PRS Category",
+           legend.labs = c("PRS <20%", "PRS 20%-80%", "PRS >80%"))
+
+# 
+# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment),phenos.has_CAD)~prscat, data=df[df$phenos.enrollment>65,])
+# 
+# 
+# g_old=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",#risk.table = T) 
+# 
+# 
+# 
+# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
+# 
+# g_young=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",#risk.table = T) 
+# 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment>65,])
+# 
+# 
+# g_young=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Event Age",#risk.table = T,xlim=c(40,70)) 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
+# 
+# g_mid=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,70),xlab="Age",#risk.table = T)  
+# 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>65,])
+# 
+# g_old=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(60,80),xlab="Age",#risk.table = T) 
 ```
+
+## <55
 
 ```{r,fig.height=8,fig.width=6}
 g_young
 ```
 
+## 55-65
 ```{r,fig.height=8,fig.width=6}
 g_mid
 ```
 
+## >65
 ```{r,fig.height=8,fig.width=6}
 g_old
 ```
 
+
+# Here we do the same for PCE
+
+-- here we standardize PCE distribution within each age to ~N(0,1)
+-- we look at bottom 20%, mid 20%, and top 20%
+-- I also do the same for nominal 10 year category with caveat that 10 year risk category is a low number in young folks
+
+```{r}
+
+dyoung=df[df$phenos.enrollment<55,]
+dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
+dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
+dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dyoung)
+
+g_young=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+
+###
+
+dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
+dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
+dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
+dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD)~pce.cat, data=dmid)
+
+
+g_mid=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+####
+
+dold=df[df$phenos.enrollment>65,]
+dold$pce.age=scale(dold$ascvd_10y_accaha_all)
+dold$pce.r=rank(dold$pce.age)/length(dold$pce.age)
+dold$pce.cat=cut(dold$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dold)
+
+g_old=ggsurvplot(fit,
+xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+
+
+# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment),phenos.has_CAD)~prscat, data=df[df$phenos.enrollment>65,])
+# 
+# 
+# g_old=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",risk.table = T) 
+# 
+# 
+# 
+# fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
+# 
+# g_young=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Time since enrollment",risk.table = T) 
+# 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment>65,])
+# 
+# 
+# g_young=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlab="Event Age",risk.table = T,xlim=c(40,70)) 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>55&df$phenos.enrollment<65,])
+# 
+# g_mid=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(50,70),xlab="Age",risk.table = T)  
+# 
+# 
+# fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~pce, data=df[df$phenos.enrollment>65,])
+# 
+# g_old=ggsurvplot(fit,
+#            conf.int = TRUE,
+#            ggtheme = theme_classic(base_size =15),fun = "cumhaz",xlim=c(60,80),xlab="Age",risk.table = T) 
+```
+
+## <55
+
+```{r,fig.height=8,fig.width=6}
+g_young
+```
+
+## 55-65
+```{r,fig.height=8,fig.width=6}
+g_mid
+```
+
+## 65 +
+```{r,fig.height=8,fig.width=6}
+g_old
+```
+
+## Here by age normalized percentile
+
+```{r}
+
+dyoung=df[df$phenos.enrollment<55,]
+dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
+dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
+dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dyoung)
+
+g_young=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+
+###
+
+dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
+dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
+dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
+dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD)~pce.cat, data=dmid)
+
+
+g_mid=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+####
+
+dold=df[df$phenos.enrollment>65,]
+dold$pce.age=scale(dold$ascvd_10y_accaha_all)
+dold$pce.r=rank(dold$pce.age)/length(dold$pce.age)
+dold$pce.cat=cut(dold$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~pce.cat, data=dold)
+
+g_old=ggsurvplot(fit,
+xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("Age specific PCE 20 percentile","Age specific PCE 20-80 percentile","Age specific PCE > 20 percentile"))
+
+
+```
+
+## <55
+
+```{r,fig.height=8,fig.width=6}
+g_young
+```
+
+## 55-65
+```{r,fig.height=8,fig.width=6}
+g_mid
+```
+
+## 65 +
+```{r,fig.height=8,fig.width=6}
+g_old
+```
+
+# Age specific with PCE category
+
+```{r}
+
+dyoung=df[df$phenos.enrollment<55,]
+dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
+dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
+dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD)~ascvdcat_all, data=dyoung)
+
+g_young=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
+
+
+###
+
+dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
+dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
+dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
+dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD)~ascvdcat_all, data=dmid)
+
+
+g_mid=ggsurvplot(fit,
+  xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+    legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
+
+####
+
+dold=df[df$phenos.enrollment>65,]
+dold$pce.age=scale(dold$ascvd_10y_accaha_all)
+dold$pce.r=rank(dold$pce.age)/length(dold$pce.age)
+dold$pce.cat=cut(dold$pce.r,breaks=c(0,0.20,0.80,1))
+fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~ascvdcat_all, data=dold)
+
+g_old=ggsurvplot(fit,
+xlim = c(0,15),
+  risk.table = F,
+  pval = TRUE,
+  #risk.table.col = "strata",
+  fun = "cumhaz",
+  xlab = "Time since Enrollment",
+  ylab = "Cumulative Hazard",
+  #main = "Cumulative Hazard by PCE Category",
+  legend.title = "Age Category",
+   legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk >7.5%"))
+
+
+```
+
+## <55
+
+```{r,fig.height=8,fig.width=6}
+g_young
+```
+
+## 55-65
+```{r,fig.height=8,fig.width=6}
+g_mid
+```
+
+## 65 +
+```{r,fig.height=8,fig.width=6}
+g_old
+```
+
+# age of event by prs.rank
+
+```{r}
+a=df%>%group_by(round(prs.r,1))%>%summarise(mean=mean(phenos.CAD_censor_age[phenos.has_CAD==1]),sd=sd(phenos.CAD_censor_age[phenos.has_CAD==1]),n=sum(phenos.has_CAD==1))
+
+a=data.frame(a)
+colnames(a)=c("PRS.percentile","Age.of.Event","sd","n")
+a$se=a$sd/sqrt(a$n)
+
+a=a[-1,]
+pprs<-ggplot(a, aes(x=PRS.percentile, y=Age.of.Event, fill=PRS.percentile,col=PRS.percentile)) + 
+  geom_point()+
+  geom_errorbar(aes(ymin=Age.of.Event-se, ymax=Age.of.Event+se),width=0.01,
+                position=position_dodge(0.05))+ylim(50,71)+theme_classic()+stat_smooth()
+
+
+a=df%>%group_by(round(ascvd.r,1))%>%summarise(mean=mean(phenos.CAD_censor_age[phenos.has_CAD==1]),sd=sd(phenos.CAD_censor_age[phenos.has_CAD==1]),n=sum(phenos.has_CAD==1))
+
+a=data.frame(a)
+colnames(a)=c("PCE.percentile","Age.of.Event","sd","n")
+a$se=a$sd/sqrt(a$n)
+
+
+ppce<-ggplot(a, aes(x=PCE.percentile, y=Age.of.Event, fill=PCE.percentile,col=PCE.percentile)) + 
+  geom_point()+
+  geom_errorbar(aes(ymin=Age.of.Event-se, ymax=Age.of.Event+se), width=.02,
+                position=position_dodge(0.05))+ylim(50,71)+theme_classic()+stat_smooth()
+
+#
+
+ggarrange(pprs, ppce, heights = c(4,4),widths = c(4,4),
+          ncol = 2, nrow = 1)
+
+# 
+# gage=ggplot(a,aes(PRS.rank,Age.of.Event))+geom_point()+stat_smooth()+theme_classic()
+# 
+# a=df[df$phenos.has_CAD==1,]%>%group_by(round(phenos.CAD_censor_age,0))%>%summarise(mean(prs_quant))
+# a=data.frame(a)
+# colnames(a)=c("Age.of.Event","PRS.Quant")
+# gprs=ggplot(a,aes(Age.of.Event,PRS.Quant))+geom_point()+stat_smooth()+theme_classic()
+# 
+# grid.arrange(gage,gprs,ncol=2)
+# 
+# 
+# ggplot(aes(x = round(ascvd.r,1), y = phenos.CAD_censor_age,group=round(ascvd.r,1)), data = df[df$phenos.has_CAD==1,])) + geom_boxplot()+theme_classic()
+# 
+# ggplot(aes(x = round(prs_quant,0), y = phenos.CAD_censor_age,group=round(prs_quant,0)), data = df[df$phenos.has_CAD==1,]) + geom_boxplot()+theme_classic()+ylim(0,90)
+# 
+```
