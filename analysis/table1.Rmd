@@ -41,7 +41,7 @@ dat$smoke=factor(dat$old_smoke,levels=c(-3,0,1,2),
                       labels=c("Never","Never","Former",
                                "Current"))
 dat$bp_med=factor(dat$bp_med2,levels=c(0,1),labels=c("No","Yes"))
-
+dat$follow=
                                
 
 label(dat$age)      <- "Age (y)"
@@ -56,7 +56,7 @@ label(dat$ldladj)  <- "Low-density lipoprotein (ng/ml)"
 label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
 
-t=table1(~ age + sex + prscat + sbp + choladj + hdladj + smoke + ascvdcat+
+t=table1(~ age + sex + prscat + sbp + race + choladj + hdladj + smoke + ascvdcat+
          ldladj + bp_med, data=dat)
 
 t1flex(t) %>% 
@@ -67,6 +67,14 @@ t1flex(t) %>%
 ```{r}
 t
 ```
+
+## extra calcs
+
+```{r}
+median(dat$age_to_censor)
+sd(dat$age_to_censor)
+```
+
 
 ```{r byasc,echo=F}
 ###

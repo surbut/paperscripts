@@ -195,7 +195,7 @@ aes(age, value, colour = variable)) +
 ```{r fillT,echo=F}
 
 
-tgt = c("Diabetes mellitus", "Smoking", "Polygenic score", "Age","Male Sex","Systolic blood pressure","High-density lipoprotein", "Total cholesterol")
+tgt = c("Diabetes mellitus", "Smoking", "Polygenic score","Male Sex","Systolic blood pressure","High-density lipoprotein", "Total cholesterol")
 
 dat = haz %>% filter(variable %in% tgt)
 datr = r2s %>%filter(variable %in% tgt)
@@ -206,7 +206,7 @@ hr_ukb_all = dat %>%
   geom_point(size = 0.5) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
-   scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"))+
+   scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"),guide="none")+
   labs(y = "Hazard Ratio of Coronary Artery Disease", x = "Age of Risk Assessment", colour = "Risk Factor")
 
 # 
@@ -218,7 +218,7 @@ r2_ukb_all = datr %>%
   geom_point(size = 1) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
-   scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"))+
+   scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"),guide="none")+
   labs(y = "Proportion of Variation Explained", x = "Age of Risk Assessment", colour = "Risk Factor")
 ```
 
@@ -235,6 +235,8 @@ hall = hr_ukb_all + theme_classic(base_size = 20) + tems
 ## generate without legend
 hr_ukb_all_nolegend=hr_ukb_all+theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(c(0.35,5)) 
 
+saveRDS(hall,"output/hall.rds")
+saveRDS(r2,"output/r2.rds")
 ```
 
 ## ALL
@@ -252,7 +254,7 @@ ggplotly(r2)
 
 ```{r}
 fig_path="./Figs/Fig1/"
-ggsave(hall,filename = paste0(fig_path,"hr_ukb_leg.tiff"),dpi = 300,width = 6,height = 6)
+ggsave(hall,filename = paste0(fig_path,"hr_ukb_leg.tiff"),dpi = 300,width = 10,height = 6)
 ggsave(hr_ukb_all_nolegend,filename = paste0(fig_path,"hr_ukb_all_noleg.tiff"),dpi = 300,width = 6,height = 6)
 ggsave(r2,filename = paste0(fig_path,"r2_ukb_all.tiff"),dpi=300,width=6,height=6)
 ```
@@ -322,14 +324,16 @@ aes(age, value, colour = variable)) +
     )
   )
 
-r2_pce = r2_ukb_pce + theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(0,0.15)
+r2_pce = r2_ukb_pce + theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(0,0.15)+labs(x="Age of Risk Assessment, Years")
 #hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,4.5)
-hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,2)+theme(legend.position = "none")
+hall_pce = hr_ukb_pce + theme_classic(base_size = 20) + tems +ylim(0.8,2)+theme(legend.position = "none")+labs(x="Age of Risk Assessment, Years")
 ```
 
 ```{r}
 ggsave(hall_pce,filename = paste0(fig_path,"hr_pce.tiff"),dpi = 300,width = 6,height = 6)
 ggsave(r2_pce,filename = paste0(fig_path,"r2_pce.tiff"),dpi = 300,width = 6,height = 6)
+saveRDS(hall_pce,"output/hallpce.rds")
+saveRDS(r2_pce,"output/r2pce.rds")
 ```
 
 ```{r}

@@ -34,13 +34,13 @@ nrow(cad_pheno)-nrow(m)
 lipids=fread("~/Dropbox/ukbb-lipids-meds.txt")
 sum(rowSums(is.na(lipids[,c("eid","statin0","ldladj","hdladj","choladj","anylipidmed0")]))>0)
 # exclude 73414
-lip=na.omit(lipids[,c("eid","statin0","ldladj","hdladj","choladj","anylipidmed0")])
+lip=na.omit(lipids[,c("eid","statin0","ldladj","hdladj","choladj","anylipidmed0","trigadj")])
 dim(lip)
 # 429122     6
 
 # baselin info
 ukb=fread("~/Dropbox/big_ukb_file.txt",header=T,sep="\t")
-cov=data.frame("iid"=ukb$id,"sex"=ukb$Sex,"sbp"=ukb$SBP_adjMeds,"smoke"=ukb$SmokingStatus,"bp_med"=ukb$BP_Meds,"Race"=ukb$in_white_British_ancestry_subset,"bmi"=ukb$BMI)
+cov=data.frame("iid"=ukb$id,"sex"=ukb$Sex,"sbp"=ukb$SBP_adjMeds,"dbp"=ukb$DBP_adjMeds,"smoke"=ukb$SmokingStatus,"bp_med"=ukb$BP_Meds,"Race"=ukb$in_white_British_ancestry_subset,"bmi"=ukb$BMI)
 cov$Race=ifelse(cov$Race==1,"white","other")
 ##
 sum(rowSums(is.na(cov))>0)
@@ -94,6 +94,15 @@ df$age.r=(rank(df$phenos.CAD_censor_age)/length(df$prs_quant))
 df$ldladj.r=(rank(df$ldladj)/length(df$ldladj))
 rownames(df)=as.character(df$eid)
 
+mean(df$dbp)
+82.84082
+sd(df$dbp)
+11.26724
+
+mean(df$trigadj)
+151.8712
+sd(df$trigadj)
+90.27076
 df2=compute_CVrisk(df,scores = c("ascvd_10y_accaha"),
                    age = "phenos.enrollment", race = "Race", gender = "sex", bmi = "bmi", sbp = "sbp",hdl = "hdladj", totchol = "choladj", bp_med = "bp_med", smoker = "smoke",
                    diabetes = "prev_disease_dm", lipid_med = "anylipidmed0",

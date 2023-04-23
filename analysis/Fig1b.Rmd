@@ -178,15 +178,15 @@ hr_fhs = ggplot(subset(
     "Total cholesterol",
     "Systolic blood pressure",
     "Pooled cohort equations",
-    "Age",
+    #"Age",
     "Smoking",
     "Male Sex",
     "High-density Lipoprotein",
     "Smoking")), aes(age, value, colour = variable,fill=variable)) +
   geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Hazard Ratio of Coronary Artery Disease", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure",
 "Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein",
-"Total cholesterol"))+
-  scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+"Total cholesterol"),guide="none")+
+  scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"),guide="none")
 
 
 r2_fhs = ggplot(subset(
@@ -196,19 +196,23 @@ r2_fhs = ggplot(subset(
     "Total cholesterol",
     "Systolic blood pressure",
     "Pooled cohort equations",
-    "Age",
+    #"Age",
     "Smoking",
     "Male Sex",
     "High-density Lipoprotein",
     "Smoking")
 ), aes(age, value, colour = variable,fill=variable))+
-  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Proportion of Variation Explained", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))+scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))
+  geom_point(size = 1) + stat_smooth(method = "loess") + labs(y = "Proportion of Variation Explained", x ="Age of Risk Assessment", colour = "Risk Factor") + scale_color_manual(values = col_p,drop = TRUE,breaks = c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"))+
+  scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic Score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density Lipoprotein","Total cholesterol"),guide="none")
 
-h1=hr_fhs+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
+h1=hr_fhs+theme_classic(base_size = 20)+tems
 # 
 # ggsave(h1,file="hr_fhs_nob.tiff",dpi = 300,width = 6,height = 6)
 
 r2=r2_fhs+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
+saveRDS(r2,"output/r2fhs.rds")
+h1=h1+theme_classic(base_size = 20)+theme(legend.position = "none")+tems
+saveRDS(h1,"output/h1hs.rds")
 
 ggsave(h1,file=paste0(fig_path,"hr_fhs.tiff"),dpi = 300,width = 6,height = 6)
 ggsave(r2,file=paste0(fig_path,"r2_fhs.tiff"),dpi = 300,width = 6,height = 6.1)
@@ -239,3 +243,24 @@ m=cbind(r2s[,c(1:2)],round(r2s[,c(3)],2))
 colnames(m)=colnames(r2s)
 DT::datatable(m)
 ```
+
+# Merge files for joint panel
+
+```{r}
+hall=readRDS("output/hall.rds")
+r2u=readRDS("output/r2.rds")
+
+r2_fhs=r2+ggtitle("FHS")+theme_classic(base_size=15)+labs(x="Age of Risk Assessment, years")
+r2u=r2u+ggtitle("UKB")+theme_classic(base_size=15)+labs(x="Age of Risk Assessment, years")
+
+h1=h1+ggtitle("FHS")+theme_classic(base_size=15)+ylim(0,5)+labs(x="Age of Risk Assessment, years")
+hall=hall+ggtitle("UKB")+theme_classic(base_size=15)+ylim(0,5)+labs(x="Age of Risk Assessment, years")
+
+print1=ggarrange(h1,hall, ncol=2, common.legend = TRUE, legend="bottom",labels = c("A.","B."),heights=c(3.5,3.5))
+
+print2=ggarrange(r2_fhs,r2u, ncol=2, common.legend = TRUE, legend="bottom",labels = c("A.","B."))
+
+
+ggsave(print1,filename = "Figs/Fig1combined.tiff",dpi = 300,width = 10,height=6)
+
+ggsave(print2,filename = "Figs/Fig2combined.tiff",dpi = 300,width = 10,height=6)
