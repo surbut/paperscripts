@@ -28,11 +28,18 @@ prs=ggplot(df, aes(x = prs_quant, y = agecat,fill=agecat)) +
   geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Density",fill="Age Category")+scale_fill_futurama()+theme_classic()
 
 
-prs
+df$prscat=factor(df$prscat,levels = c("low","intermediate","high"),labels=c("<20%","20-80%",">80%"))
+
+age=ggplot(df, aes(x = phenos.enrollment, y = prscat,fill=prscat)) + 
+  geom_density_ridges() + theme_ridges()+labs(x = "Age of Enrollment", y = "Density",fill="PRS Category")+scale_fill_jama()+theme_classic()
+
+age
+
 ```
 
 ```{r}
 ggsave(prs,filename = "Figs/density/prs_distribution.tiff",width = 6,height = 3,dpi=300)
+ggsave(age,filename = "Figs/density/age_distribution.tiff",width = 6,height = 3,dpi=300)
 ```
 
 ```{r}

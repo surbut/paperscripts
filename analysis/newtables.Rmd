@@ -51,9 +51,9 @@ summary(dat$phenos.CAD_censor_age[dat$phenos.has_CAD==1&dat$prscat=="high"])
 summary(dat$phenos.CAD_censor_age[dat$phenos.has_CAD==1&dat$ascvdcat_all=="high"])
 summary(dat$phenos.enrollment[dat$ascvdcat_all=="high"])
 
-> mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r<0.02),phenos.has_CAD==1])
+mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r<0.02),phenos.has_CAD==1])
 
-> mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r>0.98),phenos.has_CAD==1])
+mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r>0.98),phenos.has_CAD==1])
 
 ```
 

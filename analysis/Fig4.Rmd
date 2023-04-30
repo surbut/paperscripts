@@ -55,7 +55,7 @@ s=melt(data.frame(errors),id.vars = "ints")
 r$lower=r$value-s$value
 r$upper=r$value+s$value
 names(r)[2]="Risk Stratification"
-p <- ggplot(data=r, aes(x=ints, y = value,fill = `Risk Stratification`)) + geom_bar(stat="identity") +labs(y = "Proportion of Lifetime Incident Cases Predicted",x="Age at Risk Estimation")+scale_fill_manual(values=c("tomato",hex[3],"darkblue"))+theme_classic(base_size = 25)+tems#+geom_errorbar(aes(ymin = value-error, ymax = value+error), width = 0.3, position = "identity")
+p <- ggplot(data=r, aes(x=ints, y = value,fill = `Risk Stratification`)) + geom_bar(stat="identity") +labs(y = "Proportion of Lifetime Incident Cases Predicted",x="Age at Risk Estimation")+scale_fill_manual(values=c("tomato",hex[3],"darkblue"),labels=c("PRS>80%","PRS>80% and PCE>7.5%","PCE>7.5%"))+theme_classic(base_size =15 )#+geom_errorbar(aes(ymin = value-error, ymax = value+error), width = 0.3, position = "identity")
 
 
 

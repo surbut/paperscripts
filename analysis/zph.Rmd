@@ -18,7 +18,9 @@ knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE
 ```{r,echo=F}
 zph=readRDS("~/paperscripts/output/zph_amit_EQ.rds")
 
-colnames(zph)=c("Polygenic Score","PCE","LDL Cholesterol","Smoking","Age","Systolic blood pressure","Diabetes","Body Mass Index","Male Sex","High-density Lipoprotein","Total cholesterol","age")
+colnames(zph)=c("Polygenic Score","Pooled Cohort Equations","Low-density lipoprotein","Smoking","Age","Systolic blood pressure","Diabetes","Body Mass Index","Male Sex","High-density Lipoprotein","Total cholesterol","age")
+
+
 
 
 library(reshape2)
@@ -27,12 +29,17 @@ library(dplyr)
 
 m=melt(zph,id.vars = "age")
 
+tgt = c("Polygenic Score","Pooled Cohort Equations","Low-density lipoprotein","Smoking","Systolic blood pressure","Diabetes","Male Sex","High-density Lipoprotein","Total cholesterol","age")
 
-p <- ggplot(m, aes(factor(variable), value)) +
+dat = m %>% filter(variable %in% tgt)
+
+
+
+p <- ggplot(dat, aes(factor(variable), value)) +
   geom_boxplot(width = 0.5, outlier.size = 3, outlier.color = "darkred", 
                fill = "lightblue", color = "darkblue") +
   facet_wrap(~variable, scales = "free") +
-  labs(x = "", y = "Value", title = "Distribution of P Value for Cox Zph") +
+  labs(x = "", y = "Value", title = "Distribution of p-Value against Non-proportional hazards") +
   theme(plot.title = element_text(size = 20, hjust = 0.5),
         axis.text.x = element_blank(),
         axis.title = element_text(size = 20),
@@ -98,6 +105,14 @@ cox.zph.fit <- cox.zph(fit8)
 ggcoxzph(cox.zph.fit)
 
 ps=readRDS("output/zph_all.rds")
-barplot(-log10(as.matrix(ps)),las=2,xlab="Variable",ylab="-log10pvalue",main="-log10p: Model without stratification by age of enrollment")
+ps = subset(ps, select = -c(age.zph,bmi.zph) )
+colnames(ps)=c("Polygenic Score","Pooled Cohort Equations","Low-density lipoprotein","Smoking","Systolic blood pressure","Diabetes","Male Sex","High-density Lipoprotein","Total cholesterol")
+
+mp=melt(ps)
+
+bar=ggplot(mp,aes(x=variable,y=-log10(value),fill=variable))+geom_bar(stat = "identity")+theme_classic(base_size = 10)+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+labs(x="Risk Factor",fill="Risk Factor")
+
+ga=ggarrange(p,bar,labels=c("A.","B."),nrow=2)
+ggsave(ga,filename = "Figs/zph.tiff",dpi=300)
 ```
 

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE,cache = FALSE,warning = FALSE,message = FALSE
 ```{r cars,echo=F}
 
 library(table1)
-
+library(dplyr)
 library(table1)
 library(magrittr)
 library("flextable")
@@ -26,6 +26,11 @@ library("flextable")
 
 df=readRDS("output/amit_df_bp.rds")
 dat=df
+
+df2=readRDS("~/paperscripts/output/amit_df_tgdbp.rds")
+
+label(df2$trigadj)="Triglycerides (ng/ml)"
+label(df2$dbp)="Diastolic BP (mmHg)"
 
 dat$age=df$phenos.enrollment
 dat$dm    <- factor(dat$prev_disease_dm, levels=0:1, labels=c("None", "Diabetes Mellitus"))
@@ -41,8 +46,7 @@ dat$smoke=factor(dat$old_smoke,levels=c(-3,0,1,2),
                       labels=c("Never","Never","Former",
                                "Current"))
 dat$bp_med=factor(dat$bp_med2,levels=c(0,1),labels=c("No","Yes"))
-dat$follow=
-                               
+dat$follow=dat$phenos.CAD_censor_age-dat$phenos.enrollment
 
 label(dat$age)      <- "Age (y)"
 label(dat$sex)      <- "Sex"
@@ -56,8 +60,9 @@ label(dat$ldladj)  <- "Low-density lipoprotein (ng/ml)"
 label(dat$bp_med)  <- "Anti-hypertensive"
 label(dat$ascvdcat)  <- "Pooled cohort equation category (10 year risk)"
 
-t=table1(~ age + sex + prscat + sbp + race + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med, data=dat)
+t=table1(~ age + sex + sbp+prscat + ascvdcat+ bp_med+Race + smoke+choladj + hdladj + ldladj,data=dat)
+
+table1(~trigadj+dbp, data=df2)
 
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1.docx")
@@ -78,11 +83,16 @@ sd(dat$age_to_censor)
 
 ```{r byasc,echo=F}
 ###
-t=table1(~ age + sex + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med+dm+prscat |ascvdcat, data=dat)
+t=table1(~ age + sex+ Race +smoke +dm + prscat+bp_med +sbp+choladj+hdladj+
+         ldladj |ascvdcat, data=dat)
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1_byASCVD.docx")
+t1flex(t)%>%save_as_pptx(path="Figs/Tables/UKBB_table1_byASCVD.pptx")
 
+t2=table1(~trigadj+dbp|ascvdcat, data=na.omit(df2))
+t1flex(t2) %>% 
+  save_as_docx(path="Figs/Tables/UKBB_table1_byASCVD_dbp.docx")
+#
 ```
 # UK Biobank by ASCVD
 ```{r}
@@ -90,10 +100,15 @@ t
 ```
 
 ```{r byprs,echo=FALSE}
-t=table1(~ age + sex  + sbp + choladj + hdladj + smoke + ascvdcat+
-         ldladj + bp_med +dm +ascvdcat|prscat, data=dat)
+t=table1(~ age + sex+Race+smoke +dm + ascvdcat+bp_med +sbp+choladj+hdladj+
+         ldladj |prscat, data=dat)
 t1flex(t) %>% 
   save_as_docx(path="Figs/Tables/UKBB_table1_byPRS.docx")
+
+t2=table1(~trigadj+dbp|prscat, data=na.omit(df2))
+t1flex(t2) %>% 
+  save_as_docx(path="Figs/Tables/UKBB_table1_byprs_dbp.docx")
+
 ```
 
 # UK Biobank by Genomic Risk

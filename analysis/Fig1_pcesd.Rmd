@@ -189,8 +189,11 @@ ggsave(r2_pce,filename = paste0(fig_path,"r2_pce.tiff"),dpi = 300,width = 6,heig
 saveRDS(hall_pce,"output/hallpce_sd.rds")
 saveRDS(r2_pce,"output/r2pce_sd.rds")
 
-g=ggarrange(hall_pce,r2_pce,ncol=2,labels=c("A.","B."))
-ggsave(g,filename = "Docs/Figs/PCEsd.tiff",dpi=300,width=10,height=5)
+hall_pce=readRDS("output/hallpce_sd.rds")
+r2_pce=readRDS("output/r2pce_sd.rds")
+g=ggarrange(hall_pce+theme_classic(base_size = 15),r2_pce+theme_classic(base_size = 15),ncol=2,labels=c("C.","D."),legend = "none")
+
+ggsave(g,filename = "Figs/PCEsd.tiff",dpi=300,width=10,height=5)
 ```
 
 ```{r}

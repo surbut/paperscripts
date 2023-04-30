@@ -91,19 +91,7 @@ g_high=ggsurvplot(fit,
            ggtheme = theme_classic(base_size=15),fun = "cumhaz",xlim=c(40,100),xlab="Age",risk.table = T) 
 ```
 
-<!-- ## Here we plot the cumulative hazard for each risk category and stratify by age -->
 
-<!-- ```{r,fig.height=8,fig.width=6} -->
-<!-- g_low -->
-<!-- ``` -->
-
-<!-- ```{r,fig.height=8,fig.width=6} -->
-<!-- g_int -->
-<!-- ``` -->
-
-<!-- ```{r,fig.height=8,fig.width=6} -->
-<!-- g_high -->
-<!-- ``` -->
 
 # All age plots
 
@@ -119,18 +107,19 @@ library(gridExtra)
 # Create 9 sample ggplots
 
 
-fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df)
+fitprs <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~prscat, data=df)
 
-g_prs= ggsurvplot(fit,
+g_prs= ggsurvplot(fitprs,
            pval = TRUE, conf.int = TRUE,
            #risk.table = TRUE, 
            #risk.table.col = "strata",
            fun="cumhaz",
-           palette="nejm",
+           palette="jama",
            xlim = c(40,80),
+           ylim = c(0,0.15),
            xlab = "Time of Event (age in years)",
            ylab = "Cumulative Hazard",
-          title = "Cumulative Hazard by PCE Category",
+          title = "Cumulative Hazard by PRS Category",
           legend.title = "PRS Category",
           legend.labs = c("PRS<20%", "PRS 20%-80%", "PRS>80%"))
           
@@ -141,36 +130,36 @@ g_prs= ggsurvplot(fit,
 
 
 ```{r gallprs}
-g_prs
+#g_prs
 
 plots <- list()
 
-  plots[[1]] <- g_all
+plots[[1]] <- g_all
 ```
 
 ## Now we stratify by PCE category, again for all
 
 ```{r}
 
-df$asccvd_cat_two=cut(df$)
-fit <-
+pcefit <-
   survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvdcat_all,
           data = df)
 
 
 g_pce = ggsurvplot(
-  fit,
+  pcefit,
   conf.int = TRUE,
   #ggtheme = theme_classic(base_size =15),
   palette="nejm",
   xlim = c(40, 80),
+  ylim = c(0,0.15),
   risk.table = F,
   pval = TRUE,
   #risk.table.col = "strata",
   fun = "cumhaz",
   xlab = "Time of Event (age in years)",
   ylab = "Cumulative Hazard",
-  title = "Cumulative Hazard by PRS Category",
+  title = "Cumulative Hazard by PCE Category",
   legend.title = "10 year risk Category",
     legend.labs = c("10-yr risk <7.5%","10-yr risk 7.5-20%","10-yr risk 20%"))
 
@@ -179,10 +168,9 @@ g_pce = ggsurvplot(
 
 
 ```{r, gallpce}
-g_pce
-ggsave(g_pce,filename="Figs/gpce.tiff",dpi=300)
+#g_pce
+ggsave(g_pce$plot,filename="Figs/gpce.tiff",dpi=300)
 
-plots[[2]] <- g_pce
 ```
 
 ## Now we plot cumulative incidence by age of enrollment
@@ -192,15 +180,16 @@ df$agecat=cut(df$enroll_age,breaks=c(0,55,65,100),labels=c("<55","55-65","65+"))
 
 #fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~agecat, data=df)
 
-fit <- survfit(Surv((phenos.CAD_censor_age-phenos-phenos.enrollment), phenos.has_CAD) ~agecat, data=df)
+agefit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment), phenos.has_CAD) ~agecat, data=df)
 
-genroll=ggsurvplot(fit, data = df,
+genroll=ggsurvplot(agefit, data = df,
            pval = TRUE, conf.int = TRUE,
            risk.table = F, 
            #risk.table.col = "strata",
-           palette="nejm",
+           palette="futurama",
            fun="cumhaz",
-           xlim = c(0, 15), 
+           xlim = c(0, 15),
+           ylim = c(0,0.15),
            #xlim = c(40, 80),
            xlab = "Time since Enrollment",
            #xlab = "Time of Event (age in years)",
@@ -211,7 +200,7 @@ genroll=ggsurvplot(fit, data = df,
 ```
 
 ```{r genroll}
-genroll
+#genroll
 
 
 ga=ggarrange(g_prs$plot,g_pce$plot,genroll$plot,nrow=3,ncol=1,labels=c("A.","B.","C"))
@@ -496,7 +485,7 @@ qm=melt(q,id.vars = "rank")
 barplot(q,beside = T)
 q$age=c("<55","55-65",">65")
 
-p=ggplot(qm,aes(x=rank,y=value,fill=variable,color=variable))+geom_bar(stat="identity",pos="dodge")+scale_fill_futurama()+theme_classic(base_size = 20)+labs(y="10-year Predicted ASCVD Risk",x="Age Rank",fill="Age Category")+guides(color="none")+geom_hline(yintercept = 7.5)
+p=ggplot(qm,aes(x=rank,y=value,fill=variable,color=variable))+geom_bar(stat="identity",pos="dodge")+scale_fill_futurama()+theme_classic(base_size = 20)+labs(y="10-year Predicted ASCVD Risk",x="Rank Decile for Age",fill="Age Category")+guides(color="none")+geom_hline(yintercept = 7.5)
 
 ggsave(p,filename = "output/ageascvddist.tiff",dpi=300)
 
@@ -518,13 +507,14 @@ a=a[-1,]
 pprs<-ggplot(a, aes(x=PRS.percentile, y=Age.of.Event, fill=PRS.percentile,col=PRS.percentile)) + 
   geom_point()+
   geom_errorbar(aes(ymin=Age.of.Event-se, ymax=Age.of.Event+se),width=0.01,
-                position=position_dodge(0.05))+ylim(50,71)+theme_classic()+stat_smooth()+ylab("Mean Age of Event")+xlab("Polygenic Risk Decile")
+                )+ylim(50,71)+theme_classic()+stat_smooth()+ylab("Mean Age of Event")+xlab("Polygenic Risk Decile")
 p=a
 p$group=rep("PRS",length(a))
 
 a=df%>%group_by(round(ascvd.r,1))%>%summarise(mean=mean(phenos.CAD_censor_age[phenos.has_CAD==1]),sd=sd(phenos.CAD_censor_age[phenos.has_CAD==1]),n=sum(phenos.has_CAD==1))
 
 a=data.frame(a)
+a=a[-1,]
 colnames(a)=c("PCE.percentile","Age.of.Event","sd","n")
 a$se=a$sd/sqrt(a$n)
 a$score=rep("PCE",length(a[,1]))
@@ -542,8 +532,7 @@ r=rbind(p,a)
 
 plot<-ggplot(r, aes(x=Decile, y=Age.of.Event,group=Score, fill=Score,col=Score)) + 
   geom_point()+
-  geom_errorbar(aes(ymin=Age.of.Event-se, ymax=Age.of.Event+se), width=.02,
-                position=position_dodge(0.05))+ylim(50,71)+theme_classic()+stat_smooth()+ylab("Mean Age of Event,years")+xlab("Decile")+scale_color_nejm()+scale_fill_nejm()+theme_classic(base_size = 15)
+  geom_errorbar(aes(ymin=Age.of.Event-se, ymax=Age.of.Event+se), width=.02)+ylim(50,71)+theme_classic()+stat_smooth()+ylab("Mean Age of Event,years")+xlab("Decile")+scale_fill_manual(values=c("cornflowerblue","red"))+theme_classic(base_size = 15)+scale_color_manual(values=c("cornflowerblue","red"))+scale_x_continuous(breaks = seq(0, 1, 0.10))+labs(col="Risk Stratification")+ guides(fill = "none")
 
 ggsave(plot,filename = "Figs/meanageofevent.tiff",dpi=300)
 m=merge(p,a,by = "Decile")
@@ -574,12 +563,14 @@ dyoung=df[df$phenos.enrollment<55,]
 dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
 dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
 dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
+dyoung$Interaction=interaction(dyoung$prscat,dyoung$ascvdcat_all)
 dyoung$Interaction=interaction(dyoung$prscat,dyoung$pce.cat)
-
 fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment),phenos.has_CAD)~Interaction, data=dyoung)
-# fit <- survfit(Surv((phenos.CAD_censor_age), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
+#fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~Interaction, data=dyoung)
+ #fit <- survfit(Surv((phenos.CAD_censor_age), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
 g_young=ggsurvplot(fit,
-           pval = TRUE, conf.int = TRUE,
+                   pval = TRUE, 
+                   conf.int = TRUE,
            ##risk.table = F, 
            ##risk.table.col = "strata",
            fun="cumhaz",
@@ -589,20 +580,31 @@ g_young=ggsurvplot(fit,
            #xlab = "Time of Event (Age)",
            ylab = "Cumulative Hazard",
            ylim=c(0,0.15),
+           censor=FALSE,
            title = "Enrollment <55",
           legend.title = "PRS:PCE Rank",
           ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
            font.family = "Arial",
-          palette="jco",
-          
-          legend.labs = c("PRS low:PCE low", "PRS int:PCE low", "PRS high:PCE low",
-                           "PRS low:PCE int", "PRS int:PCE int", "PRS high:PCE int",
-                           "PRS low:PCE high", "PRS int:PCE high", "PRS high:PCE high"))
+palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
 
+
+          
+          legend.labs = c("PRS low:PCE Low",
+                          "PRS Intermediate:PCE Low",
+                          "PRS High:PCE Low",
+                          "PRS low:PCE Intermediate",
+                          "PRS Intermediate:PCE Intermediate",
+                          "PRS High:PCE Intermediate",
+                          "PRS low:PCE High",
+                          "PRS Intermediate:PCE High",
+                          "PRS High:PCE High"))
 ###
 
 dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
-dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
+dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)# rescale for age
+
 dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
 dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
 dmid$Interaction=interaction(dmid$prscat,dmid$pce.cat)
@@ -624,11 +626,22 @@ g_mid=ggsurvplot(fit,
           legend.title = "PRS:PCE Rank",
           ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
            font.family = "Arial",
-          palette="jco",
+                 font.family = "Arial",
+palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+
+
           
-          legend.labs = c("PRS low:PCE low", "PRS int:PCE low", "PRS high:PCE low",
-                           "PRS low:PCE int", "PRS int:PCE int", "PRS high:PCE int",
-                           "PRS low:PCE high", "PRS int:PCE high", "PRS high:PCE high"))
+          legend.labs = c("PRS low:PCE Low",
+                          "PRS Intermediate:PCE Low",
+                          "PRS High:PCE Low",
+                          "PRS low:PCE Intermediate",
+                          "PRS Intermediate:PCE Intermediate",
+                          "PRS High:PCE Intermediate",
+                          "PRS low:PCE High",
+                          "PRS Intermediate:PCE High",
+                          "PRS High:PCE High"))
 ###
 
 dold=df[df$phenos.enrollment>65,]
@@ -658,21 +671,35 @@ g_old=ggsurvplot(fit,
           legend.title = "PRS:PCE Rank",
           ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
            font.family = "Arial",
-          palette="jco",
+                 font.family = "Arial",
+palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+
+
           
-          legend.labs = c("PRS low:PCE low", "PRS int:PCE low", "PRS high:PCE low",
-                           "PRS low:PCE int", "PRS int:PCE int", "PRS high:PCE int",
-                           "PRS low:PCE high", "PRS int:PCE high", "PRS high:PCE high"))
+          legend.labs = c("PRS low:PCE Low",
+                          "PRS Intermediate:PCE Low",
+                          "PRS High:PCE Low",
+                          "PRS low:PCE Intermediate",
+                          "PRS Intermediate:PCE Intermediate",
+                          "PRS High:PCE Intermediate",
+                          "PRS low:PCE High",
+                          "PRS Intermediate:PCE High",
+                          "PRS High:PCE High"))
 
-
+gg=ggarrange(g_young$plot,g_mid$plot,g_old$plot,nrow=3,ncol=1,labels=c("A.","B.","C"),common.legend = T)
+ggsave(gg,dpi=300,filename = "Figs/interaction_time_bytimesinceenro.tiff")
 ```
+
+
 
 
 ## <55
 
 ```{r gyoungprs}
 ggsave(g_young$plot,filename = "Figs/gyoung.tiff",dpi = 300,width = 10,height = 4)
-write.csv(g_young$data.survtable,file = "Figs/Tables/cumulativeinc55.csv",quote = F,row.names = F)
+# write.csv(g_young$data.survtable,file = "Figs/Tables/cumulativeinc55.csv",quote = F,row.names = F)
 ggplotly(g_young$plot)
 ggplotly(g_young$plot)
 ```
@@ -682,19 +709,220 @@ ggplotly(g_young$plot)
 g_mid
 plots[[5]]=g_mid
 ggsave(g_mid$plot,filename = "Figs/gmid.tiff",dpi = 300,width = 10,height = 4)
-write.csv(g_mid$data.survtable,file = "Figs/Tables/cumulativeinc5565.csv",quote = F,row.names = F)
+# write.csv(g_mid$data.survtable,file = "Figs/Tables/cumulativeinc5565.csv",quote = F,row.names = F)
 ```
 
-## >65
-```{r goldprs}
-g_old
-plots[[6]]=g_old
-ggsave(g_old$plot,filename = "Figs/gold.tiff",dpi = 300,width = 10,height = 4)
-write.csv(g_old$data.survtable,file = "Figs/Tables/cumulativeinc65.csv",quote = F,row.names = F)
+## interactoin by age of evetn
 
-ggarrange(g_young$plot,g_mid$plot,g_old$plot,nrow=3,ncol=1,width=c(10,10,10),labels=c("A.","B.","C"),common.legend = T)
+## interaction
+
+# Here we break into three age groups and stratify by PRS, asking about resolution by PRS:
+
+
+```{r}
+dyoung=df[df$phenos.enrollment<55,]
+dyoung$pce.age=scale(dyoung$ascvd_10y_accaha_all)
+dyoung$pce.r=rank(dyoung$pce.age)/length(dyoung$pce.age)
+dyoung$pce.cat=cut(dyoung$pce.r,breaks=c(0,0.20,0.80,1))
+dyoung$Interaction=interaction(dyoung$prscat,dyoung$pce.cat)
+#dyoung$Interaction=interaction(dyoung$prscat,dyoung$ascvdcat_all)
+
+#fit <- survfit(Surv((phenos.CAD_censor_age-phenos.enrollment),phenos.has_CAD)~Interaction, data=dyoung)
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~prscat, data=dyoung)
+
+
+g_youngprs=ggsurvplot(fit,
+           pval = TRUE, censor=FALSE,
+           #conf.int = TRUE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(40, 70),break.x.by=5,
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           ylab = "Cumulative Hazard",
+           ylim=c(0,0.15),
+           title = "Enrollment <55",
+          legend.title = "PRS Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+          palette=c("#3182BD","#31A354","#E6550D"),break.x.by=5,
+           legend.labs = c("PCE <20%", "PCE 20-80%", "PCE >80%"))
+
+## now with interaction
+
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~Interaction, data=dyoung)
+ #fit <- survfit(Surv((phenos.CAD_censor_age), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
+g_young=ggsurvplot(fit,
+           pval = TRUE, conf.int = TRUE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           censor=FALSE,
+           #xlim = c(0, 15), 
+           xlim = c(40, 67),
+           
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           ylab = "Cumulative Hazard",
+           #ylim=c(0,0.15),
+           title = "Enrollment <55",
+          legend.title = "PRS:PCE Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+
+palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),break.x.by = 5,
+
+
+          
+          legend.labs = c("PRS low:PCE Low",
+                          "PRS Intermediate:PCE Low",
+                          "PRS High:PCE Low",
+                          "PRS low:PCE Intermediate",
+                          "PRS Intermediate:PCE Intermediate",
+                          "PRS High:PCE Intermediate",
+                          "PRS low:PCE High",
+                          "PRS Intermediate:PCE High",
+                          "PRS High:PCE High"))
+
+###
+
+dmid=df[df$phenos.enrollment>55&df$phenos.enrollment<65,]
+dmid$pce.age=scale(dmid$ascvd_10y_accaha_all)
+dmid$pce.r=rank(dmid$pce.age)/length(dmid$pce.age)
+dmid$pce.cat=cut(dmid$pce.r,breaks=c(0,0.20,0.80,1))
+dmid$Interaction=interaction(dmid$prscat,dmid$pce.cat)
+#dmid$Interaction=interaction(dmid$prscat,dmid$ascvdcat_all)
+
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~pce.cat, data=dmid)
+
+g_midprs=ggsurvplot(fit,break.x.by=5,
+           pval = TRUE, conf.int = TRUE,censor=FALSE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(55, 80),
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           ylab = "Cumulative Hazard",
+           #ylim=c(0,0.15),
+           title = "Enrollment <55",
+           palette=c("#3182BD","#31A354","#E6550D"),
+          legend.title = "PCE Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+          legend.labs = c("PCE <20%", "PCE 20-80%", "PCE >80%"))
+
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~Interaction, data=dmid)
+# fit <- survfit(Surv((phenos.CAD_censor_age), phenos.has_CAD) ~prscat, data=df[df$phenos.enrollment<55,])
+g_mid=ggsurvplot(fit,
+           pval = TRUE, 
+           conf.int = TRUE,
+           censor=FALSE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(55, 80),
+          #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           ylab = "Cumulative Hazard",
+           #ylim=c(0,0.15),
+           title = "Enrollment 55-65",
+          legend.title = "PRS:PCE Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           #font.family = "Arial",
+                 font.family = "Arial",break.x.by = 5,
+palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+
+
+          
+          legend.labs = c("PRS low:PCE Low",
+                          "PRS Intermediate:PCE Low",
+                          "PRS High:PCE Low",
+                          "PRS low:PCE Intermediate",
+                          "PRS Intermediate:PCE Intermediate",
+                          "PRS High:PCE Intermediate",
+                          "PRS low:PCE High",
+                          "PRS Intermediate:PCE High",
+                          "PRS High:PCE High"))
+###
+
+dold=df[df$phenos.enrollment>65,]
+dold$pce.age=scale(dold$ascvd_10y_accaha_all)
+dold$pce.r=rank(dold$pce.age)/length(dold$pce.age)
+dold$pce.cat=cut(dold$pce.r,breaks=c(0,0.20,0.80,1))
+dold$Interaction=interaction(dold$pce.cat,dold$prscat)
+#dold$Interaction=interaction(dold$prscat,dold$ascvdcat_all)
+
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~pce.cat, data=dold)
+
+
+g_oldprs=ggsurvplot(fit,
+           pval = TRUE, 
+           conf.int = TRUE,break.x.by=5,
+           censor=FALSE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(65, 85),
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           #ylab = "Cumulative Hazard",
+           ylim=c(0,0.15),
+           title = "Enrollment >65",
+          legend.title = "PRS Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+          palette=c("#3182BD","#31A354","#E6550D"),
+          
+          legend.labs = c("PCE <20%", "PCE 20-80%", "PCE >80%"))
+
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD)~Interaction, data=dold) 
+
+
+g_old=ggsurvplot(fit,
+           pval = TRUE, conf.int = TRUE,censor=FALSE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(65, 85),
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           #ylab = "Cumulative Hazard",
+           #ylim=c(0,0.15),
+           title = "Enrollment >65",
+          legend.title = "PRS:PCE Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+           palette=c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 5,legend.labs = c("PRS low:PCE low", "PRS int:PCE low", "PRS high:PCE low",
+                           "PRS low:PCE int", "PRS int:PCE int", "PRS high:PCE int",
+                           "PRS low:PCE high", "PRS int:PCE high", "PRS high:PCE high"))
+
+
 ```
 
+```{r}
+
+
+gg1=ggarrange(g_youngprs$plot,g_midprs$plot,g_oldprs$plot,nrow=3,ncol=1,labels=c("A.","B.","C."),common.legend = T,height=10,width=10)
+gg2=ggarrange(g_young$plot,g_mid$plot,g_old$plot,nrow=3,ncol=1,labels=c("D","F","G"),common.legend = T)
+ggsave(gg1,dpi=300,filename = "Figs/interaction_time_byage1.tiff",height=10,width = 10)
+ggsave(gg2,dpi=300,filename = "Figs/interaction_time_byage2.tiff")
+```
 ## return cumulative hazard for low and high of each age 
 
 ```{r}

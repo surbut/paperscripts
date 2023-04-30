@@ -5,6 +5,21 @@ library("ggplot2")
 library("data.table") 
 
 fwk=read.table("~/Desktop//Framingham/85598/PhenoGenotypeFiles/RootStudyConsentSet_phs000007.Framingham.v32.p13.c1.HMB-IRB-MDS/PhenotypeFiles/phs000007.v32.pht006027.v3.p13.c1.vr_wkthru_ex09_1_1001s.HMB-IRB-MDS.txt",header = T,skip = 1,sep="\t") 
+
+mean(na.omit(fwk$DBP1))
+[1] 78.53712
+> sd(na.omit(fwk$DBP1))
+[1] 10.95432
+> sd(na.omit(fwk$TRIG1))
+[1] 86.70328
+> mean(na.omit(fwk$TRIG1))
+[1] 99.13985
+
+mean(na.omit(fwk$CALC_LDL1))
+
+sd(na.omit(fwk$CALC_LDL1))
+
+
 sum(na.omit(fwk$DMRX1)) ## only 37 folks with DM
 fwk=fwk[,c("dbGaP_Subject_ID","SEX","AGE1","CURRSMK1","HDL1","TC1","LIPRX1","CALC_LDL1","BMI1","SBP1","DMRX1","HRX1")]
 

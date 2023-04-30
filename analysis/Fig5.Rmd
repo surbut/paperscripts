@@ -80,6 +80,11 @@ levels(m$Model)[3]="Combined"
 m$se=m3$value
 gplot <- ggplot(m,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),linewidth=3)+geom_pointrange()+ylim(0.5,1)+scale_color_manual(values=c("tomato","cornflowerblue","darkorchid4"))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))
 
+
+
+
+
+
 ggplotly(gplot)
 #ggsave(gplot,filename = "aucplot.pdf",dpi=300)
 ggsave(gplot,filename = "Figs/Fig5/aucplot.tiff",dpi=300,width = 9,height = 7)
@@ -89,6 +94,24 @@ msave$upper=m$AUC+m$se
 msave$lower=m$AUC-m$se
 write.table(msave,"output/AUC.csv",sep=",",quote=FALSE,row.names = F)
 ```
+
+```{r}
+tgt = c("Non Genomic","Combined")
+m2 = m %>% filter(Model %in% tgt)
+m2$Model=factor(m2$Model)
+levels(m2$Model)=c("Clinical","Clinical + Genomic")
+
+gplot2 <- ggplot(m2,aes(x = Age,y = AUC,color = Model,ymin=AUC+se,ymax=AUC-se))+geom_point()+geom_line(aes(group=Model,color =Model),linewidth=3)+geom_pointrange()+ylim(0.5,0.8)+scale_color_manual(values=c("cornflowerblue","darkorchid4"))+theme_classic(base_size = 25)+theme(axis.text.x = element_text(angle = 90))+labs(x="Age at risk estimation, years",y="AUC")
+
+ggsave(gplot2,filename = "Figs/Fig5/aucplot_onlytwo.tiff",dpi=300,width = 9,height = 7)
+
+msave=m
+msave$upper=m$AUC+m$se
+msave$lower=m$AUC-m$se
+write.table(msave,"output/AUC.csv",sep=",",quote=FALSE,row.names = F)
+```
+
+
 
 ## Lookup table
 

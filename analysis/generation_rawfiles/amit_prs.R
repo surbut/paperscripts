@@ -34,6 +34,7 @@ nrow(cad_pheno)-nrow(m)
 lipids=fread("~/Dropbox/ukbb-lipids-meds.txt")
 sum(rowSums(is.na(lipids[,c("eid","statin0","ldladj","hdladj","choladj","anylipidmed0")]))>0)
 # exclude 73414
+# exclude TG for original table
 lip=na.omit(lipids[,c("eid","statin0","ldladj","hdladj","choladj","anylipidmed0","trigadj")])
 dim(lip)
 # 429122     6
@@ -42,6 +43,7 @@ dim(lip)
 ukb=fread("~/Dropbox/big_ukb_file.txt",header=T,sep="\t")
 cov=data.frame("iid"=ukb$id,"sex"=ukb$Sex,"sbp"=ukb$SBP_adjMeds,"dbp"=ukb$DBP_adjMeds,"smoke"=ukb$SmokingStatus,"bp_med"=ukb$BP_Meds,"Race"=ukb$in_white_British_ancestry_subset,"bmi"=ukb$BMI)
 cov$Race=ifelse(cov$Race==1,"white","other")
+## exclude DBP for original table
 ##
 sum(rowSums(is.na(cov))>0)
 ## exclude 48973 without baseling info
@@ -130,8 +132,8 @@ dfc=df[-which(df$age_to_censor<0),]
 
 
 
-saveRDS(dfc,"~/Dropbox/paper_scripts/output/amit_df.rds")
-
+#saveRDS(dfc,"paper_scripts/output/amit_df.rds")
+saveRDS(dfc,file = "~/paperscripts//output/amit_df_tgdbp.rds")
 #####
 
 

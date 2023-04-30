@@ -50,6 +50,9 @@ hazards=data.frame(readRDS("output/hazards_rate_UKB_amit.rds"))
 upperbound=data.frame(readRDS("output/hazards_rate_upperbound_amit.rds"))
 lowerbound=data.frame(readRDS("output/hazards_rate_lowerbound_amit.rds"))
 
+hazards=data.frame(readRDS("output/hazards_rate_UKB_amit_EQ.rds"))
+upperbound=data.frame(readRDS("output/hazards_rate_upperbound_amit_EQ.rds"))
+lowerbound=data.frame(readRDS("output/hazards_rate_lowerbound_amit_EQ.rds"))
 
 hrmat=hazards[,grep("HR",colnames(hazards))];
 hrmat$age=dat$round.phenos.enrollment..0.
@@ -79,6 +82,9 @@ r2s = melt(r2mat, id.vars = "age")
 haz$low.se = l$value
 haz$upper.se = u$value
 
+s=reshape(haz, direction = "wide",
+idvar = "age", timevar = "variable")
+write.csv(s,"output/hrindex_ukb_eq.csv",row.names = F)
 
 
 
@@ -203,7 +209,7 @@ datr = r2s %>%filter(variable %in% tgt)
 hr_ukb_all = dat %>%
   ggplot(aes(x = age, y = value, colour = variable, fill = variable
              )) +
-  geom_point(size = 0.5) +
+  #geom_point(size = 0.5) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
    scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"),guide="none")+
@@ -215,7 +221,7 @@ hr_ukb_all = dat %>%
 r2_ukb_all = datr %>%
   ggplot(aes(x = age, y = round(value,2), colour = variable,fill = variable
              )) +
-  geom_point(size = 1) +
+  #geom_point(size = 1) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(values=col_p, drop=TRUE,breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol")) +
    scale_fill_manual(values=col_p, drop=TRUE, breaks=c("Diabetes mellitus","Male Sex","Smoking","Polygenic score","LDL Cholesterol","Systolic blood pressure","Body Mass Index","Pooled cohort equations","Age","High-density lipoprotein","Total cholesterol"),guide="none")+
@@ -236,6 +242,7 @@ hall = hr_ukb_all + theme_classic(base_size = 20) + tems
 hr_ukb_all_nolegend=hr_ukb_all+theme_classic(base_size = 20)+theme(legend.position = "none")+ylim(c(0.35,5)) 
 
 saveRDS(hall,"output/hall.rds")
+#haz
 saveRDS(r2,"output/r2.rds")
 ```
 
@@ -272,7 +279,7 @@ hr_ukb_pce = ggplot(subset(
 aes(age, value, colour = variable)) +
   labs(y = "Hazard Ratio of Coronary Artery Disease", x = "Age of Risk Assessment", colour =
          "Risk Factor") +
-  geom_point(size = 0.5) +
+  #geom_point(size = 0.5) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(
     values = col_p,
@@ -304,7 +311,7 @@ r2_ukb_pce = ggplot(subset(
 aes(age, value, colour = variable)) +
   labs(y = "Proportion of Variation Explained", x = "Age of Risk Assessment", colour =
          "Risk Factor") +
-  geom_point(size = 0.5) +
+  #geom_point(size = 0.5) +
   stat_smooth(method = "loess", span = 1) +
   scale_color_manual(
     values = col_p,
@@ -337,7 +344,7 @@ saveRDS(r2_pce,"output/r2pce.rds")
 
 
 g=ggarrange(hall_pce,r2_pce,ncol=2,labels=c("A.","B."))
-ggsave(g,filename = "Docs/Figs/PCE_nom.tiff",dpi=300,width=10,height=5)
+ggsave(g,filename = "Figs/PCE_nom.tiff",dpi=300,width=10,height=5)
 ```
 
 ```{r}
