@@ -370,18 +370,24 @@ pre code {
 </div>
 <div id="make-the-table" class="section level2">
 <h2>make the table</h2>
-<pre class="r"><code>df = readRDS(&quot;output/amit_df.rds&quot;)
+<pre class="r"><code>setwd(&quot;~/paperscripts/&quot;)
+df = readRDS(&quot;output/amit_df.rds&quot;)
 dat = data.frame(df %&gt;% group_by(round(phenos.enrollment, 0)) %&gt;% summarise(length(phenos.enrollment)))[c(3:32), ]
 
 hazards = matrix(data = NA,
                  nrow = nrow(dat),
                  ncol = 33)
+zph = matrix(data = NA,
+                 nrow = nrow(dat),
+                 ncol = 11)
 upperbound = matrix(data = NA,
                 nrow = nrow(dat),
                 ncol = 11)
 lowerbound = matrix(data = NA,
                 nrow = nrow(dat),
                 ncol = 11)
+
+
 
 ## make sure normalized
 df$prs_quant = scale(df$SCORE)
@@ -416,6 +422,10 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prs_quant,
                data = d)
   hazards[i, 1] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,1]=cox.zph.fit$table[1,3]
+  
   lowerbound[i, 1] = summary(sfit)$conf.int[3]
   upperbound[i,1] = summary(sfit)$conf.int[4]
   
@@ -430,6 +440,10 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha,
                data = d)
   hazards[i, 4] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,2]=cox.zph.fit$table[1,3]
+  
   lowerbound[i, 2] = summary(sfit)$conf.int[3]
   upperbound[i,2] = summary(sfit)$conf.int[4]
   
@@ -444,6 +458,10 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ldl.quant,
                data = d)
   hazards[i, 7] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,3]=cox.zph.fit$table[1,3]
+  
   lowerbound[i, 3] = summary(sfit)$conf.int[3]
   upperbound[i,3] = summary(sfit)$conf.int[4]
 
@@ -457,6 +475,10 @@ for (i in seq(1:nrow(dat))) {
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ smoke, data =
                  d)
   hazards[i, 10] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,4]=cox.zph.fit$table[1,3]
+  
   lowerbound[i, 4] = summary(sfit)$conf.int[3]
   upperbound[i,4] = summary(sfit)$conf.int[4]
   # #
@@ -470,7 +492,10 @@ for (i in seq(1:nrow(dat))) {
   # #  age fit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ phenos.enrollment,
                data = d)
-  hazards[i, 13] = exp(coef(sfit)[1])
+  hazards[i, 13] = exp(coef(sfit)[1])  
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,5]=cox.zph.fit$table[1,3]
+  
   lowerbound[i, 5] = summary(sfit)$conf.int[3]
   upperbound[i,5] = summary(sfit)$conf.int[4]
   #
@@ -484,6 +509,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   # #     SBP fit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sbp.quant,
                data = d)
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,6]=cox.zph.fit$table[1,3]
+  
     lowerbound[i, 6] = summary(sfit)$conf.int[3]
   upperbound[i,6] = summary(sfit)$conf.int[4]
  
@@ -498,6 +527,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   # #     dmfit
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ prev_disease_dm,
                data = d,control=coxph.control(eps=1e-8,iter.max = 30))
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,7]=cox.zph.fit$table[1,3]
+  
   hazards[i, 19] = exp(coef(sfit)[1])
     lowerbound[i, 7] = summary(sfit)$conf.int[3]
   upperbound[i,7] = summary(sfit)$conf.int[4]
@@ -514,6 +547,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ bmi.quant,
                data = d)
   hazards[i, 22] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,8]=cox.zph.fit$table[1,3]
+  
    lowerbound[i, 8] = summary(sfit)$conf.int[3]
   upperbound[i,8] = summary(sfit)$conf.int[4]
   
@@ -529,6 +566,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ sex, data =
                  d)
   hazards[i, 25] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,9]=cox.zph.fit$table[1,3]
+  
     lowerbound[i, 9] = summary(sfit)$conf.int[3]
   upperbound[i,9] = summary(sfit)$conf.int[4]
   
@@ -542,6 +583,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ hdl.quant,
                data = d)
   hazards[i, 28] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,10]=cox.zph.fit$table[1,3]
+  
     lowerbound[i, 10] = summary(sfit)$conf.int[3]
   upperbound[i,10] = summary(sfit)$conf.int[4]
   
@@ -559,6 +604,10 @@ hazards[i, 15] = with(summary(reg), 1 - deviance / null.deviance)
   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ chol.quant,
                data = d)
   hazards[i, 31] = exp(coef(sfit)[1])
+    
+  cox.zph.fit &lt;- cox.zph(sfit,terms = T)
+  zph[i,11]=cox.zph.fit$table[1,3]
+  
     lowerbound[i, 11] = summary(sfit)$conf.int[3]
   upperbound[i,11] = summary(sfit)$conf.int[4]
   reg = glm(phenos.has_CAD ~ chol.quant,
@@ -696,6 +745,9 @@ colnames(upperbound) = colnames(lowerbound)=c(
   &quot;hdl.se&quot;,
   &quot;tc.se&quot;
 )
+
+
+
 saveRDS(lowerbound,&quot;output/hazards_rate_lowerbound_amit_EQ.rds&quot;)
 saveRDS(upperbound,&quot;output/hazards_rate_upperbound_amit_EQ.rds&quot;)</code></pre>
 </div>

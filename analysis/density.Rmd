@@ -27,6 +27,7 @@ df$agecat=cut(df$phenos.enrollment,breaks=c(0,55,65,100),labels=c("<55","55-65",
 prs=ggplot(df, aes(x = prs_quant, y = agecat,fill=agecat)) + 
   geom_density_ridges() + theme_ridges()+labs(x = "Genomic Risk Quantile", y = "Density",fill="Age Category")+scale_fill_futurama()+theme_classic()
 
+prs
 
 df$prscat=factor(df$prscat,levels = c("low","intermediate","high"),labels=c("<20%","20-80%",">80%"))
 

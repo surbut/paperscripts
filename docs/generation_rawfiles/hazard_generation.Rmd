@@ -67,6 +67,7 @@ df$age.quant = scale(df$phenos.enrollment)
 df$bmi.quant = scale(df$bmi)
 df$phenos.has_CAD = df$has_disease
 df$sex = ifelse(df$sex == "male", 1, 0)
+df$ascvdquant=scale(df$ascvd_10y_accaha_all)
 
 sum(df$age_to_censor < 0 & df$phenos.has_CAD == 1)
 #df=na.omit(df)
@@ -96,10 +97,15 @@ for (i in seq(1:nrow(dat))) {
   upperbound[i,1] = summary(sfit)$conf.int[4]
 
   # #    pce fit
-  sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha,
-               data = d)
+   sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvd_10y_accaha,
+  #              data = d)
+  #sfit = coxph(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ ascvdquant,
+                data = d)
   hazards[i, 4] = exp(coef(sfit)[1])
-  reg = glm(phenos.has_CAD ~ ascvd_10y_accaha,
+  #reg = glm(phenos.has_CAD ~ ascvdquant,
+           # data = d,
+            #family = "binomial")
+reg = glm(phenos.has_CAD ~ ascvd_10y_accaha,
             data = d,
             family = "binomial")
   hazards[i, 5] = exp(coef(reg))[[2]]
@@ -296,8 +302,8 @@ hazards[1, "dm.HR"] = upperbound[1,7]=lowerbound[1,7]=NA
 #hazards[2, "dm.HR"] = NA
 #saveRDS(hazards,"~/Dropbox/hazards_rate_UKB_mixed.rds")
 #saveRDS(hazards,"~/Dropbox/hazards_rate_UKBleq.rds")
+#saveRDS(hazards,"output/hazards_rate_UKB_amit_PCEQC.rds")
 saveRDS(hazards,"output/hazards_rate_UKB_amit.rds")
-
 
 colnames(upperbound) = colnames(lowerbound)=c(
   "prs.se",
@@ -318,8 +324,12 @@ colnames(upperbound) = colnames(lowerbound)=c(
   "hdl.se",
   "tc.se"
 )
-saveRDS(lowerbound,"output/hazards_rate_lowerbound_amit.rds")
-saveRDS(upperbound,"output/hazards_rate_upperbound_amit.rds")
+
+# saveRDS(lowerbound,"output/hazards_rate_lowerbound_amit.rds")
+# saveRDS(upperbound,"output/hazards_rate_upperbound_amit.rds")
+
+saveRDS(lowerbound,"output/hazards_rate_lowerbound_amit_PCEQ.rds")
+saveRDS(upperbound,"output/hazards_rate_upperbound_amit_PCEQ.rds")
 ```
 
 

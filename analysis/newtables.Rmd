@@ -57,3 +57,101 @@ mean(dat[which(phenos.enrollment<65&phenos.enrollment>55&prs.r>0.98),phenos.has_
 
 ```
 
+# Abstract numbers
+ Among those <55 years, CAD PRS predicted 3.5-fold more events than PCE alone, including XXX-fold for events occurring prior to XXX years, with delta AUC of XXX (95% XXX-XXX).
+
+```{r}
+
+sum(df$phenos.enrollment<45&df$phenos.has_CAD==1)
+sum(df$phenos.enrollment<45&df$phenos.has_CAD==1&df$prs.r>0.80&df$ascvd_10y_accaha_all<7.5)
+138
+sum(df$phenos.enrollment<45&df$phenos.has_CAD==1&df$ascvd_10y_accaha_all>7.5&df$prs.r<0.80)
+44
+
+sum(df$phenos.enrollment<45&df$phenos.has_CAD==1&df$prs.r>0.80&df$ascvd_10y_accaha_all<7.5&df$phenos.CAD_censor_age<60)
+138
+
+sum(df$phenos.enrollment<45&df$phenos.has_CAD==1&df$ascvd_10y_accaha_all>7.5&df$prs.r<0.80&df$phenos.CAD_censor_age<60)
+44
+
+````
+
+ 
+ For those >55y, CAD PRS only identified XXX-fold more events than PCE alone with delta AUC XXX (95% XXX-XXX).
+ 
+```{r}
+sum(df$phenos.enrollment>55&df$phenos.has_CAD==1&df$prs.r>0.80&df$ascvd_10y_accaha_all<7.5)
+
+sum(df$phenos.enrollment>55&df$phenos.has_CAD==1&df$ascvd_10y_accaha_all>7.5&df$prs.r<0.80)
+```
+
+Delta AUC
+
+```{r}
+source("code/utils.R")
+library(ggplot2)
+
+df=readRDS("output/amit_df.rds")
+
+df$prscat <- cut(df$prs.r, breaks=c(0, 0.20,0.80,1), labels=c("low", "intermediate","high"))
+set.seed(456)
+
+  #which(df$phenos.enrollment>ages[i]&df$phenos.enrollment<ages[i+1])
+  d=df[df$phenos.enrollment<45,]
+  
+  indices=sample(nrow(d))
+  
+  d_train=d[indices[1:(length(indices)/2)],]
+  d_test=d[indices[(length(indices)/2+1):length(indices)],]
+  model_glm = glm(phenos.has_CAD  ~ prscat, data = d_train, family = "binomial")
+  
+  test_prob = predict(model_glm, newdata = d_test, type = "response")
+  test_roc = roc(d_test$phenos.has_CAD~ test_prob, plot = F)
+  prs.roc=test_roc$auc
+  s.prs=sqrt(var(test_roc))
+  
+  
+  ### for pce
+  model_glm = glm(phenos.has_CAD  ~ ascvdcat_all, data = d_train, family = "binomial")
+  
+  test_prob = predict(model_glm, newdata = d_test, type = "response")
+  test_roc = roc(d_test$phenos.has_CAD~ test_prob,plot=F)
+  pce.roc=test_roc$auc
+  s.pce=sqrt(var(test_roc))
+  
+  delta.auc=prs.roc-pce.roc
+  se=sqrt(s.pce^2+s.prs^2)
+  df=dim(d)[1]+dim(d)[1]-2
+  
+  
+  delta.auc+se
+  delta.auc-se
+  
+```
+
+  
+1) Calculate the difference in AUC between the two models (AUC1 - AUC2).
+
+Calculate the standard error of the difference using the following formula:
+
+SE = sqrt(SE1^2 + SE2^2), where SE1 and SE2 are the standard errors of AUC1 and AUC2, respectively.
+
+Calculate the degrees of freedom (df) using the following formula:
+
+df = n1 + n2 - 2, where n1 and n2 are the sample sizes for the two models.
+
+Calculate the t-statistic using the following formula:
+
+t = (AUC1 - AUC2) / SE
+
+Find the p-value associated with the t-statistic using a t-distribution with df degrees of freedom.
+
+Use the p-value to find the confidence interval for the difference in AUC. For example, a 95% confidence interval can be calculated as:
+
+AUC1 - AUC2 ± t_crit * SE
+
+where t_crit is the critical t-value for a 95% confidence level and df degrees of freedom. The critical t-value can be found using a t-distribution table or a statistical software package.
+(prs.roc-pce.roc)+1.96*(s.prs-s.pce)
+(prs.roc-pce.roc)-1.96*(s.prs-s.pce)
+
+
