@@ -149,6 +149,7 @@ pcefit <-
 g_pce = ggsurvplot(
   pcefit,
   conf.int = TRUE,
+  censor=FALSE,
   #ggtheme = theme_classic(base_size =15),
   palette="nejm",
   xlim = c(40, 80),
@@ -940,6 +941,34 @@ g_oldpce=ggsurvplot(fit,
           
           legend.labs = c("PCE <20%", "PCE 20-80%", "PCE >80%"))
 
+### 10yer
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~, data=dold)
+
+
+g_oldaha=ggsurvplot(fit,
+           pval = TRUE, 
+           conf.int = TRUE,break.x.by=5,
+           censor=FALSE,
+           ##risk.table = F, 
+           ##risk.table.col = "strata",
+           fun="cumhaz",
+           #xlim = c(0, 15), 
+           xlim = c(65, 85),
+            #xlab = "Time since Enrollment",
+           xlab = "Time of Event (Age)",
+           #ylab = "Cumulative Hazard",
+           ylim=c(0,0.15),
+           title = "Enrollment >65",
+          legend.title = "PCE Rank",
+          ggtheme = theme_classic2(base_size=12, base_family = "Arial"),
+           font.family = "Arial",
+          palette=c("#3182BD","#31A354","#E6550D"),
+          
+          legend.labs = c("PCE <20%", "PCE 20-80%", "PCE >80%"))
+
+
 ## prs
 
 fit <- survfit(Surv(phenos.CAD_censor_age,phenos.has_CAD)~prs.cat, data=dold)
@@ -1013,6 +1042,190 @@ ggsave(gg1,dpi=300,filename = "Figs/interaction_time_byage_prs.tiff",height=10,w
 ggsave(gg2,dpi=300,filename = "Figs/interaction_time_byage.tiff")
 ggsave(gg3,dpi=300,filename = "Figs/interaction_time_byage_pce.tiff",height=10,width = 10)
 ```
+
+
+## alltogether
+```{r}
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ Interaction, data = dyoung)
+# Create main plot
+p <- ggsurvplot(fit,
+pval = TRUE, conf.int = TRUE,
+legend="bottom",
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(40, 67),
+ylim = c(0, 0.6),
+xlab = "Time of Event (Age)",
+ylab = "Cumulative Hazard",
+title = "Enrollment <55",
+legend.title = "PRS:PCE Rank",
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 5,
+legend.labs = c("PRS low:PCE Low",
+"PRS Intermediate:PCE Low",
+"PRS High:PCE Low",
+"PRS low:PCE Intermediate",
+"PRS Intermediate:PCE Intermediate",
+"PRS High:PCE Intermediate",
+"PRS low:PCE High",
+"PRS Intermediate:PCE High",
+"PRS High:PCE High"))
+# Create inset plot
+p_inset <- ggsurvplot(fit,
+pval = FALSE, conf.int = FALSE,
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(50, 67),
+ylim = c(0, 0.15),
+xlab = NULL,
+#ylab = NULL,
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 2,
+legend = "none")
+# Combine plots
+p_combined <- ggdraw() +
+draw_plot(p$plot, 0, 0, 1, 1) +
+draw_plot(p_inset$plot, 0.50, 0.50, 0.5, 0.5)
+# Move legend to bottom
+p_combined_young <- p_combined +
+theme(legend.position = "bottom",
+legend.margin = margin(t = 1, r = 1, b = 1, l = 1, unit = "lines"))
+
+
+ggsave(p_combined_young,file="pcombinedyoung.tiff",dpi=300)
+### mid
+
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ Interaction,  data = dmid)
+# Create main plot
+p <- ggsurvplot(fit,
+pval = TRUE, conf.int = TRUE,
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(55, 80),
+ylim = c(0, 0.6),
+xlab = "Time of Event (Age)",
+ylab = "Cumulative Hazard",
+title = "Enrollment 55-65",
+legend.title = "PRS:PCE Rank",
+legend="none",
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 5,
+legend.labs = c("PRS low:PCE Low",
+"PRS Intermediate:PCE Low",
+"PRS High:PCE Low",
+"PRS low:PCE Intermediate",
+"PRS Intermediate:PCE Intermediate",
+"PRS High:PCE Intermediate",
+"PRS low:PCE High",
+"PRS Intermediate:PCE High",
+"PRS High:PCE High"))
+# Create inset plot
+p_inset <- ggsurvplot(fit,
+pval = FALSE, conf.int = FALSE,
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(60, 80),
+ylim = c(0, 0.20),
+xlab = NULL,
+#ylab = NULL,
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 2,
+legend = "none")
+# Combine plots
+p_combined <- ggdraw() +
+draw_plot(p$plot, 0, 0, 1, 1) +
+draw_plot(p_inset$plot, 0.5, 0.50,0.50,0.50)
+# Move legend to bottom
+p_combined_mid <- p_combined +
+theme(legend.position = "bottom",
+legend.margin = margin(t = 1, r = 1, b = 1, l = 1, unit = "lines"))
+
+ggsave(p_combined_mid,file="pcombinedmid.tiff",dpi=300)
+### mid
+
+
+####
+
+
+
+fit <- survfit(Surv(phenos.CAD_censor_age, phenos.has_CAD) ~ Interaction, data = dold)
+# Create main plot
+p <- ggsurvplot(fit,
+pval = TRUE, conf.int = TRUE,
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(65, 85),
+ylim = c(0, 0.6),
+legend="none",
+xlab = "Time of Event (Age)",
+ylab = "Cumulative Hazard",
+title = "Enrollment >65",
+legend.title = "PRS:PCE Rank",
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 5,
+legend.labs = c("PRS low:PCE Low",
+"PRS Intermediate:PCE Low",
+"PRS High:PCE Low",
+"PRS low:PCE Intermediate",
+"PRS Intermediate:PCE Intermediate",
+"PRS High:PCE Intermediate",
+"PRS low:PCE High",
+"PRS Intermediate:PCE High",
+"PRS High:PCE High"))
+# Create inset plot
+p_inset <- ggsurvplot(fit,
+pval = FALSE, conf.int = FALSE,
+fun = "cumhaz",
+censor = FALSE,
+xlim = c(70, 85),
+ylim = c(0, 0.60),
+xlab = NULL,
+#ylab = NULL,
+font.family = "Arial",
+palette = c(colorRampPalette(c("#DEEBF7", "#9ECAE1", "#3182BD"))(3),
+colorRampPalette(c("#E5F5E0", "#A1D99B", "#31A354"))(3),
+colorRampPalette(c("#FEE6CE", "#FDAE6B", "#E6550D"))(3)),
+break.x.by = 2,
+legend = "none")
+# Combine plots
+p_combined <- ggdraw() +
+draw_plot(p$plot, 0, 0, 1, 1) +
+draw_plot(p_inset$plot, 0.5, 0.50,0.50,0.50)
+# Move legend to bottom
+p_combined_old <- p_combined +
+theme(legend.position = "bottom",
+legend.margin = margin(t = 1, r = 1, b = 1, l = 1, unit = "lines"))
+
+
+ggsave(p_combined_old,file="pcombinedold.tiff",dpi=300)
+### mid
+
+
+ggsave(grid.arrange(p_combined_young,p_combined_mid,p_combined_old,nrow=1,ncol=3,widths=c(6,6,6),heights=4),file="alltogether.tiff",dpi=300)
+
+nrow=1,ncol=3,height=4,width=12)
+
+
+
 ## return cumulative hazard for low and high of each age 
 
 ```{r}
